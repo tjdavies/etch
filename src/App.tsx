@@ -1,25 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import styled from "styled-components";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { ProjectListPage } from "./components/pages/projectList/ProjectListPage";
+import { Colours } from "./Style";
+import { Routes } from "./Routes";
+import { ProjectPage } from "./components/pages/project/ProjectPage";
+
+const AppWrapper = styled.div`
+  min-height: 100vh;
+  background-color: ${Colours.background};
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppWrapper>
+      <BrowserRouter>
+        <Switch>
+          <Route path={Routes.project}>
+            <ProjectPage />
+          </Route>
+          <Route path="/">
+            <ProjectListPage />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </AppWrapper>
   );
 }
 
