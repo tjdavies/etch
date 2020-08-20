@@ -9,6 +9,7 @@ import {
 interface State {
   projectList: ProjectRef[];
   project: Project | null;
+  function: string | null;
 }
 
 export interface ProjectRef {
@@ -16,12 +17,35 @@ export interface ProjectRef {
   name: string;
 }
 
-export interface Project {
+type FunctionMap = { [key: string]: Fn };
+type TypeMap = { [key: string]: Type };
+
+interface Type {
   id: string;
   name: string;
 }
 
-const initialState: State = { project: null, projectList: [] };
+export interface Project {
+  id: string;
+  name: string;
+  functions: FunctionMap;
+  types: TypeMap;
+  mainFn: string;
+}
+
+export interface TypeRef {
+  name: string;
+  type: string;
+}
+
+export interface Fn {
+  id: string;
+  name: string;
+  input: TypeRef[];
+  output: TypeRef[];
+}
+
+const initialState: State = { projectList: [], project: null, function: null };
 
 const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState(
   initialState
@@ -38,6 +62,10 @@ function setProject(fn: React.SetStateAction<Project>) {
   if (p) {
     saveProject(p);
   }
+}
+
+function setFunction(fn: React.SetStateAction<State["function"]>) {
+  setGlobalState("function", fn);
 }
 
 function setProjectList(fn: React.SetStateAction<State["projectList"]>) {
@@ -60,6 +88,16 @@ export function useProjectListState() {
   return useGlobalState("projectList");
 }
 
+export function useActiveFunction() {
+  const activeProject = getProject();
+  const [fnId, setFn] = useGlobalState("function");
+  if (activeProject) {
+    if (fnId) {
+      return activeProject.functions[fnId];
+    }
+  }
+}
+
 export function loadProjects() {
   const projectList = loadProjectList();
   if (projectList) {
@@ -69,9 +107,23 @@ export function loadProjects() {
 
 export function createNewProject() {
   const existingProjects = getProjectList() || [];
+  const mainFn: Fn = {
+    name: "main",
+    id: generateId(),
+    input: [
+      { name: "time", type: "number" },
+      { name: "test", type: "string" },
+    ],
+    output: [{ name: "time", type: "number" }],
+  };
   const newProject = {
     name: "Project " + (existingProjects.length + 1),
     id: generateId(),
+    functions: {
+      [mainFn.id]: mainFn,
+    },
+    types: {},
+    mainFn: mainFn.id,
   };
   setProjectList((projectList) => {
     return [...existingProjects, newProject];
@@ -101,6 +153,7 @@ export function loadProject(id: string) {
   const project = loadProjectFromLocalState(id);
   if (project) {
     setProject(project);
+    setFunction(project.mainFn);
   }
 }
 

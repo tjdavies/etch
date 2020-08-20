@@ -16,6 +16,7 @@ const PageWrapper = styled.div``;
 
 const ProjectListWrapper = styled.div`
   padding: ${Padding.default};
+  padding-top: 160px;
   display: flex;
   flex-wrap: wrap;
   gap: ${Padding.default};
