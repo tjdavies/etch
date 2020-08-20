@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { TypeRef } from "../../../State";
+import { TypeRef, HydratedType } from "../../../State";
+import { TypeIcon } from "./TypeIcon";
+import { NewType } from "./NewType";
 
 const FunctionInputWrapper = styled.div`
   display: flex;
@@ -47,15 +49,8 @@ const InputConnector = styled.div`
   }
 `;
 
-const TypeIcon = styled.div`
-  border: 1px solid ${Colours.lightGrey};
-  width: 20px;
-  height: 20px;
-  border-radius: 1px;
-`;
-
 interface Props {
-  input: TypeRef[];
+  input: HydratedType[];
 }
 
 export function FunctionInput({ input }: Props) {
@@ -65,7 +60,7 @@ export function FunctionInput({ input }: Props) {
         {input.map((type) => (
           <InputLabel>
             {type.name}
-            <TypeIcon></TypeIcon>
+            <TypeIcon type={type} />
           </InputLabel>
         ))}
       </InputBox>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FunctionInput } from "./FunctionInput";
-import { Fn } from "../../../State";
+import { HydratedFn } from "../../../State";
 import { FunctionOutput } from "./FunctionOutput";
 
 const FunctionViewWrapper = styled.div`
@@ -12,7 +12,7 @@ const FunctionViewWrapper = styled.div`
 `;
 
 interface Props {
-  fn: Fn;
+  fn: HydratedFn;
 }
 
 export function FunctionView({ fn }: Props) {

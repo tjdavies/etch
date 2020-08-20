@@ -23,6 +23,7 @@ type TypeMap = { [key: string]: Type };
 interface Type {
   id: string;
   name: string;
+  types?: TypeRef[];
 }
 
 export interface Project {
@@ -35,7 +36,7 @@ export interface Project {
 
 export interface TypeRef {
   name: string;
-  type: string;
+  typeId: string;
 }
 
 export interface Fn {
@@ -43,6 +44,34 @@ export interface Fn {
   name: string;
   input: TypeRef[];
   output: TypeRef[];
+}
+
+export interface HydratedFn {
+  id: string;
+  name: string;
+  input: HydratedType[];
+  output: HydratedType[];
+}
+
+export const primitives: TypeMap = {
+  number: {
+    id: "number",
+    name: "number",
+  },
+  string: {
+    id: "string",
+    name: "string",
+  },
+  boolean: {
+    id: "boolean",
+    name: "boolean",
+  },
+};
+
+export interface HydratedType {
+  name: string;
+  id: string;
+  types?: HydratedType[];
 }
 
 const initialState: State = { projectList: [], project: null, function: null };
@@ -93,9 +122,36 @@ export function useActiveFunction() {
   const [fnId, setFn] = useGlobalState("function");
   if (activeProject) {
     if (fnId) {
-      return activeProject.functions[fnId];
+      return populateTypes(activeProject, activeProject.functions[fnId]);
     }
   }
+}
+
+function populateTypes(project: Project, fn: Fn): HydratedFn {
+  return {
+    ...fn,
+    input: hydrateTypes(project, fn.input),
+    output: hydrateTypes(project, fn.input),
+  };
+}
+
+function hydrateTypes(project: Project, types: TypeRef[]): HydratedType[] {
+  return types.map((ref) => {
+    const type = getType(project, ref.typeId);
+
+    if (type.types) {
+      return {
+        ...type,
+        types: hydrateTypes(project, type.types),
+      };
+    }
+
+    return type as HydratedType;
+  });
+}
+
+function getType(project: Project, id: string): Type {
+  return primitives[id] || project.types[id];
 }
 
 export function loadProjects() {
@@ -110,11 +166,11 @@ export function createNewProject() {
   const mainFn: Fn = {
     name: "main",
     id: generateId(),
-    input: [
-      { name: "time", type: "number" },
-      { name: "test", type: "string" },
+    input: [{ name: "state", typeId: "state" }],
+    output: [
+      { name: "state", typeId: "state" },
+      { name: "output", typeId: "scene" },
     ],
-    output: [{ name: "time", type: "number" }],
   };
   const newProject = {
     name: "Project " + (existingProjects.length + 1),
@@ -122,7 +178,13 @@ export function createNewProject() {
     functions: {
       [mainFn.id]: mainFn,
     },
-    types: {},
+    types: {
+      state: {
+        id: "state",
+        name: "state",
+        types: [],
+      },
+    },
     mainFn: mainFn.id,
   };
   setProjectList((projectList) => {

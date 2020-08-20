@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { TypeRef } from "../../../State";
+import { TypeRef, HydratedType } from "../../../State";
 
 const FunctionOutputWrapper = styled.div`
   display: flex;
@@ -53,7 +53,7 @@ const TypeIcon = styled.div`
 `;
 
 interface Props {
-  types: TypeRef[];
+  types: HydratedType[];
 }
 
 export function FunctionOutput({ types }: Props) {
