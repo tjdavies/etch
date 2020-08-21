@@ -1,19 +1,19 @@
 import React from "react";
-import styled from "styled-components";
-import { Colours } from "../../../Style";
 
-const TypeIconBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid ${Colours.lightGrey};
-  width: 20px;
-  height: 20px;
-  border-radius: 1px;
-  color: ${Colours.darkText};
-  cursor: pointer;
-`;
+import { useProjectState } from "../../../State";
+import { SelectCreate } from "./SelectCreate";
 
 export function NewType() {
-  return <TypeIconBox>+</TypeIconBox>;
+  const [project] = useProjectState();
+  if (project) {
+    const fList = Object.values(project.types).map((f) => f.name);
+    return (
+      <SelectCreate
+        options={fList}
+        onCreateNew={console.log}
+        onSelect={console.log}
+      />
+    );
+  }
+  return null;
 }

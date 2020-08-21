@@ -139,14 +139,11 @@ function hydrateTypes(project: Project, types: TypeRef[]): HydratedType[] {
   return types.map((ref) => {
     const type = getType(project, ref.typeId);
 
-    if (type.types) {
-      return {
-        ...type,
-        types: hydrateTypes(project, type.types),
-      };
-    }
-
-    return type as HydratedType;
+    return {
+      name: ref.name,
+      id: ref.typeId,
+      types: type.types && hydrateTypes(project, type.types),
+    };
   });
 }
 
@@ -182,7 +179,7 @@ export function createNewProject() {
       state: {
         id: "state",
         name: "state",
-        types: [],
+        types: [{ name: "count", typeId: "string" }],
       },
     },
     mainFn: mainFn.id,

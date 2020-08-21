@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { TypeRef, HydratedType } from "../../../State";
-import { TypeIcon } from "./TypeIcon";
-import { NewType } from "./NewType";
+import { HydratedType } from "../../../State";
+import { InputType } from "./InputType";
 
 const FunctionInputWrapper = styled.div`
   display: flex;
@@ -21,54 +20,19 @@ const InputBox = styled.div`
   padding: 10px;
 `;
 
-const InputLabel = styled.div`
-  color: ${Colours.darkText};
-  display: flex;
-  gap: 8px;
-`;
-
-const ConnectorWrapper = styled.div`
-  gap: 5px;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-`;
-
-const InputConnector = styled.div`
-  width: 20px;
-  height: 20px;
-
-  &:after {
-    margin-top: 5px;
-    display: block;
-    content: "";
-    border: 1px solid ${Colours.lightGrey};
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
-`;
-
 interface Props {
   input: HydratedType[];
 }
 
 export function FunctionInput({ input }: Props) {
+  console.log(input);
   return (
     <FunctionInputWrapper>
       <InputBox>
         {input.map((type) => (
-          <InputLabel>
-            {type.name}
-            <TypeIcon type={type} />
-          </InputLabel>
+          <InputType type={type} />
         ))}
       </InputBox>
-      <ConnectorWrapper>
-        {input.map((type) => (
-          <InputConnector />
-        ))}
-      </ConnectorWrapper>
     </FunctionInputWrapper>
   );
 }

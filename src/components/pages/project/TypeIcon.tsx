@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { HydratedType } from "../../../State";
+import { FormDown } from "grommet-icons";
 
-const TypeIconBox = styled.div`
+export const TypeIconBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,5 +20,5 @@ interface Props {
 }
 
 export function TypeIcon({ type }: Props) {
-  return <TypeIconBox>{type.types && "v"}</TypeIconBox>;
+  return <TypeIconBox>S</TypeIconBox>;
 }
