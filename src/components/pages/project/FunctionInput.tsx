@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { HydratedType } from "../../../State";
@@ -24,15 +24,15 @@ interface Props {
   input: HydratedType[];
 }
 
-export function FunctionInput({ input }: Props) {
+export const FunctionInput = memo(({ input }: Props) => {
   console.log(input);
   return (
     <FunctionInputWrapper>
       <InputBox>
         {input.map((type) => (
-          <InputType type={type} />
+          <InputType key={type.id} type={type} />
         ))}
       </InputBox>
     </FunctionInputWrapper>
   );
-}
+});

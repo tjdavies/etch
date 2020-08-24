@@ -61,12 +61,12 @@ export function FunctionOutput({ types }: Props) {
     <FunctionOutputWrapper>
       <ConnectorWrapper>
         {types.map((type) => (
-          <OutputConnector />
+          <OutputConnector key={type.id} id="B" />
         ))}
       </ConnectorWrapper>
       <OutputBox>
         {types.map((type) => (
-          <OutputLabel>
+          <OutputLabel key={type.id}>
             <TypeIcon></TypeIcon>
             {type.name}
           </OutputLabel>

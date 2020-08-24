@@ -119,7 +119,7 @@ export function useProjectListState() {
 
 export function useActiveFunction() {
   const activeProject = getProject();
-  const [fnId, setFn] = useGlobalState("function");
+  const [fnId] = useGlobalState("function");
   if (activeProject) {
     if (fnId) {
       return populateTypes(activeProject, activeProject.functions[fnId]);

@@ -65,12 +65,12 @@ function RecordType({ type }: Props) {
         <TypeIconBox onClick={() => toggleExpanded()}>
           {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
         </TypeIconBox>
-        <InputConnector />
+        <InputConnector id="A" />
       </InputLabel>
       {expanded && (
         <Indented>
           {type.types?.map((type) => (
-            <InputType type={type} />
+            <InputType key={type.id} type={type} />
           ))}
           <NewType />
         </Indented>

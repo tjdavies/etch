@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Colours, Padding } from "../../Style";
 import { Link } from "react-router-dom";
