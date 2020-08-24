@@ -38,16 +38,36 @@ export interface TypeRef {
   typeId: string;
 }
 
+export interface Vector2d {
+  x: number;
+  y: number;
+}
+
+export interface Token {
+  id: string;
+  ref: string;
+  position: Vector2d;
+}
+
+export interface Connection {
+  from: string;
+  to: string;
+}
+
 export interface Fn {
   id: string;
   name: string;
+  connections: Connection[];
   input: TypeRef[];
   output: TypeRef[];
+  tokens: Token[];
 }
 
 export interface HydratedFn {
   id: string;
   name: string;
+  connections: Connection[];
+  tokens: Token[];
   input: HydratedType[];
   output: HydratedType[];
 }
@@ -143,11 +163,18 @@ export function createNewProject() {
   const mainFn: Fn = {
     name: "main",
     id: generateId(),
+    connections: [
+      {
+        from: "this.state",
+        to: "this.state",
+      },
+    ],
     input: [{ name: "state", typeId: "state" }],
     output: [
       { name: "state", typeId: "state" },
       { name: "output", typeId: "scene" },
     ],
+    tokens: [],
   };
   const newProject = {
     name: "Project " + (existingProjects.length + 1),

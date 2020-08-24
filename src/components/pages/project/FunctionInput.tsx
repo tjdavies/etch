@@ -21,15 +21,16 @@ const InputBox = styled.div`
 `;
 
 interface Props {
+  refName: string;
   input: HydratedType[];
 }
 
-export const FunctionInput = memo(({ input }: Props) => {
+export const FunctionInput = memo(({ input, refName }: Props) => {
   return (
     <FunctionInputWrapper>
       <InputBox>
         {input.map((type) => (
-          <InputType key={type.id} type={type} />
+          <InputType key={type.id} type={type} refName={refName} />
         ))}
       </InputBox>
     </FunctionInputWrapper>

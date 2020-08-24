@@ -21,9 +21,11 @@ export function FunctionView({ fn }: Props) {
   return (
     <FunctionViewWrapper>
       <svg style={{ position: "absolute" }} height="100%" width="100%">
-        <Connector />
+        {fn.connections.map((c, i) => (
+          <Connector key={i} from={c.from} to={c.to} />
+        ))}
       </svg>
-      <FunctionInput input={fn.input} />
+      <FunctionInput input={fn.input} refName="from.this" />
       <FunctionOutput types={fn.output} />
     </FunctionViewWrapper>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { HydratedType } from "../../../State";
@@ -36,12 +36,13 @@ const InputConnector = styled.div`
 `;
 
 interface Props {
+  refName: string;
   type: HydratedType;
 }
 
-export function InputType({ type }: Props) {
+export function InputType({ type, refName }: Props) {
   if (type.types) {
-    return <RecordType type={type} />;
+    return <RecordType type={type} refName={refName} />;
   }
   return (
     <InputLabel>
@@ -52,12 +53,18 @@ export function InputType({ type }: Props) {
   );
 }
 
-function RecordType({ type }: Props) {
+function RecordType({ type, refName }: Props) {
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
+
+  useLayoutEffect(() => {
+    (window as any)?.dirty();
+  }, [expanded]);
+
+  const thisRefId = [refName, type.id].join(".");
 
   return (
     <>
@@ -66,12 +73,12 @@ function RecordType({ type }: Props) {
         <TypeIconBox onClick={() => toggleExpanded()}>
           {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
         </TypeIconBox>
-        <InputConnector id="A" />
+        <InputConnector id={thisRefId} />
       </InputLabel>
       {expanded && (
         <Indented>
           {type.types?.map((type) => (
-            <InputType key={type.id} type={type} />
+            <InputType key={type.id} type={type} refName={thisRefId} />
           ))}
           <NewType />
         </Indented>

@@ -61,7 +61,7 @@ export function FunctionOutput({ types }: Props) {
     <FunctionOutputWrapper>
       <ConnectorWrapper>
         {types.map((type) => (
-          <OutputConnector key={type.id} id="B" />
+          <OutputConnector key={type.id} id="to.this.state" />
         ))}
       </ConnectorWrapper>
       <OutputBox>

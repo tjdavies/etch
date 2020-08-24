@@ -1,19 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 
 import { useWindowSize } from "../../../utils/hooks/useWindowSize";
 import { Colours } from "../../../Style";
 
-export function Connector() {
+interface Props {
+  from: string;
+  to: string;
+}
+
+export function Connector({ from, to }: Props) {
   const [aPos, setAPos] = useState();
   const [bPos, setBPos] = useState();
 
   const size = useWindowSize();
 
   useEffect(() => {
-    // Update the document title using the browser API
-    setAPos(getLocation("A"));
-    setBPos(getLocation("B"));
+    updateLines();
   }, [size]);
+
+  useLayoutEffect(() => {
+    (window as any).dirty = updateLines;
+  }, []);
+
+  const updateLines = () => {
+    setAPos(getLocation("from." + from));
+    setBPos(getLocation("to." + to));
+  };
 
   if (aPos && bPos) {
     const x1 = aPos.x + 10;
@@ -26,7 +38,7 @@ export function Connector() {
       <>
         <path
           d={`M ${x1} ${y1} h ${hoz / 2} v ${y2 - y1} h ${hoz / 2}`}
-          fill="transparent"
+          fill="none"
           stroke={Colours.secondary}
         />
       </>
