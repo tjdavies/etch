@@ -1,6 +1,6 @@
 import { Project, ProjectRef } from "../State";
 
-const PROJECT_LIST = "PROJECT_LIST";
+export const PROJECT_LIST = "PROJECT_LIST";
 const PROJECT_PREFIX = "ETCH_";
 
 export function saveProjectList(projectList: ProjectRef[]) {

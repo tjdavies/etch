@@ -7,7 +7,6 @@ import {
 } from "./utils/Save";
 
 interface State {
-  projectList: ProjectRef[];
   project: Project | null;
   function: string | null;
 }
@@ -74,7 +73,7 @@ export interface HydratedType {
   types?: HydratedType[];
 }
 
-const initialState: State = { projectList: [], project: null, function: null };
+const initialState: State = { project: null, function: null };
 
 const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState(
   initialState
@@ -97,24 +96,12 @@ function setFunction(fn: React.SetStateAction<State["function"]>) {
   setGlobalState("function", fn);
 }
 
-function setProjectList(fn: React.SetStateAction<State["projectList"]>) {
-  setGlobalState("projectList", fn);
-}
-
-function getProjectList(): ProjectRef[] {
-  return getGlobalState("projectList");
-}
-
 function getProject(): Project | null {
   return getGlobalState("project");
 }
 
 export function useProjectState() {
   return useGlobalState("project");
-}
-
-export function useProjectListState() {
-  return useGlobalState("projectList");
 }
 
 export function useActiveFunction() {
@@ -151,15 +138,8 @@ function getType(project: Project, id: string): Type {
   return primitives[id] || project.types[id];
 }
 
-export function loadProjects() {
-  const projectList = loadProjectList();
-  if (projectList) {
-    setProjectList((_) => projectList);
-  }
-}
-
 export function createNewProject() {
-  const existingProjects = getProjectList() || [];
+  const existingProjects = loadProjectList() || [];
   const mainFn: Fn = {
     name: "main",
     id: generateId(),
@@ -184,10 +164,7 @@ export function createNewProject() {
     },
     mainFn: mainFn.id,
   };
-  setProjectList((projectList) => {
-    return [...existingProjects, newProject];
-  });
-  saveProjectList(getProjectList());
+  saveProjectList([...existingProjects, newProject]);
   saveProject(newProject);
 }
 
@@ -199,12 +176,11 @@ export function setProjectName(name: string) {
       name,
     }));
 
-    setProjectList((projectList) =>
-      projectList.map((proj) =>
-        proj.id === activeProject.id ? { ...proj, name } : proj
-      )
+    const projectList = loadProjectList() || [];
+    const adjustedList = projectList.map((proj) =>
+      proj.id === activeProject.id ? { ...proj, name } : proj
     );
-    saveProjectList(getProjectList());
+    saveProjectList(adjustedList);
   }
 }
 

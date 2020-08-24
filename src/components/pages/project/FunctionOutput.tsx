@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { TypeRef, HydratedType } from "../../../State";
+import { HydratedType } from "../../../State";
 
 const FunctionOutputWrapper = styled.div`
   display: flex;

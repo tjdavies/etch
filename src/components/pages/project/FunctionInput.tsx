@@ -25,7 +25,6 @@ interface Props {
 }
 
 export const FunctionInput = memo(({ input }: Props) => {
-  console.log(input);
   return (
     <FunctionInputWrapper>
       <InputBox>

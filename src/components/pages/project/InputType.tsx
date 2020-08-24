@@ -58,6 +58,7 @@ function RecordType({ type }: Props) {
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
+
   return (
     <>
       <InputLabel>

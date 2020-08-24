@@ -3,14 +3,12 @@ import { ProjectButton, ProjectButtonNew } from "./ProjectButton";
 import styled from "styled-components";
 import { Colours, Padding } from "../../../Style";
 import { ReactComponent as PlusIcon } from "../../../assets/plus.svg";
-import {
-  useProjectListState,
-  createNewProject,
-  loadProjects,
-} from "../../../State";
+import { createNewProject, Project } from "../../../State";
 import { Link, generatePath } from "react-router-dom";
 import { Routes } from "../../../Routes";
 import { PageHeader } from "../../common/Header";
+import { useLocalStorage } from "../../../utils/hooks/useLocalStorage";
+import { PROJECT_LIST } from "../../../utils/Save";
 
 const PageWrapper = styled.div``;
 
@@ -35,11 +33,10 @@ const ProjectHeader = styled.div`
   border-left: 2px solid ${Colours.lightText};
 `;
 
+const emptyProjectList: Project[] = [];
+
 export function ProjectListPage() {
-  useEffect(() => {
-    loadProjects();
-  }, []);
-  const [projectList] = useProjectListState();
+  const [projectList] = useLocalStorage(PROJECT_LIST, emptyProjectList);
 
   return (
     <PageWrapper>

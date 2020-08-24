@@ -61,6 +61,7 @@ export function ProjectPage() {
 
   return (
     <PageWrapper>
+      <FunctionView fn={fn} />
       <PageHeader>
         <ProjectNameWrapper></ProjectNameWrapper>
         <ProjectNameHeader
@@ -69,7 +70,6 @@ export function ProjectPage() {
         />
         <FnNameHeader>{fn.name}</FnNameHeader>
       </PageHeader>
-      <FunctionView fn={fn} />
     </PageWrapper>
   );
 }

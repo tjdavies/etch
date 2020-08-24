@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { HydratedType } from "../../../State";
-import { FormDown } from "grommet-icons";
 
 export const TypeIconBox = styled.div`
   display: flex;
