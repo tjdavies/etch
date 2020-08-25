@@ -4,6 +4,7 @@ import { FunctionInput } from "./FunctionInput";
 import { HydratedFn } from "../../../State";
 import { FunctionOutput } from "./FunctionOutput";
 import { Connector } from "./Connector";
+import { DragWire } from "./DragWire";
 
 const FunctionViewWrapper = styled.div`
   position: relative;
@@ -21,6 +22,7 @@ export function FunctionView({ fn }: Props) {
   return (
     <FunctionViewWrapper>
       <svg style={{ position: "absolute" }} height="100%" width="100%">
+        <DragWire />
         {fn.connections.map((c, i) => (
           <Connector key={i} from={c.from} to={c.to} />
         ))}

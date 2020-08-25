@@ -5,6 +5,8 @@ import { HydratedType } from "../../../State";
 import { TypeIcon, TypeIconBox } from "./TypeIcon";
 import { FormNext, FormDown } from "grommet-icons";
 import { NewType } from "./NewType";
+import { DraggableConnector } from "./DraggableConnector";
+import { FromConnector } from "./FromConnector";
 
 const InputLabel = styled.div`
   position: relative;
@@ -19,7 +21,7 @@ const Indented = styled.div`
   flex-direction: column;
   align-items: flex-end;
   gap: 5px;
-  border-left: 5px solid #f2f2f2;
+  margin-right: 5px;
   width: 100%;
 `;
 
@@ -48,7 +50,7 @@ export function InputType({ type, refName }: Props) {
     <InputLabel>
       {type.name}
       <TypeIcon type={type} />
-      <InputConnector />
+      <FromConnector refName={refName} />
     </InputLabel>
   );
 }
@@ -73,12 +75,17 @@ function RecordType({ type, refName }: Props) {
         <TypeIconBox onClick={() => toggleExpanded()}>
           {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
         </TypeIconBox>
-        <InputConnector id={thisRefId} />
+
+        <FromConnector refName={thisRefId} />
       </InputLabel>
       {expanded && (
         <Indented>
           {type.types?.map((type) => (
-            <InputType key={type.id} type={type} refName={thisRefId} />
+            <InputType
+              key={type.id}
+              type={type}
+              refName={thisRefId + "." + type.name}
+            />
           ))}
           <NewType />
         </Indented>

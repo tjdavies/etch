@@ -9,6 +9,7 @@ import {
 interface State {
   project: Project | null;
   function: string | null;
+  connectionDrag: ConnectionDrag | null;
 }
 
 export interface ProjectRef {
@@ -35,10 +36,11 @@ export interface Project {
 
 export interface TypeRef {
   name: string;
+  id: string;
   typeId: string;
 }
 
-export interface Vector2d {
+export interface Point {
   x: number;
   y: number;
 }
@@ -46,7 +48,7 @@ export interface Vector2d {
 export interface Token {
   id: string;
   ref: string;
-  position: Vector2d;
+  position: Point;
 }
 
 export interface Connection {
@@ -93,7 +95,15 @@ export interface HydratedType {
   types?: HydratedType[];
 }
 
-const initialState: State = { project: null, function: null };
+export interface ConnectionDrag {
+  connectionId: string;
+}
+
+const initialState: State = {
+  project: null,
+  function: null,
+  connectionDrag: null,
+};
 
 const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState(
   initialState
@@ -122,6 +132,10 @@ function getProject(): Project | null {
 
 export function useProjectState() {
   return useGlobalState("project");
+}
+
+export function useConnectionDragState() {
+  return useGlobalState("connectionDrag");
 }
 
 export function useActiveFunction() {
@@ -169,10 +183,10 @@ export function createNewProject() {
         to: "this.state",
       },
     ],
-    input: [{ name: "state", typeId: "state" }],
+    input: [{ name: "state", id: "state", typeId: "state" }],
     output: [
-      { name: "state", typeId: "state" },
-      { name: "output", typeId: "scene" },
+      { name: "state", id: "state", typeId: "state" },
+      { name: "scene", id: "scene", typeId: "scene" },
     ],
     tokens: [],
   };
@@ -186,7 +200,12 @@ export function createNewProject() {
       state: {
         id: "state",
         name: "state",
-        types: [{ name: "count", typeId: "string" }],
+        types: [{ name: "count", id: "count", typeId: "string" }],
+      },
+      scene: {
+        id: "scene",
+        name: "scene",
+        types: [{ name: "text", id: "text", typeId: "string" }],
       },
     },
     mainFn: mainFn.id,
