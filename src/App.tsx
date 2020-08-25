@@ -6,6 +6,8 @@ import { Colours, GrommetTheme } from "./Style";
 import { Routes } from "./Routes";
 import { ProjectPage } from "./components/pages/project/ProjectPage";
 import { Grommet } from "grommet";
+import { Store } from "./model/Store";
+import { Provider } from "mobx-react";
 
 const AppWrapper = styled.div`
   min-height: 100vh;

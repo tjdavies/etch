@@ -5,6 +5,7 @@ import {
   saveProject,
   loadProject as loadProjectFromLocalState,
 } from "./utils/Save";
+import { generateId } from "./utils/generateId";
 
 interface State {
   project: Project | null;
@@ -231,18 +232,10 @@ export function setProjectName(name: string) {
 }
 
 export function loadProject(id: string) {
-  const project = loadProjectFromLocalState(id);
-  if (project) {
-    setProject(project);
-    setFunction(project.mainFn);
-  }
-}
-
-function generateId() {
-  return (
-    Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15)
-  );
+  loadProjectFromLocalState(id).then((project) => {
+    //setProject(project);
+    //  setFunction(project.mainFn);
+  });
 }
 
 function isFunction(functionToCheck: any) {

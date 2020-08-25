@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import {
@@ -11,6 +11,8 @@ import {
 import { PageHeader } from "../../common/Header";
 import { useParams } from "react-router-dom";
 import { FunctionView } from "./FunctionView";
+import { observer, inject } from "mobx-react";
+import { Store } from "../../../model/Store";
 
 const PageWrapper = styled.div`
   position: relative;
@@ -46,30 +48,46 @@ const FnNameHeader = styled.div`
   border-left: 2px solid ${Colours.lightText};
 `;
 
-export function ProjectPage() {
+export const ProjectPage = observer(() => {
+  const store = useContext(Store);
   let { id } = useParams();
   useEffect(() => {
-    loadProject(id);
+    store.loadProject(id);
   }, []);
 
-  const [project] = useProjectState();
-  const fn = useActiveFunction();
+  // const [project] = useProjectState();
 
-  if (project == null || fn == null) {
+  if (store.project == null || store.activeFunction == null) {
     return null;
   }
 
+  // const fn = useActiveFunction();
+
   return (
     <PageWrapper>
-      <FunctionView fn={fn} />
       <PageHeader>
-        <ProjectNameWrapper></ProjectNameWrapper>
+        <ProjectNameWrapper />
         <ProjectNameHeader
-          onChange={(e) => setProjectName(e.target.value)}
-          value={project.name}
+          onChange={(e) => {
+            store?.project?.setName(e.target.value);
+          }}
+          value={store.project.name}
         />
-        <FnNameHeader>{fn.name}</FnNameHeader>
+        <FnNameHeader>{store.activeFunction.name}</FnNameHeader>
       </PageHeader>
     </PageWrapper>
   );
-}
+});
+
+/*<PageWrapper>
+        <FunctionView fn={fn} />
+        <PageHeader>
+          <ProjectNameWrapper></ProjectNameWrapper>
+          <ProjectNameHeader
+            onChange={(e) => setProjectName(e.target.value)}
+            value={project.name}
+          />
+          <FnNameHeader>{fn.name}</FnNameHeader>
+        </PageHeader>
+      </PageWrapper>
+      */
