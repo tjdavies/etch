@@ -7,8 +7,7 @@ import { useConnectionDragState } from "../../../State";
 
 const Connector = styled.div`
   position: absolute;
-  right: -30px;
-  margin-top: 5px;
+  top: 0;
   border: 2px solid ${Colours.primary};
   width: 10px;
   height: 10px;

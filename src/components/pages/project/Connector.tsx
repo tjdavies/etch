@@ -32,7 +32,7 @@ export function Connector({ from, to }: Props) {
     return (
       <Wire
         from={{ x: aPos.x + 10, y: aPos.y + 5 }}
-        to={{ x: bPos.x, y: bPos.y + 10 }}
+        to={{ x: bPos.x, y: bPos.y + 5 }}
       />
     );
   }

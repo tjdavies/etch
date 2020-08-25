@@ -11,21 +11,23 @@ const Connector = styled.div`
 `;
 
 const ConnectorWrapper = styled.div`
-  position: absolute;
-  right: -30px;
+  position: relative;
+  display: block;
+  left: -30px;
   margin-top: 5px;
   display: block;
 `;
 
 interface Props {
   refName: string;
+  dragRef: string | null;
 }
 
-export function FromConnector({ refName }: Props) {
+export function ToConnector({ refName, dragRef }: Props) {
   return (
     <ConnectorWrapper>
       <Connector id={refName} />
-      <DraggableConnector connectionId={refName} />
+      {dragRef && <DraggableConnector connectionId={refName} />}
     </ConnectorWrapper>
   );
 }

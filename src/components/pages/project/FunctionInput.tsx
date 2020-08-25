@@ -2,11 +2,7 @@ import React, { memo } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { HydratedType } from "../../../State";
-import { InputType } from "./InputType";
-
-const FunctionInputWrapper = styled.div`
-  display: flex;
-`;
+import { FromType } from "./FromType";
 
 const InputBox = styled.div`
   display: flex;
@@ -27,12 +23,10 @@ interface Props {
 
 export const FunctionInput = memo(({ input, refName }: Props) => {
   return (
-    <FunctionInputWrapper>
-      <InputBox>
-        {input.map((type) => (
-          <InputType key={type.id} type={type} refName={refName} />
-        ))}
-      </InputBox>
-    </FunctionInputWrapper>
+    <InputBox>
+      {input.map((type) => (
+        <FromType key={type.id} type={type} refName={refName} />
+      ))}
+    </InputBox>
   );
 });

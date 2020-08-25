@@ -2,10 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { HydratedType } from "../../../State";
-
-const FunctionOutputWrapper = styled.div`
-  display: flex;
-`;
+import { ToType } from "./ToType";
 
 const OutputBox = styled.div`
   gap: 5px;
@@ -19,59 +16,17 @@ const OutputBox = styled.div`
   padding: 10px;
 `;
 
-const OutputLabel = styled.div`
-  color: ${Colours.darkText};
-  display: flex;
-  gap: 8px;
-`;
-
-const ConnectorWrapper = styled.div`
-  gap: 5px;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-`;
-
-const OutputConnector = styled.div`
-  height: 20px;
-  &:after {
-    margin-top: 5px;
-    display: block;
-    content: "";
-    border: 1px solid ${Colours.lightGrey};
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
-`;
-
-const TypeIcon = styled.div`
-  border: 1px solid ${Colours.lightGrey};
-  width: 20px;
-  height: 20px;
-  border-radius: 1px;
-`;
-
 interface Props {
+  refName: string;
   types: HydratedType[];
 }
 
-export function FunctionOutput({ types }: Props) {
+export function FunctionOutput({ types, refName }: Props) {
   return (
-    <FunctionOutputWrapper>
-      <ConnectorWrapper>
-        {types.map((type) => (
-          <OutputConnector key={type.id} id="to.this.state" />
-        ))}
-      </ConnectorWrapper>
-      <OutputBox>
-        {types.map((type) => (
-          <OutputLabel key={type.id}>
-            <TypeIcon></TypeIcon>
-            {type.name}
-          </OutputLabel>
-        ))}
-      </OutputBox>
-    </FunctionOutputWrapper>
+    <OutputBox>
+      {types.map((type) => (
+        <ToType key={type.id} type={type} refName={refName} />
+      ))}
+    </OutputBox>
   );
 }

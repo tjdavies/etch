@@ -28,7 +28,7 @@ export function FunctionView({ fn }: Props) {
         ))}
       </svg>
       <FunctionInput input={fn.input} refName="from.this" />
-      <FunctionOutput types={fn.output} />
+      <FunctionOutput types={fn.output} refName="to.this" />
     </FunctionViewWrapper>
   );
 }
