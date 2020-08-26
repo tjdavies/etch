@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
 
 import { useWindowSize } from "../../../utils/hooks/useWindowSize";
-import { Colours } from "../../../Style";
 import { Wire } from "./Wire";
+import { IParam } from "../../../model/Param";
 
 interface Props {
-  from: string;
-  to: string;
+  from: IParam;
+  to: IParam;
 }
 
 export function Connector({ from, to }: Props) {
@@ -24,9 +24,11 @@ export function Connector({ from, to }: Props) {
   }, []);
 
   const updateLines = () => {
-    setAPos(getLocation("from." + from));
-    setBPos(getLocation("to." + to));
+    setAPos(getLocation("from." + from.id));
+    setBPos(getLocation("to." + to.id));
   };
+
+  console.log(from);
 
   if (aPos && bPos) {
     return (

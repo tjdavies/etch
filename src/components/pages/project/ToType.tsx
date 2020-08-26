@@ -1,11 +1,12 @@
 import React, { useState, useLayoutEffect } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { HydratedType } from "../../../State";
 import { TypeIcon, TypeIconBox } from "./TypeIcon";
 import { FormNext, FormDown } from "grommet-icons";
 import { NewType } from "./NewType";
 import { ToConnector } from "./ToConnector";
+import { IParam } from "../../../model/Param";
+import { IType } from "../../../model/Type";
 
 const InputLabel = styled.div`
   position: relative;
@@ -26,23 +27,23 @@ const Indented = styled.div`
 
 interface Props {
   refName: string;
-  type: HydratedType;
+  param: IParam;
 }
 
-export function ToType({ type, refName }: Props) {
-  if (type.types) {
-    return <RecordType type={type} refName={refName} />;
+export function ToType({ param, refName }: Props) {
+  if (param.type.params) {
+    return <RecordType type={param.type} refName={refName} />;
   }
   return (
     <InputLabel>
-      <ToConnector refName={refName} dragRef={null} />
-      <TypeIcon type={type} />
-      {type.name}
+      <ToConnector refName={"to." + param.id} dragRef={null} />
+      <TypeIcon type={param.type} />
+      {param.name}
     </InputLabel>
   );
 }
 
-function RecordType({ type, refName }: Props) {
+function RecordType({ type, refName }: { refName: string; type: IType }) {
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpanded = () => {
@@ -66,13 +67,15 @@ function RecordType({ type, refName }: Props) {
       </InputLabel>
       {expanded && (
         <Indented>
-          {type.types?.map((type) => (
+          {/*
+          type.params?.map((type) => (
             <ToType
               key={type.id}
               type={type}
               refName={thisRefId + "." + type.name}
             />
-          ))}
+          ))
+          */}
           <NewType />
         </Indented>
       )}

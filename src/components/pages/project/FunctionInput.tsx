@@ -1,8 +1,8 @@
-import React, { memo } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { HydratedType } from "../../../State";
 import { FromType } from "./FromType";
+import { IParam } from "../../../model/Param";
 
 const InputBox = styled.div`
   display: flex;
@@ -18,15 +18,15 @@ const InputBox = styled.div`
 
 interface Props {
   refName: string;
-  input: HydratedType[];
+  input: IParam[];
 }
 
-export const FunctionInput = memo(({ input, refName }: Props) => {
+export const FunctionInput = ({ input, refName }: Props) => {
   return (
     <InputBox>
-      {input.map((type) => (
-        <FromType key={type.id} type={type} refName={refName} />
+      {input.map((param) => (
+        <FromType key={param.id} param={param} refName={refName} />
       ))}
     </InputBox>
   );
-});
+};

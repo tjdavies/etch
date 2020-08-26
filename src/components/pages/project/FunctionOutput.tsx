@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { HydratedType } from "../../../State";
 import { ToType } from "./ToType";
+import { IParam } from "../../../model/Param";
 
 const OutputBox = styled.div`
   gap: 5px;
@@ -18,14 +18,14 @@ const OutputBox = styled.div`
 
 interface Props {
   refName: string;
-  types: HydratedType[];
+  types: IParam[];
 }
 
 export function FunctionOutput({ types, refName }: Props) {
   return (
     <OutputBox>
-      {types.map((type) => (
-        <ToType key={type.id} type={type} refName={refName} />
+      {types.map((param) => (
+        <ToType key={param.id} param={param} refName={refName} />
       ))}
     </OutputBox>
   );

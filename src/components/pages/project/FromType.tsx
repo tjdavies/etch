@@ -1,11 +1,12 @@
 import React, { useState, useLayoutEffect } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { HydratedType } from "../../../State";
 import { TypeIcon, TypeIconBox } from "./TypeIcon";
 import { FormNext, FormDown } from "grommet-icons";
 import { NewType } from "./NewType";
 import { FromConnector } from "./FromConnector";
+import { IParam } from "../../../model/Param";
+import { IType } from "../../../model/Type";
 
 const InputLabel = styled.div`
   position: relative;
@@ -28,32 +29,34 @@ const Indented = styled.div`
 
 interface Props {
   refName: string;
-  type: HydratedType;
+  param: IParam;
 }
 
-export function FromType({ type, refName }: Props) {
-  if (type.types) {
-    return <RecordType type={type} refName={refName} />;
+export function FromType({ param, refName }: Props) {
+  if (param.type.params) {
+    return <RecordType type={param.type} refName={"from." + param.id} />;
   }
   return (
     <InputLabel>
-      {type.name}
-      <TypeIcon type={type} />
-      <FromConnector refName={refName} />
+      {param.name}
+      <TypeIcon type={param.type} />
+      <FromConnector refName={"from." + param.id} />
     </InputLabel>
   );
 }
 
-function RecordType({ type, refName }: Props) {
+function RecordType({ type, refName }: { refName: string; type: IType }) {
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
 
+  /*
   useLayoutEffect(() => {
     (window as any)?.dirty();
   }, [expanded]);
+  */
 
   const thisRefId = [refName, type.id].join(".");
 
@@ -68,13 +71,14 @@ function RecordType({ type, refName }: Props) {
       </InputLabel>
       {expanded && (
         <Indented>
-          {type.types?.map((type) => (
+          {/*
+          type.types?.map((type) => (
             <FromType
               key={type.id}
               type={type}
               refName={thisRefId + "." + type.name}
             />
-          ))}
+          ))*/}
           <NewType />
         </Indented>
       )}

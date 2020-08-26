@@ -5,6 +5,7 @@ import { HydratedFn } from "../../../State";
 import { FunctionOutput } from "./FunctionOutput";
 import { Connector } from "./Connector";
 import { DragWire } from "./DragWire";
+import { IFn } from "../../../model/Fn";
 
 const FunctionViewWrapper = styled.div`
   position: relative;
@@ -15,10 +16,23 @@ const FunctionViewWrapper = styled.div`
 `;
 
 interface Props {
-  fn: HydratedFn;
+  fn: IFn;
 }
 
 export function FunctionView({ fn }: Props) {
+  return (
+    <FunctionViewWrapper>
+      <svg style={{ position: "absolute" }} height="100%" width="100%">
+        <DragWire />
+        {fn.connections.map((c) => (
+          <Connector key={c.id} from={c.from} to={c.to} />
+        ))}
+      </svg>
+      <FunctionInput input={fn.input} refName={"from." + fn.id} />
+      <FunctionOutput types={fn.output} refName={"to." + fn.id} />
+    </FunctionViewWrapper>
+  );
+  /*
   return (
     <FunctionViewWrapper>
       <svg style={{ position: "absolute" }} height="100%" width="100%">
@@ -31,4 +45,5 @@ export function FunctionView({ fn }: Props) {
       <FunctionOutput types={fn.output} refName="to.this" />
     </FunctionViewWrapper>
   );
+  */
 }

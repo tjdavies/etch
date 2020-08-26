@@ -1,18 +1,12 @@
-import React, { useEffect, useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import {
-  loadProject,
-  useProjectState,
-  setProjectName,
-  useActiveFunction,
-} from "../../../State";
 
 import { PageHeader } from "../../common/Header";
 import { useParams } from "react-router-dom";
 import { FunctionView } from "./FunctionView";
-import { observer, inject } from "mobx-react";
-import { Store, useStore } from "../../../model/Store";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../../model/Store";
 
 const PageWrapper = styled.div`
   position: relative;
@@ -55,12 +49,13 @@ export const ProjectPage = observer(() => {
 
   store.setActiveProject(id);
 
-  if (store.activeProject === null) {
+  if (store.activeProject === null || store.activeFunction === null) {
     return null;
   }
 
   return (
     <PageWrapper>
+      <FunctionView fn={store.activeFunction} />
       <PageHeader>
         <ProjectNameWrapper />
         <ProjectNameHeader
@@ -69,6 +64,7 @@ export const ProjectPage = observer(() => {
           }}
           value={store.activeProject.name}
         />
+        <FnNameHeader>{store.activeFunction?.name}</FnNameHeader>
       </PageHeader>
     </PageWrapper>
   );

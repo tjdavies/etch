@@ -1,28 +1,20 @@
-import { observable, action, reaction, computed } from "mobx";
+import { types, Instance, SnapshotIn } from "mobx-state-tree";
+import { Param } from "./Param";
+import { Wire } from "./Wire";
 
-export interface FnData {
-  id: string;
-  name: string;
-}
+export const Fn = types
+  .model({
+    id: types.identifier,
+    name: types.string,
+    input: types.array(Param),
+    output: types.array(Param),
+    connections: types.array(Wire),
+  })
+  .actions((self) => ({
+    setName(name: string) {
+      self.name = name;
+    },
+  }));
 
-export class Fn {
-  id: string = "";
-  @observable name: string = "";
-
-  constructor(data: FnData) {
-    this.id = data.id;
-    this.name = data.name;
-  }
-
-  @action
-  setName(name: string) {
-    this.name = name;
-  }
-
-  toJson(): FnData {
-    return {
-      id: this.id,
-      name: this.name,
-    };
-  }
-}
+export interface IFn extends Instance<typeof Fn> {}
+export interface IFnIn extends SnapshotIn<typeof Fn> {}
