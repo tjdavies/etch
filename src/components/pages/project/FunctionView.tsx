@@ -28,7 +28,7 @@ export function FunctionView({ fn }: Props) {
         ))}
       </svg>
       <FunctionInput input={fn.input} refName={"from." + fn.id} />
-      <FunctionOutput types={fn.output} refName={"to." + fn.id} />
+      <FunctionOutput output={fn.output} refName={"to." + fn.id} />
     </FunctionViewWrapper>
   );
 }

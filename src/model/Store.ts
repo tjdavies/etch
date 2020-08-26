@@ -3,12 +3,14 @@ import { types, Instance } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";
 import { Fn, IFnIn } from "./Fn";
+import { Param, IParam } from "./Param";
 
 export const Store = types
   .model({
     projects: types.array(Project),
     activeProject: types.maybe(types.reference(Project)),
     activeFunction: types.maybe(types.reference(Fn)),
+    activeDrag: types.maybeNull(types.reference(Param)),
   })
   .actions((self) => ({
     createNewProject() {
@@ -22,12 +24,6 @@ export const Store = types
         id: generateId(),
         name: "count",
         type: "string",
-      };
-
-      const connection = {
-        id: generateId(),
-        from: inputCountParamter.id,
-        to: outputCountParamter.id,
       };
 
       const mainFn: IFnIn = {
@@ -49,6 +45,9 @@ export const Store = types
           },
         ],
       });
+    },
+    setActiveDrag(param: IParam | null) {
+      self.activeDrag = param;
     },
     setActiveProject(id: string) {
       self.activeProject = self.projects.find((p) => p.id === id);

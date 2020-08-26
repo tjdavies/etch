@@ -39,7 +39,7 @@ export function FromType({ param, refName }: Props) {
     <InputLabel>
       {param.name}
       <TypeIcon type={param.type} />
-      <FromConnector refName={"from." + param.id} />
+      <FromConnector param={param} refName={"from." + param.id} />
     </InputLabel>
   );
 }
@@ -57,7 +57,7 @@ function RecordType({ type, refName }: { refName: string; type: IType }) {
   }, [expanded]);
   */
 
-  const thisRefId = [refName, type.id].join(".");
+  //  const thisRefId = [refName, type.id].join(".");
 
   return (
     <>
@@ -66,7 +66,6 @@ function RecordType({ type, refName }: { refName: string; type: IType }) {
         <TypeIconBox onClick={() => toggleExpanded()}>
           {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
         </TypeIconBox>
-        <FromConnector refName={thisRefId} />
       </InputLabel>
       {expanded && (
         <Indented>
@@ -84,3 +83,29 @@ function RecordType({ type, refName }: { refName: string; type: IType }) {
     </>
   );
 }
+
+/*    
+<>
+      <InputLabel>
+        {type.name}
+        <TypeIconBox onClick={() => toggleExpanded()}>
+          {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
+        </TypeIconBox>
+        
+        <FromConnector refName={thisRefId} />
+      </InputLabel>
+      {expanded && (
+        <Indented>
+          {
+          type.types?.map((type) => (
+            <FromType
+              key={type.id}
+              type={type}
+              refName={thisRefId + "." + type.name}
+            />
+          ))}
+          <NewType />
+        </Indented>
+      )}
+    </>
+    */

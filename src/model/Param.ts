@@ -1,5 +1,12 @@
-import { types, Instance, SnapshotIn, IAnyModelType } from "mobx-state-tree";
+import {
+  types,
+  Instance,
+  SnapshotIn,
+  IAnyModelType,
+  getRoot,
+} from "mobx-state-tree";
 import { Type } from "./Type";
+import { Store } from "./Store";
 
 export const Param = types
   .model({
@@ -10,6 +17,12 @@ export const Param = types
     ),
     type: types.reference(Type),
   })
+  .views((self) => ({
+    get canConnect(): boolean {
+      console.log(getRoot<typeof Store>(self));
+      return getRoot<typeof Store>(self).activeDrag?.type.id === self.type.id;
+    },
+  }))
   .actions((self) => ({
     setName(name: string) {
       self.name = name;

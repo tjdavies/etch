@@ -7,6 +7,7 @@ import { NewType } from "./NewType";
 import { ToConnector } from "./ToConnector";
 import { IParam } from "../../../model/Param";
 import { IType } from "../../../model/Type";
+import { observer } from "mobx-react-lite";
 
 const InputLabel = styled.div`
   position: relative;
@@ -30,19 +31,23 @@ interface Props {
   param: IParam;
 }
 
-export function ToType({ param, refName }: Props) {
+export const ToType = observer(({ param, refName }: Props) => {
   if (param.type.params) {
     return <RecordType type={param.type} refName={refName} />;
   }
 
   return (
     <InputLabel>
-      <ToConnector refName={"to." + param.id} dragRef={null} />
+      <ToConnector
+        refName={"to." + param.id}
+        dragRef={null}
+        highlight={param.canConnect}
+      />
       <TypeIcon type={param.type} />
       {param.name}
     </InputLabel>
   );
-}
+});
 
 function RecordType({ type, refName }: { refName: string; type: IType }) {
   const [expanded, setExpanded] = useState(false);
@@ -60,7 +65,7 @@ function RecordType({ type, refName }: { refName: string; type: IType }) {
   return (
     <>
       <InputLabel>
-        <ToConnector refName={thisRefId} dragRef={null} />
+        <ToConnector refName={thisRefId} dragRef={null} highlight={false} />
         <TypeIconBox onClick={() => toggleExpanded()}>
           {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
         </TypeIconBox>

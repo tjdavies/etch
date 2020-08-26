@@ -38,11 +38,13 @@ const ProjectHeader = styled.div`
 
 export const ProjectListPage = observer(() => {
   const store = useStore();
+
   return (
     <PageWrapper>
       <PageHeader>
         <ProjectHeader>projects</ProjectHeader>
       </PageHeader>
+
       <ProjectListWrapper>
         {store.projects.map((project) => (
           <Link
