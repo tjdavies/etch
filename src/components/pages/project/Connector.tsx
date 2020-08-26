@@ -28,8 +28,6 @@ export function Connector({ from, to }: Props) {
     setBPos(getLocation("to." + to.id));
   };
 
-  console.log(from);
-
   if (aPos && bPos) {
     return (
       <Wire

@@ -3,13 +3,12 @@ import { types, Instance } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";
 import { Fn, IFnIn } from "./Fn";
-import { IParam, IParamIn } from "./Param";
 
 export const Store = types
   .model({
     projects: types.array(Project),
-    activeProject: types.maybeNull(types.reference(Project)),
-    activeFunction: types.maybeNull(types.reference(Fn)),
+    activeProject: types.maybe(types.reference(Project)),
+    activeFunction: types.maybe(types.reference(Fn)),
   })
   .actions((self) => ({
     createNewProject() {
@@ -53,8 +52,8 @@ export const Store = types
       });
     },
     setActiveProject(id: string) {
-      self.activeProject = self.projects.find((p) => p.id === id) || null;
-      self.activeFunction = self.activeProject?.mainFn || null;
+      self.activeProject = self.projects.find((p) => p.id === id);
+      self.activeFunction = self.activeProject?.mainFn;
     },
   }));
 

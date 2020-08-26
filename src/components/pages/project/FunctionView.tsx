@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { FunctionInput } from "./FunctionInput";
-import { HydratedFn } from "../../../State";
 import { FunctionOutput } from "./FunctionOutput";
 import { Connector } from "./Connector";
 import { DragWire } from "./DragWire";
@@ -32,18 +31,4 @@ export function FunctionView({ fn }: Props) {
       <FunctionOutput types={fn.output} refName={"to." + fn.id} />
     </FunctionViewWrapper>
   );
-  /*
-  return (
-    <FunctionViewWrapper>
-      <svg style={{ position: "absolute" }} height="100%" width="100%">
-        <DragWire />
-        {fn.connections.map((c, i) => (
-          <Connector key={i} from={c.from} to={c.to} />
-        ))}
-      </svg>
-      <FunctionInput input={fn.input} refName="from.this" />
-      <FunctionOutput types={fn.output} refName="to.this" />
-    </FunctionViewWrapper>
-  );
-  */
 }

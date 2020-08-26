@@ -10,7 +10,6 @@ import { IType } from "../../../model/Type";
 
 const InputLabel = styled.div`
   position: relative;
-
   color: ${Colours.darkText};
   display: flex;
   align-items: flex-start;

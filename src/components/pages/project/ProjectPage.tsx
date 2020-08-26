@@ -49,25 +49,25 @@ export const ProjectPage = observer(() => {
 
   store.setActiveProject(id);
 
-  if (store.activeProject === null || store.activeFunction === null) {
-    return null;
+  if (store.activeProject && store.activeFunction) {
+    return (
+      <PageWrapper>
+        <FunctionView fn={store.activeFunction} />
+        <PageHeader>
+          <ProjectNameWrapper />
+          <ProjectNameHeader
+            onChange={(e) => {
+              store.activeProject?.setName(e.target.value);
+            }}
+            value={store.activeProject.name}
+          />
+          <FnNameHeader>{store.activeFunction?.name}</FnNameHeader>
+        </PageHeader>
+      </PageWrapper>
+    );
   }
 
-  return (
-    <PageWrapper>
-      <FunctionView fn={store.activeFunction} />
-      <PageHeader>
-        <ProjectNameWrapper />
-        <ProjectNameHeader
-          onChange={(e) => {
-            store.activeProject?.setName(e.target.value);
-          }}
-          value={store.activeProject.name}
-        />
-        <FnNameHeader>{store.activeFunction?.name}</FnNameHeader>
-      </PageHeader>
-    </PageWrapper>
-  );
+  return null;
 
   /*
   // const [project] = useProjectState();

@@ -1,13 +1,11 @@
-import { ProjectRef } from "../State";
-
 export const PROJECT_LIST = "PROJECT_LIST";
 const PROJECT_PREFIX = "ETCH_";
 
-export function saveProjectList(projectList: ProjectRef[]) {
+export function saveProjectList(projectList: any[]) {
   localStorage.setItem(PROJECT_LIST, JSON.stringify(projectList));
 }
 
-export function loadProjectList(): ProjectRef[] | undefined {
+export function loadProjectList(): any[] | undefined {
   const projectList = localStorage.getItem(PROJECT_LIST);
   if (projectList) {
     return JSON.parse(projectList);

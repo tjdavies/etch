@@ -34,6 +34,7 @@ export function ToType({ param, refName }: Props) {
   if (param.type.params) {
     return <RecordType type={param.type} refName={refName} />;
   }
+
   return (
     <InputLabel>
       <ToConnector refName={"to." + param.id} dragRef={null} />

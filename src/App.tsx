@@ -17,9 +17,11 @@ const AppWrapper = styled.div`
 
 const initialState = loadProjectList();
 
-const store = Store.create(initialState);
+const store = Store.create({
+  projects: initialState,
+});
 
-onSnapshot(store, saveProjectList);
+onSnapshot(store, (snapShot) => saveProjectList(snapShot.projects));
 
 function App() {
   return (
