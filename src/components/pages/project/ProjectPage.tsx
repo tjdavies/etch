@@ -12,7 +12,7 @@ import { PageHeader } from "../../common/Header";
 import { useParams } from "react-router-dom";
 import { FunctionView } from "./FunctionView";
 import { observer, inject } from "mobx-react";
-import { Store } from "../../../model/Store";
+import { Store, useStore } from "../../../model/Store";
 
 const PageWrapper = styled.div`
   position: relative;
@@ -49,12 +49,31 @@ const FnNameHeader = styled.div`
 `;
 
 export const ProjectPage = observer(() => {
-  const store = useContext(Store);
-  let { id } = useParams();
-  useEffect(() => {
-    store.loadProject(id);
-  }, []);
+  const { id } = useParams();
 
+  const store = useStore();
+
+  store.setActiveProject(id);
+
+  if (store.activeProject === null) {
+    return null;
+  }
+
+  return (
+    <PageWrapper>
+      <PageHeader>
+        <ProjectNameWrapper />
+        <ProjectNameHeader
+          onChange={(e) => {
+            store.activeProject?.setName(e.target.value);
+          }}
+          value={store.activeProject.name}
+        />
+      </PageHeader>
+    </PageWrapper>
+  );
+
+  /*
   // const [project] = useProjectState();
 
   if (store.project == null || store.activeFunction == null) {
@@ -77,6 +96,7 @@ export const ProjectPage = observer(() => {
       </PageHeader>
     </PageWrapper>
   );
+  */
 });
 
 /*<PageWrapper>

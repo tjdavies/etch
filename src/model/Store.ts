@@ -1,32 +1,33 @@
-import { observable, action, configure } from "mobx";
-import { loadProject, ProjectJson } from "../utils/Save";
-import { Project } from "./Project";
-import { createContext } from "react";
-import { Fn } from "./Fn";
+import { Project, IProject } from "./Project";
+import { types, Instance } from "mobx-state-tree";
+import { generateId } from "../utils/generateId";
+import { createContext, useContext } from "react";
 
-configure({ enforceActions: "observed" });
+export const Store = types
+  .model({
+    projects: types.array(Project),
+    activeProject: types.maybeNull(types.reference(Project)),
+  })
+  .actions((self) => ({
+    createNewProject() {
+      self.projects.push({
+        id: generateId(),
+        name: "Project" + (self.projects.length + 1),
+      });
+    },
+    setActiveProject(id: string) {
+      self.activeProject = self.projects.find((p) => p.id === id) || null;
+    },
+  }));
 
-class StoreClass {
-  @observable project: Project | null = null;
-  @observable activeFunction: Fn | null = null;
+export interface IStore extends Instance<typeof Store> {}
+const StoreContext = createContext<null | IStore>(null);
 
-  @action
-  loadProject(id: string) {
-    this.project = null;
-    loadProject(id).then(this.projectLoaded, this.projectLoadError);
-    
+export const StoreProvider = StoreContext.Provider;
+export function useStore() {
+  const store = useContext(StoreContext);
+  if (store === null) {
+    throw new Error("Store cannot be null, please add a context provider");
   }
-
-  @action.bound
-  projectLoaded(project: ProjectJson) {
-    this.project = new Project(project);
-    this.activeFunction = 
-  }
-
-  @action.bound
-  projectLoadError(error: ProjectJson) {
-    this.project = null;
-  }
+  return store;
 }
-
-export const Store = createContext(new StoreClass());

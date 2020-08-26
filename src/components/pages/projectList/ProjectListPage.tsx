@@ -9,6 +9,9 @@ import { Routes } from "../../../Routes";
 import { PageHeader } from "../../common/Header";
 import { useLocalStorage } from "../../../utils/hooks/useLocalStorage";
 import { PROJECT_LIST } from "../../../utils/Save";
+import { IProject } from "../../../model/Project";
+import { IStore, useStore } from "../../../model/Store";
+import { observer } from "mobx-react-lite";
 
 const PageWrapper = styled.div``;
 
@@ -33,18 +36,15 @@ const ProjectHeader = styled.div`
   border-left: 2px solid ${Colours.lightText};
 `;
 
-const emptyProjectList: Project[] = [];
-
-export function ProjectListPage() {
-  const [projectList] = useLocalStorage(PROJECT_LIST, emptyProjectList);
-
+export const ProjectListPage = observer(() => {
+  const store = useStore();
   return (
     <PageWrapper>
       <PageHeader>
         <ProjectHeader>projects</ProjectHeader>
       </PageHeader>
       <ProjectListWrapper>
-        {projectList?.map((project) => (
+        {store.projects.map((project) => (
           <Link
             key={project.id}
             to={generatePath(Routes.project, { id: project.id })}
@@ -52,10 +52,10 @@ export function ProjectListPage() {
             <ProjectButton>{project.name}</ProjectButton>
           </Link>
         ))}
-        <ProjectButtonNew key={"new"} onClick={createNewProject}>
+        <ProjectButtonNew key={"new"} onClick={store.createNewProject}>
           <StyledPlusIcon />
         </ProjectButtonNew>
       </ProjectListWrapper>
     </PageWrapper>
   );
-}
+});
