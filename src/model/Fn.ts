@@ -8,8 +8,18 @@ export const Fn = types
     name: types.string,
     input: types.array(Param),
     output: types.array(Param),
-    connections: types.array(Wire),
   })
+  .views((self) => ({
+    get connections() {
+      return self.input.flatMap((inputs) =>
+        inputs.connections.map((connection) => ({
+          id: inputs.id + connection.id,
+          from: inputs,
+          to: connection,
+        }))
+      );
+    },
+  }))
   .actions((self) => ({
     setName(name: string) {
       self.name = name;

@@ -68,42 +68,4 @@ export const ProjectPage = observer(() => {
   }
 
   return null;
-
-  /*
-  // const [project] = useProjectState();
-
-  if (store.project == null || store.activeFunction == null) {
-    return null;
-  }
-
-  // const fn = useActiveFunction();
-
-  return (
-    <PageWrapper>
-      <PageHeader>
-        <ProjectNameWrapper />
-        <ProjectNameHeader
-          onChange={(e) => {
-            store?.project?.setName(e.target.value);
-          }}
-          value={store.project.name}
-        />
-        <FnNameHeader>{store.activeFunction.name}</FnNameHeader>
-      </PageHeader>
-    </PageWrapper>
-  );
-  */
 });
-
-/*<PageWrapper>
-        <FunctionView fn={fn} />
-        <PageHeader>
-          <ProjectNameWrapper></ProjectNameWrapper>
-          <ProjectNameHeader
-            onChange={(e) => setProjectName(e.target.value)}
-            value={project.name}
-          />
-          <FnNameHeader>{fn.name}</FnNameHeader>
-        </PageHeader>
-      </PageWrapper>
-      */

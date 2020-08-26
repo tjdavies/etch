@@ -35,7 +35,6 @@ export const Store = types
         name: "main",
         input: [inputCountParamter],
         output: [outputCountParamter],
-        connections: [connection],
       };
 
       self.projects.push({
