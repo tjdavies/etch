@@ -11,7 +11,6 @@ export const Store = types
     activeProject: types.maybe(types.reference(Project)),
     activeFunction: types.maybe(types.reference(Fn)),
     activeDrag: types.maybe(types.reference(Param)),
-    activeFromSocket: types.maybe(types.reference(Param)),
     activeSocket: types.maybe(types.reference(Param)),
   })
   .actions((self) => ({
@@ -63,9 +62,6 @@ export const Store = types
     setActiveProject(id: string) {
       self.activeProject = self.projects.find((p) => p.id === id);
       self.activeFunction = self.activeProject?.mainFn;
-    },
-    setActiveFromSocket(param: IParam | undefined) {
-      self.activeFromSocket = param;
     },
   }));
 
