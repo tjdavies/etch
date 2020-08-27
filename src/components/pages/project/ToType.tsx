@@ -26,11 +26,10 @@ const Indented = styled.div`
 */
 
 interface Props {
-  refName: string;
   param: IParam;
 }
 
-export const ToType = observer(({ param, refName }: Props) => {
+export const ToType = observer(({ param }: Props) => {
   /*
   if (param.type.params) {
     return <RecordType type={param.type} refName={refName} />;

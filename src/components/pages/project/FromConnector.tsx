@@ -18,14 +18,13 @@ const ConnectorWrapper = styled.div`
 `;
 
 interface Props {
-  refName: string;
   param: IParam;
 }
 
-export function FromConnector({ refName, param }: Props) {
+export function FromConnector({ param }: Props) {
   return (
     <ConnectorWrapper>
-      <Connector id={refName} />
+      <Connector id={param.id} />
     </ConnectorWrapper>
   );
 }

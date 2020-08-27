@@ -17,15 +17,14 @@ const OutputBox = styled.div`
 `;
 
 interface Props {
-  refName: string;
   output: IParam[];
 }
 
-export function FunctionOutput({ output, refName }: Props) {
+export function FunctionOutput({ output }: Props) {
   return (
     <OutputBox>
       {output.map((param) => (
-        <ToType key={param.id} param={param} refName={refName} />
+        <ToType key={param.id} param={param} />
       ))}
     </OutputBox>
   );

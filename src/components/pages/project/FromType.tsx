@@ -26,11 +26,10 @@ const Indented = styled.div`
 */
 
 interface Props {
-  refName: string;
   param: IParam;
 }
 
-export function FromType({ param, refName }: Props) {
+export function FromType({ param }: Props) {
   /*
   if (param.type.params) {
     return <RecordType type={param.type} refName={"from." + param.id} />;
@@ -40,7 +39,7 @@ export function FromType({ param, refName }: Props) {
     <InputLabel>
       {param.name}
       <TypeIcon type={param.type} />
-      <FromConnector param={param} refName={param.id} />
+      <FromConnector param={param} />
     </InputLabel>
   );
 }

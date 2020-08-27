@@ -20,8 +20,8 @@ interface Props {
 export function FunctionView({ fn }: Props) {
   return (
     <FunctionViewWrapper>
-      <FunctionInput input={fn.input} refName={"from." + fn.id} />
-      <FunctionOutput output={fn.output} refName={"to." + fn.id} />
+      <FunctionInput input={fn.input} />
+      <FunctionOutput output={fn.output} />
       <Wires />
     </FunctionViewWrapper>
   );
