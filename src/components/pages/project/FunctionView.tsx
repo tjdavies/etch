@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FunctionInput } from "./FunctionInput";
 import { FunctionOutput } from "./FunctionOutput";
 import { IFn } from "../../../model/Fn";
-import { Wires } from "./Wires";
+import { Wires } from "./wires/Wires";
 
 const FunctionViewWrapper = styled.div`
   position: relative;

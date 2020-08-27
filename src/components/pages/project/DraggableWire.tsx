@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import Draggable from "react-draggable";
-import { Wire } from "./Wire";
-import { Point } from "../../../State";
+import { Wire } from "./wires/Wire";
+import { Point } from "../../../types/types";
 
 interface Props {
   from: Point;

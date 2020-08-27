@@ -1,9 +1,9 @@
 import React from "react";
 
 import { observer } from "mobx-react-lite";
-import { Connector } from "./Connector";
-import { Colours } from "../../../Style";
-import { useStore } from "../../../model/Store";
+import { Connector } from "../Connector";
+import { Colours } from "../../../../Style";
+import { useStore } from "../../../../model/Store";
 
 export const Wires = observer(() => {
   const { activeFunction } = useStore();

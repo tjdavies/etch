@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { HydratedType } from "../../../State";
+import { IType } from "../../../model/Type";
 
 export const TypeIconBox = styled.div`
   display: flex;
@@ -14,10 +14,6 @@ export const TypeIconBox = styled.div`
   color: ${Colours.darkText};
 `;
 
-interface Props {
-  type: HydratedType;
-}
-
-export function TypeIcon({ type }: Props) {
+export function TypeIcon({ type }: { type: IType }) {
   return <TypeIconBox>S</TypeIconBox>;
 }

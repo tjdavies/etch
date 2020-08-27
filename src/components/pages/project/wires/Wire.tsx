@@ -1,5 +1,5 @@
 import React from "react";
-import { Point } from "../../../State";
+import { Point } from "../../../../types/types";
 
 interface Props {
   from: Point;

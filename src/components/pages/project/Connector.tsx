@@ -3,7 +3,7 @@ import { useWindowSize } from "../../../utils/hooks/useWindowSize";
 import { IParam } from "../../../model/Param";
 import { DraggableWire } from "./DraggableWire";
 import { useStore } from "../../../model/Store";
-import { Point } from "../../../State";
+import { Point } from "../../../types/types";
 
 interface Props {
   from: IParam;
