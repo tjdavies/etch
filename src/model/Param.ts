@@ -12,14 +12,13 @@ export const Param = types
   .model({
     id: types.identifier,
     name: types.string,
-    connections: types.array(
+    connection: types.maybe(
       types.reference(types.late((): IAnyModelType => Param))
     ),
     type: types.reference(Type),
   })
   .views((self) => ({
     get canConnect(): boolean {
-      console.log(getRoot<typeof Store>(self));
       return getRoot<typeof Store>(self).activeDrag?.type.id === self.type.id;
     },
   }))

@@ -11,13 +11,21 @@ export const Fn = types
   })
   .views((self) => ({
     get connections() {
-      return self.input.flatMap((inputs) =>
-        inputs.connections.map((connection) => ({
-          id: inputs.id + connection.id,
-          from: inputs,
-          to: connection,
-        }))
-      );
+      return self.input.map((param) => {
+        if (param.connection) {
+          return {
+            id: param.id,
+            from: param,
+            to: param.connection,
+          };
+        } else {
+          return {
+            id: param.id,
+            from: param,
+            to: param,
+          };
+        }
+      });
     },
   }))
   .actions((self) => ({

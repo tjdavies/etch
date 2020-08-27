@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { DraggableConnector } from "./DraggableConnector";
 import { IParam } from "../../../model/Param";
 
 const Connector = styled.div`
@@ -27,7 +26,6 @@ export function FromConnector({ refName, param }: Props) {
   return (
     <ConnectorWrapper>
       <Connector id={refName} />
-      <DraggableConnector connectionId={refName} param={param} />
     </ConnectorWrapper>
   );
 }

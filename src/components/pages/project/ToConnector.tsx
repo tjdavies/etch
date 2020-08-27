@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { DraggableConnector } from "./DraggableConnector";
+import { IParam } from "../../../model/Param";
+import { useStore } from "../../../model/Store";
+import { observer } from "mobx-react-lite";
 
 const Connector = styled.div`
   border: 1px solid;
@@ -21,15 +23,18 @@ const ConnectorWrapper = styled.div`
 `;
 
 interface Props {
-  refName: string;
-  dragRef: string | null;
-  highlight: boolean;
+  param: IParam;
 }
 
-export function ToConnector({ refName, dragRef, highlight }: Props) {
+export const ToConnector = observer(({ param }: Props) => {
+  const store = useStore();
+
   return (
-    <ConnectorWrapper>
-      <Connector id={refName} highlight={highlight} />
+    <ConnectorWrapper
+      onMouseOver={() => store.setActiveSocket(param)}
+      onMouseOut={() => store.setActiveSocket(undefined)}
+    >
+      <Connector id={param.id} highlight={param.canConnect} />
     </ConnectorWrapper>
   );
-}
+});

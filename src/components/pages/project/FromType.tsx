@@ -32,14 +32,16 @@ interface Props {
 }
 
 export function FromType({ param, refName }: Props) {
+  /*
   if (param.type.params) {
     return <RecordType type={param.type} refName={"from." + param.id} />;
   }
+  */
   return (
     <InputLabel>
       {param.name}
       <TypeIcon type={param.type} />
-      <FromConnector param={param} refName={"from." + param.id} />
+      <FromConnector param={param} refName={param.id} />
     </InputLabel>
   );
 }

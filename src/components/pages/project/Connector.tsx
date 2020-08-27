@@ -1,8 +1,10 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useWindowSize } from "../../../utils/hooks/useWindowSize";
-import { Wire } from "./Wire";
 import { IParam } from "../../../model/Param";
+import { DraggableWire } from "./DraggableWire";
+import { useStore } from "../../../model/Store";
+import { Point } from "../../../State";
 
 interface Props {
   from: IParam;
@@ -10,29 +12,28 @@ interface Props {
 }
 
 export function Connector({ from, to }: Props) {
-  const [aPos, setAPos] = useState();
-  const [bPos, setBPos] = useState();
+  const [aPos, setAPos] = useState<Point | null>();
+  const [bPos, setBPos] = useState<Point | null>();
 
   const size = useWindowSize();
+  const store = useStore();
 
   useEffect(() => {
     updateLines();
-  }, [size]);
-
-  useLayoutEffect(() => {
-    (window as any).dirty = updateLines;
-  }, []);
+  }, [size, to]);
 
   const updateLines = () => {
-    setAPos(getLocation("from." + from.id));
-    setBPos(getLocation("to." + to.id));
+    setAPos(getLocation(from.id));
+    setBPos(getLocation(to.id));
   };
 
   if (aPos && bPos) {
     return (
-      <Wire
-        from={{ x: aPos.x + 10, y: aPos.y + 5 }}
-        to={{ x: bPos.x, y: bPos.y + 5 }}
+      <DraggableWire
+        from={{ x: aPos.x, y: aPos.y }}
+        to={{ x: bPos.x, y: bPos.y }}
+        onStartDrag={() => store.startDrag(from)}
+        onStopDrag={() => store.stopDrag()}
       />
     );
   }

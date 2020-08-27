@@ -7,10 +7,8 @@ import { createNewProject, Project } from "../../../State";
 import { Link, generatePath } from "react-router-dom";
 import { Routes } from "../../../Routes";
 import { PageHeader } from "../../common/Header";
-import { useLocalStorage } from "../../../utils/hooks/useLocalStorage";
-import { PROJECT_LIST } from "../../../utils/Save";
-import { IProject } from "../../../model/Project";
-import { IStore, useStore } from "../../../model/Store";
+
+import { useStore } from "../../../model/Store";
 import { observer } from "mobx-react-lite";
 
 const PageWrapper = styled.div``;

@@ -10,7 +10,9 @@ export const Store = types
     projects: types.array(Project),
     activeProject: types.maybe(types.reference(Project)),
     activeFunction: types.maybe(types.reference(Fn)),
-    activeDrag: types.maybeNull(types.reference(Param)),
+    activeDrag: types.maybe(types.reference(Param)),
+    activeFromSocket: types.maybe(types.reference(Param)),
+    activeSocket: types.maybe(types.reference(Param)),
   })
   .actions((self) => ({
     createNewProject() {
@@ -46,12 +48,24 @@ export const Store = types
         ],
       });
     },
-    setActiveDrag(param: IParam | null) {
-      self.activeDrag = param;
+    startDrag(drag: IParam) {
+      self.activeDrag = drag;
+    },
+    stopDrag() {
+      if (self.activeDrag) {
+        self.activeDrag.connection = self.activeSocket;
+      }
+      self.activeDrag = undefined;
+    },
+    setActiveSocket(param: IParam | undefined) {
+      self.activeSocket = param;
     },
     setActiveProject(id: string) {
       self.activeProject = self.projects.find((p) => p.id === id);
       self.activeFunction = self.activeProject?.mainFn;
+    },
+    setActiveFromSocket(param: IParam | undefined) {
+      self.activeFromSocket = param;
     },
   }));
 

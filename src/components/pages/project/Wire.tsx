@@ -18,7 +18,6 @@ export function Wire({ from, to }: Props) {
     <path
       d={`M ${x1} ${y1} h ${hoz / 2} v ${y2 - y1} h ${hoz / 2}`}
       fill="none"
-      stroke={Colours.secondary}
     />
   );
 }
