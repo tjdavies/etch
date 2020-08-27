@@ -1,5 +1,8 @@
-import { types, Instance, SnapshotIn } from "mobx-state-tree";
+import { types, Instance, SnapshotIn, IAnyModelType } from "mobx-state-tree";
 import { Param } from "./Param";
+import { Token, IToken } from "./Token";
+import { IPoint } from "./Point";
+import { generateId } from "../utils/generateId";
 
 export const Fn = types
   .model({
@@ -7,6 +10,7 @@ export const Fn = types
     name: types.string,
     input: types.array(Param),
     output: types.array(Param),
+    tokens: types.array(Token),
   })
   .views((self) => ({
     get connections() {
@@ -30,6 +34,14 @@ export const Fn = types
   .actions((self) => ({
     setName(name: string) {
       self.name = name;
+    },
+    addToken(position: IPoint, fn: IFn) {
+      const newToken: IToken = {
+        id: generateId(),
+        position,
+        fn,
+      };
+      self.tokens.push(newToken);
     },
   }));
 

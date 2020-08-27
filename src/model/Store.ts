@@ -4,6 +4,7 @@ import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";
 import { Fn, IFnIn } from "./Fn";
 import { Param, IParam } from "./Param";
+import { IPoint } from "./Point";
 
 export const Store = types
   .model({
@@ -37,7 +38,7 @@ export const Store = types
       self.projects.push({
         id: generateId(),
         name: "Project" + (self.projects.length + 1),
-        functions: [mainFn],
+        functions: { [mainFn.id]: mainFn },
         mainFn: mainFn.id,
         types: [
           {
@@ -62,6 +63,22 @@ export const Store = types
     setActiveProject(id: string) {
       self.activeProject = self.projects.find((p) => p.id === id);
       self.activeFunction = self.activeProject?.mainFn;
+    },
+    createNewFunction(position: IPoint, name: string) {
+      const newFn: IFnIn = {
+        id: generateId(),
+        name,
+        input: [],
+        output: [],
+      };
+
+      if (self.activeProject) {
+        self.activeProject.functions.put(newFn);
+        const f = self.activeProject.functions.get(newFn.id);
+        if (f) {
+          self.activeFunction?.addToken(position, f);
+        }
+      }
     },
   }));
 
