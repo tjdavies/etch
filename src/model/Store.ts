@@ -1,4 +1,4 @@
-import { Project, IProject } from "./Project";
+import { Project } from "./Project";
 import { types, Instance } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";

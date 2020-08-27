@@ -2,7 +2,6 @@ import React from "react";
 
 import { observer } from "mobx-react-lite";
 import { Connector } from "./Connector";
-import { IWire } from "../../../model/Wire";
 import { Colours } from "../../../Style";
 import { useStore } from "../../../model/Store";
 

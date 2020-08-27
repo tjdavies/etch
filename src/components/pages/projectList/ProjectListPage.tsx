@@ -1,13 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ProjectButton, ProjectButtonNew } from "./ProjectButton";
 import styled from "styled-components";
 import { Colours, Padding } from "../../../Style";
 import { ReactComponent as PlusIcon } from "../../../assets/plus.svg";
-import { createNewProject, Project } from "../../../State";
 import { Link, generatePath } from "react-router-dom";
 import { Routes } from "../../../Routes";
 import { PageHeader } from "../../common/Header";
-
 import { useStore } from "../../../model/Store";
 import { observer } from "mobx-react-lite";
 

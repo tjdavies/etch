@@ -1,6 +1,5 @@
 import { types, Instance, SnapshotIn } from "mobx-state-tree";
 import { Param } from "./Param";
-import { Wire } from "./Wire";
 
 export const Fn = types
   .model({

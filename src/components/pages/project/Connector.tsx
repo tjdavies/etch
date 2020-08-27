@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import { useWindowSize } from "../../../utils/hooks/useWindowSize";
 import { IParam } from "../../../model/Param";
 import { DraggableWire } from "./DraggableWire";
@@ -19,13 +18,9 @@ export function Connector({ from, to }: Props) {
   const store = useStore();
 
   useEffect(() => {
-    updateLines();
-  }, [size, to]);
-
-  const updateLines = () => {
     setAPos(getLocation(from.id));
     setBPos(getLocation(to.id));
-  };
+  }, [size, from, to]);
 
   if (aPos && bPos) {
     return (

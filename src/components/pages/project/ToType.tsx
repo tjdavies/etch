@@ -1,14 +1,10 @@
-import React, { useState, useLayoutEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { TypeIcon, TypeIconBox } from "./TypeIcon";
-import { FormNext, FormDown } from "grommet-icons";
-import { NewType } from "./NewType";
+import { TypeIcon } from "./TypeIcon";
 import { ToConnector } from "./ToConnector";
 import { IParam } from "../../../model/Param";
-import { IType } from "../../../model/Type";
 import { observer } from "mobx-react-lite";
-import { useStore } from "../../../model/Store";
 
 const InputLabel = styled.div`
   position: relative;
@@ -17,6 +13,7 @@ const InputLabel = styled.div`
   gap: 5px;
 `;
 
+/*
 const Indented = styled.div`
   display: flex;
   flex: 1;
@@ -26,6 +23,7 @@ const Indented = styled.div`
   margin-left: 5px;
   width: 100%;
 `;
+*/
 
 interface Props {
   refName: string;
@@ -47,6 +45,7 @@ export const ToType = observer(({ param, refName }: Props) => {
   );
 });
 
+/*
 function RecordType({ type, refName }: { refName: string; type: IType }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -78,10 +77,11 @@ function RecordType({ type, refName }: { refName: string; type: IType }) {
               refName={thisRefId + "." + type.name}
             />
           ))
-          */}
+         }
           <NewType />
         </Indented>
       )}
     </>
   );
 }
+ */

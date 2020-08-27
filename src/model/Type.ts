@@ -1,10 +1,5 @@
-import {
-  types,
-  Instance,
-  IAnyComplexType,
-  IAnyModelType,
-} from "mobx-state-tree";
-import { Param, IParam } from "./Param";
+import { types, Instance, IAnyModelType } from "mobx-state-tree";
+import { Param } from "./Param";
 
 export const Type = types
   .model({

@@ -1,5 +1,4 @@
 import React from "react";
-import { Colours } from "../../../Style";
 import { Point } from "../../../State";
 
 interface Props {

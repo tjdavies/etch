@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import Draggable from "react-draggable";
 import { Wire } from "./Wire";
@@ -28,7 +28,6 @@ export const DraggableWire = ({ from, to, onStartDrag, onStopDrag }: Props) => {
       <Draggable
         position={dragPos}
         onStart={(e, data) => {
-          // const pos = { x: data.x, y: data.y };
           setDragging(true);
           onStartDrag();
         }}
