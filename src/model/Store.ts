@@ -2,7 +2,7 @@ import { Project } from "./Project";
 import { types, Instance } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";
-import { Fn, IFnIn } from "./Fn";
+import { Fn, IFnIn, IFn } from "./Fn";
 import { Param, IParam } from "./Param";
 import { IPoint } from "./Point";
 
@@ -19,13 +19,13 @@ export const Store = types
       const inputCountParamter = {
         id: generateId(),
         name: "count",
-        type: "string",
+        type: "number",
       };
 
       const outputCountParamter = {
         id: generateId(),
         name: "count",
-        type: "string",
+        type: "number",
       };
 
       const mainFn: IFnIn = {
@@ -105,7 +105,21 @@ export const Store = types
         }
       }
     },
+    runApp() {
+      if (self.activeProject) {
+      }
+    },
   }));
+
+function calculateFunction(fn: IFn, inputValue: object): object {
+  const values = {
+    this: inputValue,
+  };
+
+  //fn.input.map( t => t.connectionProp.id )
+
+  return inputValue;
+}
 
 export interface IStore extends Instance<typeof Store> {}
 const StoreContext = createContext<null | IStore>(null);

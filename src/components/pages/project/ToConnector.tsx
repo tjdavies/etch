@@ -4,6 +4,7 @@ import { Colours } from "../../../Style";
 import { IParam } from "../../../model/Param";
 import { useStore } from "../../../model/Store";
 import { observer } from "mobx-react-lite";
+import { IPlug } from "../../../model/Token";
 
 const Connector = styled.div`
   border: 1px solid;
@@ -23,7 +24,7 @@ const ConnectorWrapper = styled.div`
 `;
 
 interface Props {
-  param: IParam;
+  param: IPlug;
 }
 
 export const ToConnector = observer(({ param }: Props) => {
@@ -31,10 +32,10 @@ export const ToConnector = observer(({ param }: Props) => {
 
   return (
     <ConnectorWrapper
-      onMouseOver={() => store.setActiveSocket(param)}
+      //   onMouseOver={() => store.setActiveSocket(param.i)}
       onMouseOut={() => store.setActiveSocket(undefined)}
     >
-      <Connector id={param.id} highlight={param.canConnect} />
+      <Connector id={param.id} highlight={param.param.canConnect} />
     </ConnectorWrapper>
   );
 });

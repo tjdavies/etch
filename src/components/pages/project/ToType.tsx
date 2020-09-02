@@ -5,6 +5,7 @@ import { TypeIcon } from "./TypeIcon";
 import { ToConnector } from "./ToConnector";
 import { IParam } from "../../../model/Param";
 import { observer } from "mobx-react-lite";
+import { IPlug } from "../../../model/Token";
 
 const InputLabel = styled.div`
   position: relative;
@@ -26,7 +27,7 @@ const Indented = styled.div`
 */
 
 interface Props {
-  param: IParam;
+  param: IPlug;
 }
 
 export const ToType = observer(({ param }: Props) => {
@@ -38,8 +39,8 @@ export const ToType = observer(({ param }: Props) => {
   return (
     <InputLabel>
       <ToConnector param={param} />
-      <TypeIcon type={param.type} />
-      {param.name}
+      <TypeIcon type={param.param.type} />
+      {param.param.name}
     </InputLabel>
   );
 });

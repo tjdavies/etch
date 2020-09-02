@@ -17,14 +17,15 @@ const InputBox = styled.div`
 `;
 
 interface Props {
+  parentId: string;
   input: IParam[];
 }
 
-export const FunctionInput = ({ input }: Props) => {
+export const FunctionInput = ({ input, parentId }: Props) => {
   return (
     <InputBox>
       {input.map((param) => (
-        <FromType key={param.id} param={param} />
+        <FromType key={param.id} param={param} parentId={parentId} />
       ))}
     </InputBox>
   );

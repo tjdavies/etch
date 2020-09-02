@@ -2,6 +2,7 @@ import { types, Instance, SnapshotIn, IAnyModelType } from "mobx-state-tree";
 import { Point } from "./Point";
 import { Fn, IFn } from "./Fn";
 import { generateId } from "../utils/generateId";
+import { IParam } from "./Param";
 
 export const Token = types
   .model({
@@ -9,9 +10,25 @@ export const Token = types
     position: Point,
     fn: types.reference(types.late((): IAnyModelType => Fn)),
   })
+  .views((self) => ({
+    get inputs(): IPlug[] {
+      return self.fn.input.map((param: IParam) => {
+        return {
+          id: self.id + "_" + param.id,
+          canConnect: param.canConnect,
+          param,
+        };
+      });
+    },
+  }))
   .actions((self) => ({}));
 
 export interface IToken extends Instance<typeof Token> {
   fn: IFn;
 }
 export interface ITokenIn extends SnapshotIn<typeof Token> {}
+
+export interface IPlug {
+  id: string;
+  param: IParam;
+}

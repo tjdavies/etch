@@ -39,8 +39,8 @@ export function FunctionView({ fn }: Props) {
         <Token key={t.id} token={t} />
       ))}
 
-      <FunctionInput input={fn.input} />
-      <FunctionOutput output={fn.output} />
+      <FunctionInput input={fn.input} parentId={fn.id} />
+      <FunctionOutput output={fn.sockets} />
       <Wires />
       {showTokenDropdown && (
         <TokenDropDown

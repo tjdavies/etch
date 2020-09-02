@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { ToType } from "./ToType";
-import { IParam } from "../../../model/Param";
+import { IPlug } from "../../../model/Token";
 
 const OutputBox = styled.div`
   gap: 5px;
@@ -17,7 +17,7 @@ const OutputBox = styled.div`
 `;
 
 interface Props {
-  output: IParam[];
+  output: IPlug[];
 }
 
 export function FunctionOutput({ output }: Props) {

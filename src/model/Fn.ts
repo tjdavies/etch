@@ -1,6 +1,6 @@
-import { types, Instance, SnapshotIn, IAnyModelType } from "mobx-state-tree";
+import { types, Instance, SnapshotIn } from "mobx-state-tree";
 import { Param } from "./Param";
-import { Token, IToken } from "./Token";
+import { Token, IToken, ITokenIn, IPlug } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
 
@@ -17,29 +17,38 @@ export const Fn = types
       return self.input.map((param) => {
         if (param.connection) {
           return {
-            id: param.id,
+            id: self.id + param.id,
             from: param,
             to: param.connection,
           };
         } else {
           return {
-            id: param.id,
+            id: self.id + param.id,
             from: param,
             to: param,
           };
         }
       });
     },
+    get sockets(): IPlug[] {
+      return self.output.map((param) => {
+        return {
+          id: self.id + "_" + param.id,
+          param,
+        };
+      });
+    },
   }))
+
   .actions((self) => ({
     setName(name: string) {
       self.name = name;
     },
     addToken(position: IPoint, fn: IFn) {
-      const newToken: IToken = {
+      const newToken: ITokenIn = {
         id: generateId(),
         position,
-        fn,
+        fn: fn.id,
       };
       self.tokens.push(newToken);
     },

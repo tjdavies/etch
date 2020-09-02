@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { ToType } from "../ToType";
 import { IParam } from "../../../../model/Param";
+import { IPlug } from "../../../../model/Token";
 
 const InputWrapper = styled.div`
   display: flex;
@@ -11,7 +12,7 @@ const InputWrapper = styled.div`
 `;
 
 interface Props {
-  input: IParam[];
+  input: IPlug[];
 }
 
 export function TokenInput({ input }: Props) {

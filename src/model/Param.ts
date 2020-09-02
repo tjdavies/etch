@@ -9,6 +9,10 @@ import { Type } from "./Type";
 import { Store } from "./Store";
 import { generateId } from "../utils/generateId";
 
+function struct<T>(obj: T) {
+  return obj as { [P in keyof T]: T[P] extends () => infer R ? R : T[P] };
+}
+
 export const Param = types
   .model({
     id: types.optional(types.identifier, generateId),
@@ -21,6 +25,9 @@ export const Param = types
   .views((self) => ({
     get canConnect(): boolean {
       return getRoot<typeof Store>(self).activeDrag?.type.id === self.type.id;
+    },
+    get connectionProp(): IParam {
+      return self.connection as IParam;
     },
   }))
   .actions((self) => ({

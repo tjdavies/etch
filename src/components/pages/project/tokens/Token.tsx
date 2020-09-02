@@ -6,6 +6,7 @@ import { Colours } from "../../../../Style";
 import Draggable from "react-draggable";
 import { FunctionInput } from "../FunctionInput";
 import { TokenInput } from "./TokenInput";
+import { TokenOutput } from "./TokenOutput";
 
 interface TokenWrapperProps {
   position: Point;
@@ -17,7 +18,6 @@ const TokenWrapper = styled.div`
   top: ${(props: TokenWrapperProps) => props.position.y + "px"};
   display: flex;
   flex-direction: column;
-  width: 200px;
   border: 1px solid ${Colours.lightGrey};
   border-radius: 6px;
   background-color: ${Colours.white};
@@ -41,17 +41,18 @@ const TokenBody = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;
-  align-items: center;
   margin: 10px;
+  gap: 30px;
 `;
 
 export function Token({ token }: Props) {
   return (
-    <Draggable onDrag={() => (window as any).redraw()}>
+    <Draggable handle={".header"} onDrag={() => (window as any).redraw()}>
       <TokenWrapper position={token.position}>
-        <TokenHeader>{token.fn.name}</TokenHeader>
+        <TokenHeader className="header">{token.fn.name}</TokenHeader>
         <TokenBody>
-          <TokenInput input={token.fn.input} />
+          <TokenInput input={token.inputs} />
+          <TokenOutput output={token.fn.output} parentId={token.id} />
         </TokenBody>
       </TokenWrapper>
     </Draggable>
