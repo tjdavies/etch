@@ -19,6 +19,14 @@ export const Token = types
         };
       });
     },
+    get plugs(): IPlug[] {
+      return self.fn.output.map((param: IParam) => {
+        return {
+          id: self.id + "_" + param.id,
+          param,
+        };
+      });
+    },
   }))
   .actions((self) => ({}));
 

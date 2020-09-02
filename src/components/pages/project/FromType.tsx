@@ -4,6 +4,7 @@ import { Colours } from "../../../Style";
 import { TypeIcon } from "./TypeIcon";
 import { FromConnector } from "./FromConnector";
 import { IParam } from "../../../model/Param";
+import { IPlug } from "../../../model/Token";
 
 const InputLabel = styled.div`
   position: relative;
@@ -26,11 +27,10 @@ const Indented = styled.div`
 */
 
 interface Props {
-  parentId: string;
-  param: IParam;
+  param: IPlug;
 }
 
-export function FromType({ param, parentId }: Props) {
+export function FromType({ param }: Props) {
   /*
   if (param.type.params) {
     return <RecordType type={param.type} refName={"from." + param.id} />;
@@ -38,9 +38,9 @@ export function FromType({ param, parentId }: Props) {
   */
   return (
     <InputLabel>
-      {param.name}
-      <TypeIcon type={param.type} />
-      <FromConnector parentId={parentId} param={param} />
+      {param.param.name}
+      <TypeIcon type={param.param.type} />
+      <FromConnector param={param} />
     </InputLabel>
   );
 }

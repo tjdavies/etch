@@ -6,8 +6,8 @@ import { useStore } from "../../../model/Store";
 import { Point } from "../../../types/types";
 
 interface Props {
-  from: IParam;
-  to: IParam;
+  from: string;
+  to: string;
 }
 
 export function Connector({ from, to }: Props) {
@@ -18,13 +18,13 @@ export function Connector({ from, to }: Props) {
   const store = useStore();
 
   useEffect(() => {
-    setAPos(getLocation(from.id));
-    setBPos(getLocation(to.id));
+    setAPos(getLocation(from));
+    setBPos(getLocation(to));
   }, [size, from, to]);
 
   (window as any).redraw = () => {
-    setAPos(getLocation(from.id));
-    setBPos(getLocation(to.id));
+    setAPos(getLocation(from));
+    setBPos(getLocation(to));
   };
 
   if (aPos && bPos) {
@@ -32,8 +32,8 @@ export function Connector({ from, to }: Props) {
       <DraggableWire
         from={{ x: aPos.x, y: aPos.y }}
         to={{ x: bPos.x, y: bPos.y }}
-        onStartDrag={() => store.startDrag(from)}
-        onStopDrag={() => store.stopDrag()}
+        onStartDrag={() => null /*store.startDrag(from)*/}
+        onStopDrag={() => null /*store.stopDrag()*/}
       />
     );
   }

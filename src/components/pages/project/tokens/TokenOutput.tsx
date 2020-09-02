@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { IParam } from "../../../../model/Param";
 import { FromType } from "../FromType";
+import { IPlug } from "../../../../model/Token";
 
 const OutputWrapper = styled.div`
   display: flex;
@@ -11,15 +12,14 @@ const OutputWrapper = styled.div`
 `;
 
 interface Props {
-  parentId: string;
-  output: IParam[];
+  output: IPlug[];
 }
 
-export function TokenOutput({ output, parentId }: Props) {
+export function TokenOutput({ output }: Props) {
   return (
     <OutputWrapper>
       {output.map((param) => (
-        <FromType key={param.id} param={param} parentId={parentId} />
+        <FromType key={param.id} param={param} />
       ))}
     </OutputWrapper>
   );

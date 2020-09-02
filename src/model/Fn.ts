@@ -13,23 +13,6 @@ export const Fn = types
     tokens: types.array(Token),
   })
   .views((self) => ({
-    get connections() {
-      return self.input.map((param) => {
-        if (param.connection) {
-          return {
-            id: self.id + param.id,
-            from: param,
-            to: param.connection,
-          };
-        } else {
-          return {
-            id: self.id + param.id,
-            from: param,
-            to: param,
-          };
-        }
-      });
-    },
     get plugs(): IPlug[] {
       return self.input.map((param) => {
         return {
@@ -44,6 +27,30 @@ export const Fn = types
           id: self.id + "_" + param.id,
           param,
         };
+      });
+    },
+    get connections() {
+      return this.plugs.map((plug) => {
+        return {
+          id: plug.id,
+          from: plug.id,
+          to: plug.id,
+        };
+        /*
+        if (param.connection) {
+          return {
+            id: self.id + param.id,
+            from: param,
+            to: param.connection,
+          };
+        } else {
+          return {
+            id: self.id + param.id,
+            from: param,
+            to: param,
+          };
+        }
+        */
       });
     },
   }))

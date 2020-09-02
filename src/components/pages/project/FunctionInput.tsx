@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { FromType } from "./FromType";
 import { IParam } from "../../../model/Param";
+import { IPlug } from "../../../model/Token";
 
 const InputBox = styled.div`
   display: flex;
@@ -17,15 +18,14 @@ const InputBox = styled.div`
 `;
 
 interface Props {
-  parentId: string;
-  input: IParam[];
+  input: IPlug[];
 }
 
-export const FunctionInput = ({ input, parentId }: Props) => {
+export const FunctionInput = ({ input }: Props) => {
   return (
     <InputBox>
       {input.map((param) => (
-        <FromType key={param.id} param={param} parentId={parentId} />
+        <FromType key={param.id} param={param} />
       ))}
     </InputBox>
   );
