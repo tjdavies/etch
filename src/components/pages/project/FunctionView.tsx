@@ -16,6 +16,13 @@ const FunctionViewWrapper = styled.div`
   flex: 1;
 `;
 
+const BackGround = styled.div`
+  position: absolute;
+  display: flex;
+  height: 100%;
+  background-color: red;
+`;
+
 interface Props {
   fn: IFn;
 }
@@ -41,6 +48,7 @@ export function FunctionView({ fn }: Props) {
           onClose={() => setShowTokenDropdown(null)}
         />
       )}
+      <BackGround />
     </FunctionViewWrapper>
   );
 }

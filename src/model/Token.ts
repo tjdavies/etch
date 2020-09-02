@@ -1,6 +1,6 @@
 import { types, Instance, SnapshotIn, IAnyModelType } from "mobx-state-tree";
 import { Point } from "./Point";
-import { Fn } from "./Fn";
+import { Fn, IFn } from "./Fn";
 import { generateId } from "../utils/generateId";
 
 export const Token = types
@@ -11,5 +11,7 @@ export const Token = types
   })
   .actions((self) => ({}));
 
-export interface IToken extends Instance<typeof Token> {}
+export interface IToken extends Instance<typeof Token> {
+  fn: IFn;
+}
 export interface ITokenIn extends SnapshotIn<typeof Token> {}

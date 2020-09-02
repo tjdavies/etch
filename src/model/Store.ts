@@ -35,15 +35,40 @@ export const Store = types
         output: [outputCountParamter],
       };
 
+      const addFn: IFnIn = {
+        id: "add",
+        name: "add",
+        input: [
+          {
+            name: "A",
+            type: "number",
+          },
+          {
+            name: "B",
+            type: "number",
+          },
+        ],
+        output: [
+          {
+            name: "A + B",
+            type: "number",
+          },
+        ],
+      };
+
       self.projects.push({
         id: generateId(),
         name: "Project" + (self.projects.length + 1),
-        functions: { [mainFn.id]: mainFn },
+        functions: { [mainFn.id]: mainFn, add: addFn },
         mainFn: mainFn.id,
         types: [
           {
             id: "string",
             name: "string",
+          },
+          {
+            id: "number",
+            name: "number",
           },
         ],
       });

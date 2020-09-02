@@ -15,7 +15,7 @@ const Connector = styled.div`
 `;
 
 const ConnectorWrapper = styled.div`
-  position: relative;
+  position: absolute;
   display: block;
   left: -30px;
   margin-top: 5px;

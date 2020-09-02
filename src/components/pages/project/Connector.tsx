@@ -22,6 +22,11 @@ export function Connector({ from, to }: Props) {
     setBPos(getLocation(to.id));
   }, [size, from, to]);
 
+  (window as any).redraw = () => {
+    setAPos(getLocation(from.id));
+    setBPos(getLocation(to.id));
+  };
+
   if (aPos && bPos) {
     return (
       <DraggableWire

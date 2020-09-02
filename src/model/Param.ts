@@ -7,10 +7,11 @@ import {
 } from "mobx-state-tree";
 import { Type } from "./Type";
 import { Store } from "./Store";
+import { generateId } from "../utils/generateId";
 
 export const Param = types
   .model({
-    id: types.identifier,
+    id: types.optional(types.identifier, generateId),
     name: types.string,
     connection: types.maybe(
       types.reference(types.late((): IAnyModelType => Param))
