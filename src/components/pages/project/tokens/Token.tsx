@@ -51,7 +51,7 @@ export function Token({ token }: Props) {
       <TokenWrapper position={token.position}>
         <TokenHeader className="header">{token.fn.name}</TokenHeader>
         <TokenBody>
-          <TokenInput input={token.inputs} />
+          <TokenInput input={token.sockets} />
           <TokenOutput output={token.fn.output} parentId={token.id} />
         </TokenBody>
       </TokenWrapper>

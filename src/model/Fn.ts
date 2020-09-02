@@ -1,6 +1,6 @@
 import { types, Instance, SnapshotIn } from "mobx-state-tree";
 import { Param } from "./Param";
-import { Token, IToken, ITokenIn, IPlug } from "./Token";
+import { Token, ITokenIn, IPlug } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
 
@@ -28,6 +28,14 @@ export const Fn = types
             to: param,
           };
         }
+      });
+    },
+    get plugs(): IPlug[] {
+      return self.input.map((param) => {
+        return {
+          id: self.id + "_" + param.id,
+          param,
+        };
       });
     },
     get sockets(): IPlug[] {

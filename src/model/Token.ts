@@ -11,11 +11,10 @@ export const Token = types
     fn: types.reference(types.late((): IAnyModelType => Fn)),
   })
   .views((self) => ({
-    get inputs(): IPlug[] {
+    get sockets(): IPlug[] {
       return self.fn.input.map((param: IParam) => {
         return {
           id: self.id + "_" + param.id,
-          canConnect: param.canConnect,
           param,
         };
       });
