@@ -29,7 +29,7 @@ export function FunctionView({ fn }: Props) {
       onDoubleClick={(e) => setShowTokenDropdown({ x: e.pageX, y: e.pageY })}
     >
       {fn.tokens.map((t) => (
-        <Token token={t} />
+        <Token key={t.id} token={t} />
       ))}
 
       <FunctionInput input={fn.input} />
