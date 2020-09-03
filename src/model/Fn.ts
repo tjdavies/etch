@@ -3,20 +3,23 @@ import { Param } from "./Param";
 import { Token, ITokenIn, IPlug } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
+import { Wire } from "./Wire";
 
 export const Fn = types
   .model({
     id: types.identifier,
     name: types.string,
+    core: types.boolean,
     input: types.array(Param),
     output: types.array(Param),
     tokens: types.array(Token),
+    wires: types.array(Wire),
   })
   .views((self) => ({
     get plugs(): IPlug[] {
       return self.input.map((param) => {
         return {
-          id: self.id + "_" + param.id,
+          id: self.id + "/" + param.id,
           param,
         };
       });
@@ -24,37 +27,12 @@ export const Fn = types
     get sockets(): IPlug[] {
       return self.output.map((param) => {
         return {
-          id: self.id + "_" + param.id,
+          id: self.id + "/" + param.id,
           param,
         };
       });
     },
-    get connections() {
-      return this.plugs.map((plug) => {
-        return {
-          id: plug.id,
-          from: plug.id,
-          to: plug.id,
-        };
-        /*
-        if (param.connection) {
-          return {
-            id: self.id + param.id,
-            from: param,
-            to: param.connection,
-          };
-        } else {
-          return {
-            id: self.id + param.id,
-            from: param,
-            to: param,
-          };
-        }
-        */
-      });
-    },
   }))
-
   .actions((self) => ({
     setName(name: string) {
       self.name = name;

@@ -11,21 +11,13 @@ interface Props {
 }
 
 export function Connector({ from, to }: Props) {
-  const [aPos, setAPos] = useState<Point | null>();
-  const [bPos, setBPos] = useState<Point | null>();
+  // const [aPos, setAPos] = useState<Point | null>();
+  //  const [bPos, setBPos] = useState<Point | null>();
 
-  const size = useWindowSize();
   const store = useStore();
 
-  useEffect(() => {
-    setAPos(getLocation(from));
-    setBPos(getLocation(to));
-  }, [size, from, to]);
-
-  (window as any).redraw = () => {
-    setAPos(getLocation(from));
-    setBPos(getLocation(to));
-  };
+  const aPos = getLocation(from);
+  const bPos = getLocation(to);
 
   if (aPos && bPos) {
     return (

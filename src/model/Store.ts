@@ -5,6 +5,12 @@ import { createContext, useContext } from "react";
 import { Fn, IFnIn, IFn } from "./Fn";
 import { Param, IParam } from "./Param";
 import { IPoint } from "./Point";
+import { nullType } from "mobx-state-tree/dist/internal";
+import { IPlug } from "./Token";
+import { coreFunctions, coreFunctionProcesses } from "./CoreFunctions";
+import { Wire } from "../components/pages/project/wires/Wire";
+import { IWire } from "./Wire";
+import { isNull, isNullOrUndefined } from "util";
 
 export const Store = types
   .model({
@@ -31,35 +37,15 @@ export const Store = types
       const mainFn: IFnIn = {
         id: generateId(),
         name: "main",
+        core: false,
         input: [inputCountParamter],
         output: [outputCountParamter],
-      };
-
-      const addFn: IFnIn = {
-        id: "add",
-        name: "add",
-        input: [
-          {
-            name: "A",
-            type: "number",
-          },
-          {
-            name: "B",
-            type: "number",
-          },
-        ],
-        output: [
-          {
-            name: "A + B",
-            type: "number",
-          },
-        ],
       };
 
       self.projects.push({
         id: generateId(),
         name: "Project" + (self.projects.length + 1),
-        functions: { [mainFn.id]: mainFn, add: addFn },
+        functions: { ...coreFunctions, [mainFn.id]: mainFn },
         mainFn: mainFn.id,
         types: [
           {
@@ -77,10 +63,12 @@ export const Store = types
       self.activeDrag = drag;
     },
     stopDrag() {
+      /*
       if (self.activeDrag) {
         self.activeDrag.connection = self.activeSocket;
       }
       self.activeDrag = undefined;
+      */
     },
     setActiveSocket(param: IParam | undefined) {
       self.activeSocket = param;
@@ -92,6 +80,7 @@ export const Store = types
     createNewFunction(position: IPoint, name: string) {
       const newFn: IFnIn = {
         id: generateId(),
+        core: false,
         name,
         input: [],
         output: [],
@@ -111,14 +100,57 @@ export const Store = types
     },
   }));
 
-function calculateFunction(fn: IFn, inputValue: object): object {
-  const values = {
-    this: inputValue,
-  };
+export function calculateFunction(
+  fn: IFn,
+  inputValue: Record<string, any>
+): Record<string, any> | null {
+  if (fn.core) {
+    return (coreFunctionProcesses[fn.id] as any)(inputValue);
+  }
 
-  //fn.input.map( t => t.connectionProp.id )
+  const values = mapInputToValues(fn.plugs, inputValue);
 
-  return inputValue;
+  //const results = mapPlugsToOutput(fn, values);
+
+  return mapPlugsToOutput(fn.wires, fn.sockets, values);
+}
+
+export function mapInputToValues(
+  plugs: IPlug[],
+  inputValue: Record<string, any>
+): Record<string, any> {
+  return plugs.reduce((accumulator, plug) => {
+    return {
+      ...accumulator,
+      [plug.id]: inputValue[plug.param.id],
+    };
+  }, {});
+}
+
+function mapPlugsToOutput(
+  wires: IWire[],
+  sockets: IPlug[],
+  values: Record<string, any>
+): Record<string, any> | null {
+  return sockets.reduce((accumulator, socket) => {
+    const wire = findWireTo(wires, socket.id);
+
+    if (wire) {
+      return {
+        ...accumulator,
+        [socket.param.id]: values[wire.from],
+      };
+    }
+    return accumulator;
+  }, {});
+}
+
+function findWireFrom(wires: IWire[], path: string): IWire | undefined {
+  return wires.find((wire) => wire.from === path);
+}
+
+function findWireTo(wires: IWire[], path: string): IWire | undefined {
+  return wires.find((wire) => wire.to === path);
 }
 
 export interface IStore extends Instance<typeof Store> {}
