@@ -3,7 +3,6 @@ import { types, Instance } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";
 import { Fn, IFnIn, IFn } from "./Fn";
-import { Param, IParam } from "./Param";
 import { IPoint } from "./Point";
 import { coreFunctions, coreFunctionProcesses } from "./CoreFunctions";
 import { IWire } from "./Wire";
@@ -14,7 +13,7 @@ export const Store = types
     projects: types.array(Project),
     activeProject: types.maybe(types.reference(Project)),
     activeFunction: types.maybe(types.reference(Fn)),
-    activeDrag: types.maybe(Plug),
+    activeDrag: types.maybe(types.string),
     activeSocket: types.maybe(Plug),
   })
   .actions((self) => ({
@@ -56,17 +55,21 @@ export const Store = types
         ],
       });
     },
-    startDrag(drag: IPlug) {
+    activeDragPlug(drag: string) {
+      self.activeDrag = drag;
+    },
+    startDrag(drag: string) {
       self.activeDrag = drag;
     },
     stopDrag() {
-      /*
-      if (self.activeDrag) {
-        self.activeDrag.connection = self.activeSocket;
+      if (self.activeDrag && self.activeSocket) {
+        self.activeFunction?.wires.push({
+          from: self.activeDrag,
+          to: self.activeSocket.id,
+        });
       }
+
       self.activeDrag = undefined;
-      */
-      // wires.push()
     },
     setActiveSocket(param: IPlug | undefined) {
       self.activeSocket = param;

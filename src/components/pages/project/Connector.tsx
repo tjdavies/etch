@@ -24,8 +24,8 @@ export function Connector({ from, to }: Props) {
       <DraggableWire
         from={{ x: aPos.x, y: aPos.y }}
         to={{ x: bPos.x, y: bPos.y }}
-        onStartDrag={() => null /*store.startDrag(from)*/}
-        onStopDrag={() => null /*store.stopDrag()*/}
+        onStartDrag={() => store.startDrag(from)}
+        onStopDrag={() => store.stopDrag()}
       />
     );
   }

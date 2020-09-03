@@ -34,7 +34,7 @@ export const ToConnector = observer(({ socket }: Props) => {
       onMouseOver={() => store.setActiveSocket(socket)}
       onMouseOut={() => store.setActiveSocket(undefined)}
     >
-      <Connector id={socket.id} highlight={socket.param.canConnect} />
+      <Connector id={socket.id} highlight={false} />
     </ConnectorWrapper>
   );
 });

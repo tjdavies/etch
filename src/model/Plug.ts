@@ -3,7 +3,7 @@ import { Param } from "./Param";
 
 export const Plug = types.model({
   id: types.identifier,
-  param: Param,
+  param: types.reference(Param),
 });
 
 export interface IPlug extends Instance<typeof Plug> {}

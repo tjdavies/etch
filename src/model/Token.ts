@@ -3,7 +3,7 @@ import { Point } from "./Point";
 import { Fn, IFn } from "./Fn";
 import { generateId } from "../utils/generateId";
 import { IParam } from "./Param";
-import { Plug, IPlug } from "./Plug";
+import { IPlug } from "./Plug";
 
 export const Token = types
   .model({
@@ -15,7 +15,7 @@ export const Token = types
     get sockets(): IPlug[] {
       return self.fn.input.map((param: IParam) => {
         return {
-          id: self.id + "_" + param.id,
+          id: self.id + "/" + param.id,
           param,
         };
       });
@@ -23,7 +23,7 @@ export const Token = types
     get plugs(): IPlug[] {
       return self.fn.output.map((param: IParam) => {
         return {
-          id: self.id + "_" + param.id,
+          id: self.id + "/" + param.id,
           param,
         };
       });
