@@ -3,6 +3,7 @@ import { Point } from "./Point";
 import { Fn, IFn } from "./Fn";
 import { generateId } from "../utils/generateId";
 import { IParam } from "./Param";
+import { Plug, IPlug } from "./Plug";
 
 export const Token = types
   .model({
@@ -34,8 +35,3 @@ export interface IToken extends Instance<typeof Token> {
   fn: IFn;
 }
 export interface ITokenIn extends SnapshotIn<typeof Token> {}
-
-export interface IPlug {
-  id: string;
-  param: IParam;
-}

@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ToType } from "../ToType";
-import { IParam } from "../../../../model/Param";
-import { IPlug } from "../../../../model/Token";
+import { IPlug } from "../../../../model/Plug";
 
 const InputWrapper = styled.div`
   display: flex;

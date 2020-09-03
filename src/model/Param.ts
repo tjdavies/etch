@@ -1,4 +1,10 @@
-import { types, Instance, SnapshotIn, getRoot } from "mobx-state-tree";
+import {
+  types,
+  Instance,
+  SnapshotIn,
+  getRoot,
+  getParent,
+} from "mobx-state-tree";
 import { Type } from "./Type";
 import { Store } from "./Store";
 import { generateId } from "../utils/generateId";
@@ -11,7 +17,14 @@ export const Param = types
   })
   .views((self) => ({
     get canConnect(): boolean {
-      return getRoot<typeof Store>(self).activeDrag?.type.id === self.type.id;
+      return (
+        getRoot<typeof Store>(self).activeDrag?.param.type.id === self.type.id
+      );
+    },
+    get path(): string {
+      console.log("getParent");
+      console.log(getParent);
+      return "getParent(self)";
     },
   }))
   .actions((self) => ({

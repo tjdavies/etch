@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { IPlug } from "../../../model/Token";
+import { IPlug } from "../../../model/Plug";
 
 const Connector = styled.div`
   border: 1px solid ${Colours.lightGrey};

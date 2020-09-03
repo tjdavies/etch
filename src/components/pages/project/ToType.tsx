@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { TypeIcon } from "./TypeIcon";
 import { ToConnector } from "./ToConnector";
-import { IParam } from "../../../model/Param";
 import { observer } from "mobx-react-lite";
-import { IPlug } from "../../../model/Token";
+import { IPlug } from "../../../model/Plug";
 
 const InputLabel = styled.div`
   position: relative;
@@ -38,7 +37,7 @@ export const ToType = observer(({ param }: Props) => {
 */
   return (
     <InputLabel>
-      <ToConnector param={param} />
+      <ToConnector socket={param} />
       <TypeIcon type={param.param.type} />
       {param.param.name}
     </InputLabel>

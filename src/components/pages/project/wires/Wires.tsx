@@ -30,6 +30,9 @@ export const Wires = observer(() => {
       {activeFunction?.wires.map((c) => {
         return <Connector key={c.id} from={c.from} to={c.to} />;
       })}
+      {activeFunction?.plugs.map((c) => {
+        return <Connector key={c.id} from={c.id} to={c.id} />;
+      })}
     </svg>
   );
 });

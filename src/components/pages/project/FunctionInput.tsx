@@ -2,8 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { FromType } from "./FromType";
-import { IParam } from "../../../model/Param";
-import { IPlug } from "../../../model/Token";
+import { IPlug } from "../../../model/Plug";
 
 const InputBox = styled.div`
   display: flex;

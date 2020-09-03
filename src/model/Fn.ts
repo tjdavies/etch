@@ -1,9 +1,10 @@
 import { types, Instance, SnapshotIn } from "mobx-state-tree";
 import { Param } from "./Param";
-import { Token, ITokenIn, IPlug } from "./Token";
+import { Token, ITokenIn } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
 import { Wire } from "./Wire";
+import { IPlug } from "./Plug";
 
 export const Fn = types
   .model({

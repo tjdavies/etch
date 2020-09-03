@@ -5,20 +5,17 @@ import { createContext, useContext } from "react";
 import { Fn, IFnIn, IFn } from "./Fn";
 import { Param, IParam } from "./Param";
 import { IPoint } from "./Point";
-import { nullType } from "mobx-state-tree/dist/internal";
-import { IPlug } from "./Token";
 import { coreFunctions, coreFunctionProcesses } from "./CoreFunctions";
-import { Wire } from "../components/pages/project/wires/Wire";
 import { IWire } from "./Wire";
-import { isNull, isNullOrUndefined } from "util";
+import { IPlug, Plug } from "./Plug";
 
 export const Store = types
   .model({
     projects: types.array(Project),
     activeProject: types.maybe(types.reference(Project)),
     activeFunction: types.maybe(types.reference(Fn)),
-    activeDrag: types.maybe(types.reference(Param)),
-    activeSocket: types.maybe(types.reference(Param)),
+    activeDrag: types.maybe(Plug),
+    activeSocket: types.maybe(Plug),
   })
   .actions((self) => ({
     createNewProject() {
@@ -59,7 +56,7 @@ export const Store = types
         ],
       });
     },
-    startDrag(drag: IParam) {
+    startDrag(drag: IPlug) {
       self.activeDrag = drag;
     },
     stopDrag() {
@@ -69,8 +66,9 @@ export const Store = types
       }
       self.activeDrag = undefined;
       */
+      // wires.push()
     },
-    setActiveSocket(param: IParam | undefined) {
+    setActiveSocket(param: IPlug | undefined) {
       self.activeSocket = param;
     },
     setActiveProject(id: string) {

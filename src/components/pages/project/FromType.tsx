@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { TypeIcon } from "./TypeIcon";
 import { FromConnector } from "./FromConnector";
-import { IParam } from "../../../model/Param";
-import { IPlug } from "../../../model/Token";
+import { IPlug } from "../../../model/Plug";
 
 const InputLabel = styled.div`
   position: relative;

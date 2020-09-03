@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { ToType } from "./ToType";
-import { IPlug } from "../../../model/Token";
+import { IPlug } from "../../../model/Plug";
 
 const OutputBox = styled.div`
   gap: 5px;

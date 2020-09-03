@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { IParam } from "../../../model/Param";
 import { useStore } from "../../../model/Store";
 import { observer } from "mobx-react-lite";
-import { IPlug } from "../../../model/Token";
+import { IPlug } from "../../../model/Plug";
 
 const Connector = styled.div`
   border: 1px solid;
@@ -24,18 +23,18 @@ const ConnectorWrapper = styled.div`
 `;
 
 interface Props {
-  param: IPlug;
+  socket: IPlug;
 }
 
-export const ToConnector = observer(({ param }: Props) => {
+export const ToConnector = observer(({ socket }: Props) => {
   const store = useStore();
 
   return (
     <ConnectorWrapper
-      //   onMouseOver={() => store.setActiveSocket(param.i)}
+      onMouseOver={() => store.setActiveSocket(socket)}
       onMouseOut={() => store.setActiveSocket(undefined)}
     >
-      <Connector id={param.id} highlight={param.param.canConnect} />
+      <Connector id={socket.id} highlight={socket.param.canConnect} />
     </ConnectorWrapper>
   );
 });

@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { IParam } from "../../../../model/Param";
 import { FromType } from "../FromType";
-import { IPlug } from "../../../../model/Token";
+import { IPlug } from "../../../../model/Plug";
 
 const OutputWrapper = styled.div`
   display: flex;
