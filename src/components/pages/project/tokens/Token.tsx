@@ -31,6 +31,7 @@ const TokenHeader = styled.div`
   display: flex;
   align-items: center;
   padding-left: 10px;
+  cursor: move;
 `;
 
 interface Props {

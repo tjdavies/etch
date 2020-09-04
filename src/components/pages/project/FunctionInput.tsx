@@ -6,6 +6,7 @@ import { IPlug } from "../../../model/Plug";
 
 const InputBox = styled.div`
   display: flex;
+  z-index: 1;
   flex-direction: column;
   align-items: flex-end;
   gap: 5px;
@@ -14,6 +15,8 @@ const InputBox = styled.div`
   border-bottom-right-radius: 4px;
   border-top-right-radius: 4px;
   padding: 10px;
+  background-color: ${Colours.white};
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 interface Props {

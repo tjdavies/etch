@@ -7,6 +7,7 @@ import { IPlug } from "../../../model/Plug";
 
 const InputLabel = styled.div`
   position: relative;
+
   color: ${Colours.darkText};
   display: flex;
   align-items: flex-start;

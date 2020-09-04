@@ -17,10 +17,12 @@ const FunctionViewWrapper = styled.div`
 `;
 
 const BackGround = styled.div`
-  position: absolute;
-  display: flex;
-  height: 100%;
-  background-color: red;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  content: " ";
 `;
 
 interface Props {
@@ -32,9 +34,10 @@ export function FunctionView({ fn }: Props) {
     null
   );
   return (
-    <FunctionViewWrapper
-      onDoubleClick={(e) => setShowTokenDropdown({ x: e.pageX, y: e.pageY })}
-    >
+    <FunctionViewWrapper>
+      <BackGround
+        onDoubleClick={(e) => setShowTokenDropdown({ x: e.pageX, y: e.pageY })}
+      />
       {fn.tokens.map((t) => (
         <Token key={t.id} token={t} />
       ))}
@@ -48,7 +51,6 @@ export function FunctionView({ fn }: Props) {
           onClose={() => setShowTokenDropdown(null)}
         />
       )}
-      <BackGround />
     </FunctionViewWrapper>
   );
 }

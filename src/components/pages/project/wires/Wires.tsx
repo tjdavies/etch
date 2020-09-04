@@ -5,6 +5,12 @@ import { Connector } from "../Connector";
 import { Colours } from "../../../../Style";
 import { useStore } from "../../../../model/Store";
 import { useWindowSize } from "../../../../utils/hooks/useWindowSize";
+import styled from "styled-components";
+
+const WireSVG = styled.svg`
+  position: absolute;
+  pointer-events: none;
+`;
 
 export const Wires = observer(() => {
   const { activeFunction } = useStore();
@@ -20,8 +26,7 @@ export const Wires = observer(() => {
   };
 
   return (
-    <svg
-      style={{ position: "absolute", pointerEvents: "none" }}
+    <WireSVG
       height="100%"
       width="100%"
       fill={Colours.primary}
@@ -33,6 +38,6 @@ export const Wires = observer(() => {
       {activeFunction?.plugs.map((c) => {
         return <Connector key={c.id} from={c.id} to={c.id} />;
       })}
-    </svg>
+    </WireSVG>
   );
 });
