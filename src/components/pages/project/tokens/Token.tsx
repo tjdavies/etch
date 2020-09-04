@@ -4,7 +4,6 @@ import { IToken } from "../../../../model/Token";
 import { Point } from "../../../../types/types";
 import { Colours } from "../../../../Style";
 import Draggable from "react-draggable";
-import { FunctionInput } from "../FunctionInput";
 import { TokenInput } from "./TokenInput";
 import { TokenOutput } from "./TokenOutput";
 
@@ -18,8 +17,7 @@ const TokenWrapper = styled.div`
   top: ${(props: TokenWrapperProps) => props.position.y + "px"};
   display: flex;
   flex-direction: column;
-  border: 1px solid ${Colours.lightGrey};
-  border-radius: 6px;
+
   background-color: ${Colours.white};
 `;
 
@@ -42,8 +40,12 @@ const TokenBody = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;
-  margin: 10px;
+  padding: 10px;
   gap: 30px;
+  border: 1px solid ${Colours.lightGrey};
+  border-top: none;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
 `;
 
 export function Token({ token }: Props) {
