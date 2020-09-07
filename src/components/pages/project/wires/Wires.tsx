@@ -38,6 +38,11 @@ export const Wires = observer(() => {
       {activeFunction?.plugs.map((c) => {
         return <Connector key={c.id} from={c.id} to={c.id} />;
       })}
+      {activeFunction?.tokens.flatMap((token) => {
+        return token.plugs.map((c) => {
+          return <Connector key={c.id} from={c.id} to={c.id} />;
+        });
+      })}
     </WireSVG>
   );
 });

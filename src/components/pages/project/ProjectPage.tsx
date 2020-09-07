@@ -42,6 +42,16 @@ const FnNameHeader = styled.div`
   border-left: 2px solid ${Colours.lightText};
 `;
 
+const RunButton = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 5px;
+  color: ${Colours.lightText};
+  background-color: ${Colours.primary};
+  cursor: pointer;
+`;
+
 export const ProjectPage = observer(() => {
   const { id } = useParams();
 
@@ -63,6 +73,7 @@ export const ProjectPage = observer(() => {
           />
           <FnNameHeader>{store.activeFunction?.name}</FnNameHeader>
         </PageHeader>
+        <RunButton onClick={store.run}> Run </RunButton>
       </PageWrapper>
     );
   }
