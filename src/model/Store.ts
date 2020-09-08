@@ -1,5 +1,11 @@
 import { Project } from "./Project";
-import { types, Instance, clone, getType } from "mobx-state-tree";
+import {
+  types,
+  Instance,
+  clone,
+  getType,
+  isStateTreeNode,
+} from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";
 import { Fn, IFnIn, IFn } from "./Fn";
@@ -7,7 +13,6 @@ import { IPoint } from "./Point";
 import { coreFunctions, coreFunctionProcesses } from "./CoreFunctions";
 import { IPath, Path } from "./Path";
 import { IWire } from "./Wire";
-import { isNullOrUndefined } from "util";
 import { Token, IToken } from "./Token";
 
 export const Store = types
@@ -61,7 +66,11 @@ export const Store = types
       self.activeDrag = clone(drag);
     },
     startDrag(drag: IPath) {
-      self.activeDrag = drag;
+      if (isStateTreeNode(drag)) {
+        self.activeDrag = clone(drag);
+      } else {
+        self.activeDrag = drag;
+      }
     },
     stopDrag() {
       if (self.activeFunction && self.activeDrag) {

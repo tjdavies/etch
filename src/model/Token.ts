@@ -1,9 +1,8 @@
 import { types, Instance, SnapshotIn, IAnyModelType } from "mobx-state-tree";
-import { Point } from "./Point";
+import { Point, IPoint } from "./Point";
 import { Fn, IFn } from "./Fn";
 import { generateId } from "../utils/generateId";
 import { IParam } from "./Param";
-import { Path } from "./Path";
 
 export const Token = types
   .model("Token", {
@@ -31,7 +30,11 @@ export const Token = types
       });
     },
   }))
-  .actions((self) => ({}));
+  .actions((self) => ({
+    setPosition(position: IPoint) {
+      self.position = position;
+    },
+  }));
 
 export interface IToken extends Instance<typeof Token> {
   fn: IFn;

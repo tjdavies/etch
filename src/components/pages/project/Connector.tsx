@@ -11,9 +11,6 @@ interface Props {
 }
 
 export function Connector({ from, to }: Props) {
-  // const [aPos, setAPos] = useState<Point | null>();
-  //  const [bPos, setBPos] = useState<Point | null>();
-
   const store = useStore();
 
   const aPos = getLocation(from.path);

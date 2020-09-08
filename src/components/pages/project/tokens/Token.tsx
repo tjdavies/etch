@@ -1,23 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { IToken } from "../../../../model/Token";
-import { Point } from "../../../../types/types";
 import { Colours } from "../../../../Style";
 import Draggable from "react-draggable";
 import { TokenInput } from "./TokenInput";
 import { TokenOutput } from "./TokenOutput";
 
-interface TokenWrapperProps {
-  position: Point;
-}
-
 const TokenWrapper = styled.div`
   position: absolute;
-  left: ${(props: TokenWrapperProps) => props.position.x + "px"};
-  top: ${(props: TokenWrapperProps) => props.position.y + "px"};
   display: flex;
   flex-direction: column;
-
   background-color: ${Colours.white};
 `;
 
@@ -50,8 +42,14 @@ const TokenBody = styled.div`
 
 export function Token({ token }: Props) {
   return (
-    <Draggable handle={".header"} onDrag={() => (window as any).redraw()}>
-      <TokenWrapper position={token.position}>
+    <Draggable
+      handle={".header"}
+      onDrag={(e, data) => {
+        token.setPosition({ x: data.x, y: data.y });
+      }}
+      position={token.position}
+    >
+      <TokenWrapper>
         <TokenHeader className="header">{token.fn.name}</TokenHeader>
         <TokenBody>
           <TokenInput input={token.sockets} />
