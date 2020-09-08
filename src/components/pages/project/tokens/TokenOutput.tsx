@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FromType } from "../FromType";
-import { IPlug } from "../../../../model/Plug";
+import { IPath } from "../../../../model/Path";
 
 const OutputWrapper = styled.div`
   display: flex;
@@ -11,14 +11,14 @@ const OutputWrapper = styled.div`
 `;
 
 interface Props {
-  output: IPlug[];
+  output: IPath[];
 }
 
 export function TokenOutput({ output }: Props) {
   return (
     <OutputWrapper>
       {output.map((param) => (
-        <FromType key={param.id} param={param} />
+        <FromType key={param.path} param={param} />
       ))}
     </OutputWrapper>
   );

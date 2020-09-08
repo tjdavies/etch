@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { IPlug } from "../../../model/Plug";
 
 const Connector = styled.div`
   border: 1px solid ${Colours.lightGrey};
@@ -19,13 +18,13 @@ const ConnectorWrapper = styled.div`
 `;
 
 interface Props {
-  param: IPlug;
+  path: string;
 }
 
-export function FromConnector({ param }: Props) {
+export function FromConnector({ path }: Props) {
   return (
     <ConnectorWrapper>
-      <Connector id={param.id} />
+      <Connector id={path} />
     </ConnectorWrapper>
   );
 }

@@ -4,7 +4,7 @@ import { Colours } from "../../../Style";
 import { TypeIcon } from "./TypeIcon";
 import { ToConnector } from "./ToConnector";
 import { observer } from "mobx-react-lite";
-import { IPlug } from "../../../model/Plug";
+import { IPath } from "../../../model/Path";
 
 const InputLabel = styled.div`
   position: relative;
@@ -26,10 +26,10 @@ const Indented = styled.div`
 */
 
 interface Props {
-  param: IPlug;
+  path: IPath;
 }
 
-export const ToType = observer(({ param }: Props) => {
+export const ToType = observer(({ path }: Props) => {
   /*
   if (param.type.params) {
     return <RecordType type={param.type} refName={refName} />;
@@ -37,9 +37,9 @@ export const ToType = observer(({ param }: Props) => {
 */
   return (
     <InputLabel>
-      <ToConnector socket={param} />
-      <TypeIcon type={param.param.type} />
-      {param.param.name}
+      <ToConnector socket={path} />
+      <TypeIcon type={path.param.type} />
+      {path.param.name}
     </InputLabel>
   );
 });

@@ -1,21 +1,21 @@
 import { Project } from "./Project";
-import { types, Instance } from "mobx-state-tree";
+import { types, Instance, clone } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";
 import { Fn, IFnIn, IFn } from "./Fn";
 import { IPoint } from "./Point";
 import { coreFunctions, coreFunctionProcesses } from "./CoreFunctions";
+import { IPath, Path } from "./Path";
 import { IWire } from "./Wire";
-import { IPlug, Plug } from "./Plug";
-import { isUndefined } from "util";
+import { isNullOrUndefined } from "util";
 
 export const Store = types
   .model({
     projects: types.array(Project),
     activeProject: types.maybe(types.reference(Project)),
     activeFunction: types.maybe(types.reference(Fn)),
-    activeDrag: types.maybe(types.string),
-    activeSocket: types.maybe(Plug),
+    activeDrag: types.maybe(Path),
+    activeSocket: types.maybe(Path),
   })
   .actions((self) => ({
     createNewProject() {
@@ -56,23 +56,33 @@ export const Store = types
         ],
       });
     },
-    activeDragPlug(drag: string) {
-      self.activeDrag = drag;
+    activeDragPlug(drag: IPath) {
+      self.activeDrag = clone(drag);
     },
-    startDrag(drag: string) {
+    startDrag(drag: IPath) {
       self.activeDrag = drag;
     },
     stopDrag() {
-      if (self.activeDrag && self.activeSocket) {
-        self.activeFunction?.wires.push({
-          from: self.activeDrag,
-          to: self.activeSocket.id,
-        });
+      if (self.activeFunction && self.activeDrag) {
+        if (self.activeSocket) {
+          self.activeFunction.wires.push({
+            id: self.activeDrag.path,
+            from: clone(self.activeDrag),
+            to: clone(self.activeSocket),
+          });
+        } else {
+          const index = self.activeFunction.wires.findIndex(
+            (i) => i.id === self.activeDrag?.path
+          );
+          if (index > -1) {
+            self.activeFunction.wires.splice(index, 1);
+          }
+        }
       }
 
       self.activeDrag = undefined;
     },
-    setActiveSocket(param: IPlug | undefined) {
+    setActiveSocket(param: IPath | undefined) {
       self.activeSocket = param;
     },
     setActiveProject(id: string) {
@@ -112,10 +122,12 @@ export function calculateFunction(
     return (coreFunctionProcesses[fn.id] as any)(inputValue);
   }
 
-  fn.sockets
-    .map((socket) => findWireFrom(fn.wires, socket.id))
-    .map((wire) => wire?.from);
+  let values = mapInputToValues(fn.plugs, inputValue);
+  const plugs = findAllPlugsForSockets(fn, fn.sockets);
 
+  console.log(plugs);
+
+  /*
   let values = mapInputToValues(fn.plugs, inputValue);
   console.log(inputValue);
   console.log("values");
@@ -130,8 +142,53 @@ export function calculateFunction(
 
   results = mapPlugsToOutput(fn.wires, fn.sockets, values);
 
-  return results;
+  console.log("results");
+  console.log(results);
+  */
+  return null;
 }
+
+function findPlugValue(socket: IPath, values: Record<string, any>) {
+  if (values[socket.path]) {
+    return values[socket.path];
+  } else {
+    //socket.target
+  }
+}
+
+function findAllPlugsForSockets(
+  fn: IFn,
+  sockets: IPath[]
+): (IPath | undefined)[] {
+  return sockets
+    .map((socket) => {
+      const wire = findWireTo(fn.wires, socket.path);
+      return wire?.from;
+    })
+    .filter(isNotNill)
+    .map(log);
+}
+
+function findWireTo(wires: IWire[], path: string): IWire | undefined {
+  return wires.find((wire) => wire.to.path === path);
+}
+
+function isNotNill(value: any) {
+  return value !== null && value !== undefined;
+}
+
+export function mapInputToValues(
+  plugs: IPath[],
+  inputValue: Record<string, any>
+): Record<string, any> {
+  return plugs.reduce((accumulator, plug) => {
+    return {
+      ...accumulator,
+      [plug.path]: inputValue[plug.param.id],
+    };
+  }, {});
+}
+
 /*
 function run(
   fn: IFn,
@@ -164,6 +221,7 @@ export function compute(plugs, plugValues) {
   return computeFn(plugValues);
 }
 */
+/*
 export function reduceTokens(
   fn: IFn,
   inputValue: Record<string, any>
@@ -182,19 +240,7 @@ export function reduceTokens(
   }, inputValue);
 }
 
-export function mapInputToValues(
-  plugs: IPlug[],
-  inputValue: Record<string, any>
-): Record<string, any> {
-  return plugs.reduce((accumulator, plug) => {
-    console.log("plug");
-    console.log(plug);
-    return {
-      ...accumulator,
-      [plug.id]: inputValue[plug.param.id],
-    };
-  }, {});
-}
+
 
 function mapPlugsToOutput(
   wires: IWire[],
@@ -214,13 +260,12 @@ function mapPlugsToOutput(
   }, {});
 }
 
-function findWireFrom(wires: IWire[], path: string): IWire | undefined {
-  return wires.find((wire) => wire.from === path);
-}
+
 
 function findWireTo(wires: IWire[], path: string): IWire | undefined {
   return wires.find((wire) => wire.to === path);
 }
+*/
 
 export interface IStore extends Instance<typeof Store> {}
 const StoreContext = createContext<null | IStore>(null);
@@ -232,4 +277,9 @@ export function useStore() {
     throw new Error("Store cannot be null, please add a context provider");
   }
   return store;
+}
+
+function log<T>(t: T): T {
+  console.log(t);
+  return t;
 }

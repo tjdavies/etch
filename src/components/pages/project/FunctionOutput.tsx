@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { ToType } from "./ToType";
-import { IPlug } from "../../../model/Plug";
+import { IPath } from "../../../model/Path";
 
 const OutputBox = styled.div`
   gap: 5px;
@@ -20,14 +20,14 @@ const OutputBox = styled.div`
 `;
 
 interface Props {
-  output: IPlug[];
+  output: IPath[];
 }
 
 export function FunctionOutput({ output }: Props) {
   return (
     <OutputBox>
       {output.map((param) => (
-        <ToType key={param.id} param={param} />
+        <ToType key={param.path} path={param} />
       ))}
     </OutputBox>
   );

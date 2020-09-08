@@ -52,6 +52,13 @@ const RunButton = styled.div`
   cursor: pointer;
 `;
 
+const Error = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const ProjectPage = observer(() => {
   const { id } = useParams();
 
@@ -78,5 +85,10 @@ export const ProjectPage = observer(() => {
     );
   }
 
-  return null;
+  return (
+    <PageWrapper>
+      <PageHeader />
+      <Error>Sorry, no project found</Error>
+    </PageWrapper>
+  );
 });

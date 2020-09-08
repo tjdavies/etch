@@ -3,7 +3,6 @@ import { SearchableDropDown } from "./SearchableDropDown";
 import styled from "styled-components";
 import { Point } from "../../../types/types";
 import { useStore } from "../../../model/Store";
-import { IFn } from "../../../model/Fn";
 
 interface FloatyDropdownProps {
   position: Point;

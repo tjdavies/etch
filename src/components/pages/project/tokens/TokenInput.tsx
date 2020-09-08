@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ToType } from "../ToType";
-import { IPlug } from "../../../../model/Plug";
+import { IPath } from "../../../../model/Path";
 
 const InputWrapper = styled.div`
   display: flex;
@@ -11,14 +11,14 @@ const InputWrapper = styled.div`
 `;
 
 interface Props {
-  input: IPlug[];
+  input: IPath[];
 }
 
 export function TokenInput({ input }: Props) {
   return (
     <InputWrapper>
       {input.map((param) => (
-        <ToType key={param.id} param={param} />
+        <ToType key={param.path} path={param} />
       ))}
     </InputWrapper>
   );

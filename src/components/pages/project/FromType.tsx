@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { TypeIcon } from "./TypeIcon";
 import { FromConnector } from "./FromConnector";
-import { IPlug } from "../../../model/Plug";
+import { IPath } from "../../../model/Path";
 
 const InputLabel = styled.div`
   position: relative;
@@ -27,7 +27,7 @@ const Indented = styled.div`
 */
 
 interface Props {
-  param: IPlug;
+  param: IPath;
 }
 
 export function FromType({ param }: Props) {
@@ -40,7 +40,7 @@ export function FromType({ param }: Props) {
     <InputLabel>
       {param.param.name}
       <TypeIcon type={param.param.type} />
-      <FromConnector param={param} />
+      <FromConnector path={param.path} />
     </InputLabel>
   );
 }

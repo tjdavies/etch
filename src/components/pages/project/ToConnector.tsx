@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { useStore } from "../../../model/Store";
 import { observer } from "mobx-react-lite";
-import { IPlug } from "../../../model/Plug";
+import { IPath } from "../../../model/Path";
 
 const Connector = styled.div`
   border: 1px solid;
@@ -23,7 +23,7 @@ const ConnectorWrapper = styled.div`
 `;
 
 interface Props {
-  socket: IPlug;
+  socket: IPath;
 }
 
 export const ToConnector = observer(({ socket }: Props) => {
@@ -34,7 +34,7 @@ export const ToConnector = observer(({ socket }: Props) => {
       onMouseOver={() => store.setActiveSocket(socket)}
       onMouseOut={() => store.setActiveSocket(undefined)}
     >
-      <Connector id={socket.id} highlight={false} />
+      <Connector id={socket.path} highlight={false} />
     </ConnectorWrapper>
   );
 });

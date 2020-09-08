@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { FromType } from "./FromType";
-import { IPlug } from "../../../model/Plug";
+import { IPath } from "../../../model/Path";
 
 const InputBox = styled.div`
   display: flex;
@@ -20,14 +20,14 @@ const InputBox = styled.div`
 `;
 
 interface Props {
-  input: IPlug[];
+  input: IPath[];
 }
 
 export const FunctionInput = ({ input }: Props) => {
   return (
     <InputBox>
       {input.map((param) => (
-        <FromType key={param.id} param={param} />
+        <FromType key={param.path} param={param} />
       ))}
     </InputBox>
   );

@@ -1,6 +1,6 @@
-import { types, Instance, SnapshotIn, getRoot } from "mobx-state-tree";
+import { types, Instance, SnapshotIn } from "mobx-state-tree";
 import { Type } from "./Type";
-import { Store } from "./Store";
+
 import { generateId } from "../utils/generateId";
 
 export const Param = types

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useWindowSize } from "../../../utils/hooks/useWindowSize";
-import { IParam } from "../../../model/Param";
+import React from "react";
+
 import { DraggableWire } from "./DraggableWire";
 import { useStore } from "../../../model/Store";
-import { Point } from "../../../types/types";
+
+import { IPath } from "../../../model/Path";
 
 interface Props {
-  from: string;
-  to: string;
+  from: IPath;
+  to: IPath;
 }
 
 export function Connector({ from, to }: Props) {
@@ -16,8 +16,8 @@ export function Connector({ from, to }: Props) {
 
   const store = useStore();
 
-  const aPos = getLocation(from);
-  const bPos = getLocation(to);
+  const aPos = getLocation(from.path);
+  const bPos = getLocation(to.path);
 
   if (aPos && bPos) {
     return (
