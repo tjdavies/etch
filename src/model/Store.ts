@@ -140,29 +140,30 @@ function getValuesForSockets(
   const plugs = findAllPlugsForSockets(fn, sockets);
 
   return plugs.reduce((accumulator, plug) => {
-    return {
-      [plug.path]: findPlugValue(fn, plug, accumulator),
-      ...accumulator,
-    };
+    return findPlugValue(fn, plug, accumulator);
   }, plugValues);
 }
 
 function findPlugValue(fn: IFn, plug: IPath, plugValues: Record<string, any>) {
+  console.log("findPlugValue");
   console.log(plugValues);
   console.log(plug.path);
   if (plugValues[plug.path]) {
-    return plugValues[plug.path];
+    return plugValues;
   } else {
     if (getType(plug.target) === Token) {
       const token = plug.target as IToken;
-      console.log("Token");
-      const outPutValues = runToken(fn, token, plugValues);
-      console.log(outPutValues);
-      if (outPutValues) {
-        return outPutValues[plug.param.id];
+      const computedValues = getValuesForSockets(fn, token.sockets, plugValues);
+      const outPutValue = runToken(fn, token, computedValues);
+
+      if (outPutValue) {
+        return {
+          [plug.path]: outPutValue[plug.param.id],
+          ...computedValues,
+        };
       }
 
-      return undefined;
+      return plugValues;
     } else {
       console.log("Fn");
       return plugValues;
@@ -171,6 +172,8 @@ function findPlugValue(fn: IFn, plug: IPath, plugValues: Record<string, any>) {
 }
 
 function runToken(fn: IFn, token: IToken, plugValues: Record<string, any>) {
+  console.log("runToken");
+  console.log(token.id);
   const input = mapSocketsToValues(fn, token, plugValues);
 
   console.log("input");
@@ -185,7 +188,6 @@ function mapSocketsToValues(
   plugValues: Record<string, any>
 ) {
   const input = (token.sockets as IPath[]).reduce((accumulator, socket) => {
-    console.log(socket.path);
     const wire = findWireTo(fn.wires, socket.path);
     if (wire) {
       return {
