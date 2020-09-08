@@ -7,7 +7,7 @@ import { Wire } from "./Wire";
 import { IPath } from "./Path";
 
 export const Fn = types
-  .model({
+  .model("Fn", {
     id: types.identifier,
     name: types.string,
     core: types.boolean,

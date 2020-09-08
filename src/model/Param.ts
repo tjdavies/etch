@@ -4,7 +4,7 @@ import { Type } from "./Type";
 import { generateId } from "../utils/generateId";
 
 export const Param = types
-  .model({
+  .model("Param", {
     id: types.optional(types.identifier, generateId),
     name: types.string,
     type: types.reference(Type),

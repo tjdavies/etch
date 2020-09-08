@@ -4,11 +4,10 @@ import { Token } from "./Token";
 import { Param } from "./Param";
 import { generateId } from "../utils/generateId";
 
+//const FnOrToken = types.union(Fn, Token);
+
 export const Path = types.model({
-  target: types.union(
-    types.reference(types.late((): IAnyModelType => Fn)),
-    types.reference(types.late((): IAnyModelType => Token))
-  ),
+  target: types.reference(types.late((): any => types.union(Fn, Token))),
   param: types.reference(Param),
   path: types.string,
 });

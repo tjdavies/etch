@@ -6,7 +6,7 @@ import { IParam } from "./Param";
 import { Path } from "./Path";
 
 export const Token = types
-  .model({
+  .model("Token", {
     id: types.optional(types.identifier, generateId),
     position: Point,
     fn: types.reference(types.late((): IAnyModelType => Fn)),
