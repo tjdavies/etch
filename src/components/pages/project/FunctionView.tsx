@@ -9,11 +9,11 @@ import { Point } from "../../../types/types";
 import { Token } from "./tokens/Token";
 
 const FunctionViewWrapper = styled.div`
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex: 1;
+  height: 100vh;
+  width: 100%;
 `;
 
 const BackGround = styled.div`

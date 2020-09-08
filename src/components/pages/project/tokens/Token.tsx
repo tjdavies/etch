@@ -7,7 +7,7 @@ import { TokenInput } from "./TokenInput";
 import { TokenOutput } from "./TokenOutput";
 
 const TokenWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   background-color: ${Colours.white};

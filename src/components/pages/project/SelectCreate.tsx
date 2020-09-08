@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { DropButton } from "grommet";
 import { FormAdd } from "grommet-icons";
 import { TypeIconBox } from "./TypeIcon";
 
@@ -42,6 +41,7 @@ export function SelectCreate({
   };
 
   return (
+    /*
     <DropButton
       open={open}
       onClose={() => setOpen(false)}
@@ -59,6 +59,8 @@ export function SelectCreate({
         <FormAdd size="small" />
       </TypeIconBox>
     </DropButton>
+    */
+    null
   );
 }
 

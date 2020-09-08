@@ -13,7 +13,9 @@ import makeInspectable from "mobx-devtools-mst";
 const AppWrapper = styled.div`
   min-width: 100vw;
   min-height: 100vh;
+
   background-color: ${Colours.background};
+  overflow: hidden;
 `;
 
 const initialState = loadProjectList();
