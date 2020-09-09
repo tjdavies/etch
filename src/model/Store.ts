@@ -82,7 +82,7 @@ export const Store = types
           });
         } else {
           const index = self.activeFunction.wires.findIndex(
-            (i) => i.id === self.activeDrag?.path
+            (i) => i.to.path === self.activeDrag?.path
           );
           if (index > -1) {
             self.activeFunction.wires.splice(index, 1);

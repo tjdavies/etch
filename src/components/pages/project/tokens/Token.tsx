@@ -46,6 +46,7 @@ export function Token({ token }: Props) {
       handle={".header"}
       onDrag={(e, data) => {
         token.setPosition({ x: data.x, y: data.y });
+        (window as any).redraw();
       }}
       position={token.position}
     >
