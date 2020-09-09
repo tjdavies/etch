@@ -8,7 +8,7 @@ import {
 } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";
-import { Fn, IFnIn, IFn } from "./Fn";
+import { IFnIn, IFn, FnRef } from "./Fn";
 import { IPoint } from "./Point";
 import { coreFunctions, coreFunctionProcesses } from "./CoreFunctions";
 import { IPath, Path } from "./Path";
@@ -20,7 +20,7 @@ export const Store = types
   .model("store", {
     projects: types.array(Project),
     activeProject: types.maybe(types.reference(Project)),
-    activeFunction: types.maybe(types.reference(Fn)),
+    activeFunction: types.maybe(FnRef),
     activeDrag: types.maybe(Path),
     activeSocket: types.maybe(Path),
   })
@@ -51,7 +51,7 @@ export const Store = types
         name: "Project" + (self.projects.length + 1),
         functions: { ...coreFunctions, [mainFn.id]: mainFn },
         mainFn: mainFn.id,
-        types: {},
+        types: { ...coreTypes },
       });
     },
     activeDragPlug(drag: IPath) {
@@ -74,7 +74,7 @@ export const Store = types
           });
         } else {
           const index = self.activeFunction.wires.findIndex(
-            (i) => i.to.path === self.activeDrag?.path
+            (i: any) => i.to.path === self.activeDrag?.path
           );
           if (index > -1) {
             self.activeFunction.wires.splice(index, 1);

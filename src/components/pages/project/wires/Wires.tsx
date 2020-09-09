@@ -6,6 +6,7 @@ import { useStore } from "../../../../model/Store";
 import { useWindowSize } from "../../../../utils/hooks/useWindowSize";
 import styled from "styled-components";
 import { IPath } from "../../../../model/Path";
+import { IWire } from "../../../../model/Wire";
 
 const WireSVG = styled.svg`
   position: absolute;
@@ -32,13 +33,13 @@ export const Wires = observer(() => {
       fill={Colours.primary}
       stroke={Colours.primary}
     >
-      {activeFunction?.wires.map((c) => {
+      {activeFunction?.wires.map((c: IWire) => {
         return <Connector key={c.to.path} from={c.from} to={c.to} />;
       })}
-      {activeFunction?.plugs.map((c) => {
+      {activeFunction?.plugs.map((c: IPath) => {
         return <Connector key={c.path} from={c} to={c} />;
       })}
-      {activeFunction?.tokens.flatMap((token) => {
+      {activeFunction?.tokens.flatMap((token: any) => {
         return token.plugs.map((c: IPath) => {
           return <Connector key={c.path} from={c} to={c} />;
         });

@@ -1,10 +1,17 @@
-import { types, Instance, SnapshotIn } from "mobx-state-tree";
+import {
+  types,
+  Instance,
+  SnapshotIn,
+  getParent,
+  getRoot,
+} from "mobx-state-tree";
 import { Param } from "./Param";
 import { Token, ITokenIn } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
 import { Wire } from "./Wire";
 import { IPath } from "./Path";
+import { Store } from "./Store";
 
 export const Fn = types
   .model("Fn", {
@@ -49,6 +56,18 @@ export const Fn = types
       self.tokens.push(newToken);
     },
   }));
+
+export const FnRef = types.reference(Fn, {
+  get(identifier: string, parent: any /*Store*/): any {
+    return getRoot<typeof Store>(parent).activeProject?.functions.get(
+      identifier
+    );
+  },
+
+  set(value) {
+    return value.id;
+  },
+});
 
 export interface IFn extends Instance<typeof Fn> {}
 export interface IFnIn extends SnapshotIn<typeof Fn> {}

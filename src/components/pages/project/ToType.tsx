@@ -38,7 +38,8 @@ export const ToType = observer(({ path }: Props) => {
   return (
     <InputLabel>
       <ToConnector socket={path} />
-      <TypeIcon type={path.param.type} />
+      {path.param?.type && <TypeIcon type={path.param.type} />}
+
       {path.param.name}
     </InputLabel>
   );

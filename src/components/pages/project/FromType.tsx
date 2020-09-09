@@ -40,7 +40,8 @@ export function FromType({ param }: Props) {
   return (
     <InputLabel>
       {param.param.name}
-      <TypeIcon type={param.param.type} />
+      {param.param?.type && <TypeIcon type={param.param.type} />}
+
       <FromConnector path={param.path} />
     </InputLabel>
   );

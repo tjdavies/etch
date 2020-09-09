@@ -3,14 +3,13 @@ import {
   Instance,
   IAnyModelType,
   SnapshotIn,
-  resolveIdentifier,
+  getParent,
 } from "mobx-state-tree";
 import { Param } from "./Param";
 import { generateId } from "../utils/generateId";
-import { coreTypes } from "./CoreTypes";
 
 export const Type = types
-  .model({
+  .model("type", {
     id: types.optional(types.identifier, generateId),
     name: types.string,
     params: types.maybe(
@@ -26,11 +25,7 @@ export const Type = types
 export const TypeRef = types.maybeNull(
   types.reference(Type, {
     get(identifier /* string */, parent: any /*Store*/): any {
-      return (
-        resolveIdentifier(Type, parent, identifier) ||
-        coreTypes[identifier] ||
-        null
-      );
+      return (getParent(parent, 4) as any).types.get(identifier) || null;
     },
 
     set(value) {

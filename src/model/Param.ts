@@ -1,5 +1,5 @@
 import { types, Instance, SnapshotIn } from "mobx-state-tree";
-import { Type, TypeRef } from "./Type";
+import { TypeRef } from "./Type";
 
 import { generateId } from "../utils/generateId";
 

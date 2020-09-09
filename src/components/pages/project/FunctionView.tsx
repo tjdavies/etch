@@ -38,7 +38,7 @@ export function FunctionView({ fn }: Props) {
       <BackGround
         onDoubleClick={(e) => setShowTokenDropdown({ x: e.pageX, y: e.pageY })}
       />
-      {fn.tokens.map((t) => (
+      {fn.tokens.map((t: any) => (
         <Token key={t.id} token={t} />
       ))}
 
