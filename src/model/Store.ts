@@ -152,6 +152,7 @@ function findPlugValue(fn: IFn, plug: IPath, plugValues: Record<string, any>) {
   if (plugValues[plug.path]) {
     return plugValues;
   } else {
+    console.log(plug.target);
     if (getType(plug.target) === Token) {
       const token = plug.target as IToken;
       const computedValues = getValuesForSockets(fn, token.sockets, plugValues);

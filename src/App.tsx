@@ -7,7 +7,7 @@ import { Routes } from "./Routes";
 import { ProjectPage } from "./components/pages/project/ProjectPage";
 import { Store, StoreProvider } from "./model/Store";
 import { loadProjectList, saveProjectList } from "./utils/Save";
-import { onSnapshot } from "mobx-state-tree";
+import { onSnapshot, getSnapshot } from "mobx-state-tree";
 import makeInspectable from "mobx-devtools-mst";
 
 const AppWrapper = styled.div`
@@ -26,6 +26,10 @@ const store = Store.create({
 makeInspectable(store);
 
 onSnapshot(store, (snapShot) => saveProjectList(snapShot.projects));
+
+(window as any).out = () => {
+  console.log(getSnapshot(store));
+};
 
 function App() {
   return (

@@ -3,10 +3,8 @@ import { FnRef } from "./Fn";
 import { Token } from "./Token";
 import { Param } from "./Param";
 
-//const FnOrToken = types.union(Fn, Token);
-
 export const Path = types.model({
-  target: types.late((): any => types.union(FnRef, types.reference(Token))),
+  target: types.late((): any => types.union(types.reference(Token), FnRef)),
   param: types.reference(Param),
   path: types.string,
 });

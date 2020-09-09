@@ -59,8 +59,11 @@ export const Fn = types
 
 export const FnRef = types.reference(Fn, {
   get(identifier: string, parent: any /*Store*/): any {
-    return getRoot<typeof Store>(parent).activeProject?.functions.get(
-      identifier
+    console.log("getting ");
+    console.log(identifier);
+    return (
+      getRoot<typeof Store>(parent).activeProject?.functions.get(identifier) ||
+      null
     );
   },
 
