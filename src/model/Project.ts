@@ -8,7 +8,7 @@ export const Project = types
     name: types.string,
     functions: types.map(Fn),
     mainFn: types.reference(Fn),
-    types: types.array(Type),
+    types: types.map(Type),
   })
   .actions((self) => ({
     setName(name: string) {

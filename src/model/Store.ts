@@ -14,6 +14,7 @@ import { coreFunctions, coreFunctionProcesses } from "./CoreFunctions";
 import { IPath, Path } from "./Path";
 import { IWire } from "./Wire";
 import { Token, IToken } from "./Token";
+import { coreTypes } from "./CoreTypes";
 
 export const Store = types
   .model("store", {
@@ -50,16 +51,7 @@ export const Store = types
         name: "Project" + (self.projects.length + 1),
         functions: { ...coreFunctions, [mainFn.id]: mainFn },
         mainFn: mainFn.id,
-        types: [
-          {
-            id: "string",
-            name: "string",
-          },
-          {
-            id: "number",
-            name: "number",
-          },
-        ],
+        types: {},
       });
     },
     activeDragPlug(drag: IPath) {

@@ -1,5 +1,5 @@
 import { types, Instance, SnapshotIn } from "mobx-state-tree";
-import { Type } from "./Type";
+import { Type, TypeRef } from "./Type";
 
 import { generateId } from "../utils/generateId";
 
@@ -7,7 +7,7 @@ export const Param = types
   .model("Param", {
     id: types.optional(types.identifier, generateId),
     name: types.string,
-    type: types.reference(Type),
+    type: TypeRef,
   })
   .views((self) => ({
     // get canConnect(): boolean {
