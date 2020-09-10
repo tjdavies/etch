@@ -35,17 +35,22 @@ export const Store = types
       }
     },
     stopDrag() {
-      if (self.activeFunction && self.activeDrag) {
+      if (self.activeDrag) {
+        const index = self.activeFunction.wires.findIndex(
+          (i: any) => i.to.path === self.activeDrag?.path
+        );
+
         if (self.activeSocket) {
-          self.activeFunction.wires.push({
-            id: self.activeDrag.path,
-            from: clone(self.activeDrag),
-            to: clone(self.activeSocket),
-          });
+          if (index > -1) {
+            self.activeFunction.wires[index].to = clone(self.activeSocket);
+          } else {
+            self.activeFunction.wires.push({
+              id: self.activeDrag.path,
+              from: clone(self.activeDrag),
+              to: clone(self.activeSocket),
+            });
+          }
         } else {
-          const index = self.activeFunction.wires.findIndex(
-            (i: any) => i.to.path === self.activeDrag?.path
-          );
           if (index > -1) {
             self.activeFunction.wires.splice(index, 1);
           }
