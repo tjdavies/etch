@@ -12,9 +12,10 @@ const Connector = styled.div`
 const ConnectorWrapper = styled.div`
   position: absolute;
   right: -30px;
-  margin-top: 5px;
   display: block;
   pointer-events: none;
+  padding: 5px;
+  z-index: -1;
 `;
 
 interface Props {

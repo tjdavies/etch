@@ -6,7 +6,7 @@ import { IPath } from "../../../model/Path";
 
 const InputBox = styled.div`
   display: flex;
-  z-index: 1;
+  z-index: 2;
   flex-direction: column;
   align-items: flex-end;
   gap: 5px;

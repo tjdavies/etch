@@ -18,8 +18,8 @@ const ConnectorWrapper = styled.div`
   position: absolute;
   display: block;
   left: -30px;
-  margin-top: 5px;
   display: block;
+  padding: 5px;
 `;
 
 interface Props {

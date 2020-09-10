@@ -6,7 +6,6 @@ import { IPath } from "../../../model/Path";
 
 const OutputBox = styled.div`
   gap: 5px;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
