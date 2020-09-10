@@ -1,10 +1,11 @@
 import { types, Instance, SnapshotIn, destroy } from "mobx-state-tree";
-import { Param } from "./Param";
+import { Param, IParam, IParamIn } from "./Param";
 import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
 import { Wire } from "./Wire";
 import { IPath } from "./Path";
+import { IType } from "./Type";
 
 export const Fn = types
   .model("Fn", {
@@ -58,6 +59,13 @@ export const Fn = types
         destroy(element);
       });
       destroy(token);
+    },
+    addInputParam(type: IType) {
+      const newParam: IParamIn = {
+        name: "new",
+        type: type.id,
+      };
+      self.input.push(newParam);
     },
   }));
 

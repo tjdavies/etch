@@ -13,9 +13,10 @@ const ConnectorWrapper = styled.div`
   position: absolute;
   right: -30px;
   display: block;
-  pointer-events: none;
+
   padding: 5px;
   z-index: -1;
+  pointer-events: none;
 `;
 
 interface Props {

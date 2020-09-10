@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { FromType } from "./FromType";
 import { IPath } from "../../../model/Path";
+import { AddParam } from "./AddParam";
 
 const InputBox = styled.div`
   display: flex;
@@ -29,6 +30,7 @@ export const FunctionInput = ({ input }: Props) => {
       {input.map((param) => (
         <FromType key={param.path} param={param} />
       ))}
+      <AddParam />
     </InputBox>
   );
 };

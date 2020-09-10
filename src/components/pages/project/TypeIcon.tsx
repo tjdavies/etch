@@ -12,6 +12,7 @@ export const TypeIconBox = styled.div`
   height: 20px;
   border-radius: 1px;
   color: ${Colours.darkText};
+  background-color: ${Colours.background};
 `;
 
 export function TypeIcon({ type }: { type: IType }) {
