@@ -5,6 +5,8 @@ import { PageHeader } from "../../common/Header";
 import { FunctionView } from "./FunctionView";
 import { observer } from "mobx-react-lite";
 import { IStore } from "../../../model/Store";
+import { Revert } from "grommet-icons";
+import { useHistory } from "react-router-dom";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -41,6 +43,16 @@ const FnNameHeader = styled.div`
 
 const RunButton = styled.div`
   position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding: 5px;
+  color: ${Colours.lightText};
+  background-color: ${Colours.primary};
+  cursor: pointer;
+`;
+
+const BackButton = styled.div`
+  position: absolute;
   top: 20px;
   right: 20px;
   padding: 5px;
@@ -50,6 +62,7 @@ const RunButton = styled.div`
 `;
 
 export const ProjectView = observer(({ store }: { store: IStore }) => {
+  let history = useHistory();
   return (
     <PageWrapper>
       <FunctionView fn={store.activeFunction} />
@@ -61,8 +74,14 @@ export const ProjectView = observer(({ store }: { store: IStore }) => {
           }}
           value={store.project.name}
         />
-        <FnNameHeader>{store.activeFunction?.name}</FnNameHeader>
+        <FnNameHeader>{store.activeFunction.name}</FnNameHeader>
       </PageHeader>
+      {store.activeFunction.id !== store.project.mainFn.id && (
+        <BackButton onClick={history.goBack}>
+          <Revert color={Colours.lightText} />
+        </BackButton>
+      )}
+
       <RunButton onClick={store.run}> Run </RunButton>
     </PageWrapper>
   );

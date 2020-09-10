@@ -18,7 +18,10 @@ function App() {
     <AppWrapper>
       <BrowserRouter>
         <Switch>
-          <Route path={Routes.project}>
+          <Route path={Routes.project} exact>
+            <ProjectPage />
+          </Route>
+          <Route path={Routes.function} exact>
             <ProjectPage />
           </Route>
           <Route path="/">

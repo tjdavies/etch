@@ -7,6 +7,8 @@ import { TokenInput } from "./TokenInput";
 import { TokenOutput } from "./TokenOutput";
 import { Share } from "grommet-icons";
 import { useStore } from "../../../../model/Store";
+import { useHistory, generatePath } from "react-router-dom";
+import { Routes } from "../../../../Routes";
 
 const TokenWrapper = styled.div`
   position: fixed;
@@ -44,7 +46,19 @@ const TokenBody = styled.div`
 `;
 
 export function Token({ token }: Props) {
+  const history = useHistory();
   const store = useStore();
+
+  const onOpenToken = () => {
+    if (!token.fn.core) {
+      history.push(
+        generatePath(Routes.function, {
+          id: store.project.id,
+          fn: token.fn.id,
+        })
+      );
+    }
+  };
 
   return (
     <Draggable
@@ -55,11 +69,7 @@ export function Token({ token }: Props) {
       }}
       position={token.position}
     >
-      <TokenWrapper
-        onDoubleClick={() =>
-          !token.fn.core && store.setActiveFunction(token.fn)
-        }
-      >
+      <TokenWrapper onDoubleClick={onOpenToken}>
         <TokenHeader className="header">
           {!token.fn.core && <Share color="white" size="small" />}
           {token.fn.name}

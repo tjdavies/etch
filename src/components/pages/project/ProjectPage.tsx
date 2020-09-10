@@ -24,16 +24,14 @@ const Error = styled.div`
 `;
 
 export const ProjectPage = () => {
-  const { id } = useParams();
+  const { id, fn } = useParams();
 
   const initialState = loadProject(id);
-
-  console.log(initialState);
 
   if (initialState) {
     const store: IStore = Store.create({
       project: initialState,
-      activeFunction: initialState.mainFn,
+      activeFunction: fn || initialState.mainFn,
     });
 
     makeInspectable(store);
