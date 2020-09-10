@@ -1,4 +1,4 @@
-import { types, Instance, SnapshotIn } from "mobx-state-tree";
+import { types, Instance, SnapshotIn, getParent } from "mobx-state-tree";
 import { Point, IPoint } from "./Point";
 import { IFn, Fn } from "./Fn";
 import { generateId } from "../utils/generateId";
@@ -33,6 +33,9 @@ export const Token = types
   .actions((self) => ({
     setPosition(position: IPoint) {
       self.position = position;
+    },
+    remove() {
+      getParent<IFn>(self, 2).removeToken(self as IToken);
     },
   }));
 

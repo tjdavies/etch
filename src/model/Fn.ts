@@ -1,6 +1,6 @@
-import { types, Instance, SnapshotIn } from "mobx-state-tree";
+import { types, Instance, SnapshotIn, destroy } from "mobx-state-tree";
 import { Param } from "./Param";
-import { Token, ITokenIn } from "./Token";
+import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
 import { Wire } from "./Wire";
@@ -48,6 +48,16 @@ export const Fn = types
         fn: fn.id,
       };
       self.tokens.push(newToken);
+    },
+    removeToken(token: IToken) {
+      const connected = self.wires.filter(
+        (wire) => wire.from.target === token || wire.to.target === token
+      );
+      console.log(connected);
+      connected.forEach((element) => {
+        destroy(element);
+      });
+      destroy(token);
     },
   }));
 

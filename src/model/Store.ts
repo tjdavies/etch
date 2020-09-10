@@ -251,12 +251,6 @@ function mapPlugsToOutput(
   }, {});
 }
 
-/*
-function findWireTo(wires: IWire[], path: string): IWire | undefined {
-  return wires.find((wire) => wire.to === path);
-}
-*/
-
 export interface IStore extends Instance<typeof Store> {}
 const StoreContext = createContext<null | IStore>(null);
 

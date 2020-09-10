@@ -7,6 +7,7 @@ import { Wires } from "./wires/Wires";
 import { TokenDropDown } from "./TokenDropDown";
 import { Point } from "../../../types/types";
 import { Token } from "./tokens/Token";
+import { observer } from "mobx-react-lite";
 
 const FunctionViewWrapper = styled.div`
   display: flex;
@@ -29,7 +30,7 @@ interface Props {
   fn: IFn;
 }
 
-export function FunctionView({ fn }: Props) {
+export const FunctionView = observer(({ fn }: Props) => {
   const [showTokenDropdown, setShowTokenDropdown] = useState<Point | null>(
     null
   );
@@ -53,4 +54,4 @@ export function FunctionView({ fn }: Props) {
       )}
     </FunctionViewWrapper>
   );
-}
+});

@@ -5,7 +5,7 @@ import { Colours } from "../../../../Style";
 import Draggable from "react-draggable";
 import { TokenInput } from "./TokenInput";
 import { TokenOutput } from "./TokenOutput";
-import { Share } from "grommet-icons";
+import { Share, Close } from "grommet-icons";
 import { useStore } from "../../../../model/Store";
 import { useHistory, generatePath } from "react-router-dom";
 import { Routes } from "../../../../Routes";
@@ -25,7 +25,9 @@ const TokenHeader = styled.div`
   color: ${Colours.lightText};
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding-left: 10px;
+  padding-right: 10px;
   cursor: move;
 `;
 
@@ -43,6 +45,10 @@ const TokenBody = styled.div`
   border-top: none;
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;
+`;
+
+const CloseButton = styled.div`
+  cursor: pointer;
 `;
 
 export function Token({ token }: Props) {
@@ -71,8 +77,13 @@ export function Token({ token }: Props) {
     >
       <TokenWrapper onDoubleClick={onOpenToken}>
         <TokenHeader className="header">
-          {!token.fn.core && <Share color="white" size="small" />}
-          {token.fn.name}
+          <div>
+            {!token.fn.core && <Share color="white" size="small" />}
+            {token.fn.name}
+          </div>
+          <CloseButton onClick={token.remove}>
+            <Close color="white" size="small" />
+          </CloseButton>
         </TokenHeader>
         <TokenBody>
           <TokenInput input={token.sockets} />
