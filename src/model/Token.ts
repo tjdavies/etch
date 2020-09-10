@@ -1,6 +1,6 @@
 import { types, Instance, SnapshotIn, IAnyModelType } from "mobx-state-tree";
 import { Point, IPoint } from "./Point";
-import { IFn, FnRef } from "./Fn";
+import { IFn, Fn } from "./Fn";
 import { generateId } from "../utils/generateId";
 import { IParam } from "./Param";
 
@@ -8,7 +8,7 @@ export const Token = types
   .model("Token", {
     id: types.optional(types.identifier, generateId),
     position: Point,
-    fn: types.late((): any => FnRef),
+    fn: types.late((): any => types.reference(Fn)),
   })
   .views((self) => ({
     get sockets() {

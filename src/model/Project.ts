@@ -1,13 +1,13 @@
 import { types, Instance } from "mobx-state-tree";
-import { FnRef, Fn } from "./Fn";
 import { Type } from "./Type";
+import { Fn } from "./Fn";
 
 export const Project = types
   .model({
     id: types.identifier,
     name: types.string,
     functions: types.map(Fn),
-    mainFn: FnRef,
+    mainFn: types.reference(Fn),
     types: types.map(Type),
   })
   .actions((self) => ({

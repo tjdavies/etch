@@ -57,19 +57,5 @@ export const Fn = types
     },
   }));
 
-export const FnRef = types.reference(Fn, {
-  get(identifier: string, parent: any /*Store*/): any {
-    console.log("getting ");
-    console.log(identifier);
-    return (
-      getRoot<typeof Store>(parent).project.functions.get(identifier) || null
-    );
-  },
-
-  set(value) {
-    return value.id;
-  },
-});
-
 export interface IFn extends Instance<typeof Fn> {}
 export interface IFnIn extends SnapshotIn<typeof Fn> {}

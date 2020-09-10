@@ -8,7 +8,7 @@ import {
 } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";
-import { IFnIn, IFn, FnRef } from "./Fn";
+import { IFnIn, IFn, Fn } from "./Fn";
 import { IPoint } from "./Point";
 import { coreFunctions, coreFunctionProcesses } from "./CoreFunctions";
 import { IPath, Path } from "./Path";
@@ -19,7 +19,7 @@ import { coreTypes } from "./CoreTypes";
 export const Store = types
   .model("store", {
     project: Project,
-    activeFunction: FnRef,
+    activeFunction: types.reference(Fn),
     activeDrag: types.maybe(Path),
     activeSocket: types.maybe(Path),
   })

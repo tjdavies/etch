@@ -1,10 +1,10 @@
-import { types, Instance, IAnyModelType } from "mobx-state-tree";
-import { FnRef } from "./Fn";
+import { types, Instance } from "mobx-state-tree";
 import { Token } from "./Token";
 import { Param } from "./Param";
+import { Fn } from "./Fn";
 
 export const Path = types.model({
-  target: types.late((): any => types.union(types.reference(Token), FnRef)),
+  target: types.reference(types.late((): any => types.union(Token, Fn))),
   param: types.reference(Param),
   path: types.string,
 });
