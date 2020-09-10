@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Colours } from "../../../Style";
+import { Colours } from "../../Style";
 
 const getRegExp = (text: string) => {
   // The line below escapes regular expression special characters:
@@ -48,12 +48,18 @@ export function SearchableDropDown({
   };
 
   const onEnter = () => {
-    onCreateNew(searchValue);
+    console.log(dynamicOptions);
+    if (dynamicOptions.length > 0 && searchValue === dynamicOptions[0].label) {
+      onSelect(searchValue);
+    } else {
+      onCreateNew(searchValue);
+    }
   };
 
   return (
     <SearchableDropDownWrapper>
       <input
+        autoFocus
         value={searchValue}
         onChange={(e) => onSearch(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && onEnter()}

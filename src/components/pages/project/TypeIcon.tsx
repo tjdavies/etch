@@ -15,5 +15,5 @@ export const TypeIconBox = styled.div`
 `;
 
 export function TypeIcon({ type }: { type: IType }) {
-  return <TypeIconBox>S</TypeIconBox>;
+  return <TypeIconBox>{type.name.charAt(0)}</TypeIconBox>;
 }

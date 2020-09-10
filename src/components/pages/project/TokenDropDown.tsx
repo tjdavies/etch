@@ -1,8 +1,9 @@
 import React from "react";
-import { SearchableDropDown } from "./SearchableDropDown";
+import { SearchableDropDown } from "../../common/SearchableDropDown";
 import styled from "styled-components";
 import { Point } from "../../../types/types";
 import { useStore } from "../../../model/Store";
+import { Colours } from "../../../Style";
 
 interface FloatyDropdownProps {
   position: Point;
@@ -16,6 +17,8 @@ const FloatyDropdown = styled.div`
 
 const FloatyDropdownBlocker = styled.div`
   position: fixed;
+  background-color: #0000000a;
+  z-index: 10;
   top: 0;
   left: 0;
   bottom: 0;
