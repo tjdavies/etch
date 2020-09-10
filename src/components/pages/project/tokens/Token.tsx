@@ -29,6 +29,7 @@ const TokenHeader = styled.div`
   padding-left: 10px;
   padding-right: 10px;
   cursor: move;
+  gap: 10px;
 `;
 
 interface Props {
