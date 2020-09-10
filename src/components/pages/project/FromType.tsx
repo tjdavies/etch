@@ -31,7 +31,6 @@ interface Props {
 }
 
 export function FromType({ param }: Props) {
-  console.log(param);
   /*
   if (param.type.params) {
     return <RecordType type={param.type} refName={"from." + param.id} />;

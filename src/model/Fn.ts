@@ -41,6 +41,7 @@ export const Fn = types
       self.name = name;
     },
     addToken(position: IPoint, fn: IFn) {
+      position.y = position.y - 170;
       const newToken: ITokenIn = {
         id: generateId(),
         position,

@@ -5,12 +5,15 @@ import { Colours } from "../../../../Style";
 import Draggable from "react-draggable";
 import { TokenInput } from "./TokenInput";
 import { TokenOutput } from "./TokenOutput";
+import { Share } from "grommet-icons";
+import { useStore } from "../../../../model/Store";
 
 const TokenWrapper = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
   background-color: ${Colours.white};
+  user-select: none;
 `;
 
 const TokenHeader = styled.div`
@@ -41,6 +44,8 @@ const TokenBody = styled.div`
 `;
 
 export function Token({ token }: Props) {
+  const store = useStore();
+
   return (
     <Draggable
       handle={".header"}
@@ -50,8 +55,15 @@ export function Token({ token }: Props) {
       }}
       position={token.position}
     >
-      <TokenWrapper>
-        <TokenHeader className="header">{token.fn.name}</TokenHeader>
+      <TokenWrapper
+        onDoubleClick={() =>
+          !token.fn.core && store.setActiveFunction(token.fn)
+        }
+      >
+        <TokenHeader className="header">
+          {!token.fn.core && <Share color="white" size="small" />}
+          {token.fn.name}
+        </TokenHeader>
         <TokenBody>
           <TokenInput input={token.sockets} />
           <TokenOutput output={token.plugs} />
