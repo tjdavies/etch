@@ -1,5 +1,5 @@
 import { types, Instance } from "mobx-state-tree";
-import { Type } from "./Type";
+import { Type, IType } from "./Type";
 import { Fn } from "./Fn";
 
 export const Project = types
@@ -10,6 +10,11 @@ export const Project = types
     mainFn: types.reference(Fn),
     types: types.map(Type),
   })
+  .views((self) => ({
+    get typeList(): IType[] {
+      return Array.from(self.types.values());
+    },
+  }))
   .actions((self) => ({
     setName(name: string) {
       self.name = name;

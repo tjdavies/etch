@@ -1,5 +1,5 @@
 import React from "react";
-import { SearchableDropDown } from "../../common/SearchableDropDown";
+import { SearchableDropDown, Option } from "../../common/SearchableDropDown";
 import styled from "styled-components";
 import { Point } from "../../../types/types";
 import { useStore } from "../../../model/Store";
@@ -20,11 +20,17 @@ const FloatyDropdownBlocker = styled.div`
 
 interface Props {
   onClose: () => void;
-  onCreateNew: () => void;
-  onSelect: () => void;
+  onCreateNew: (name: string) => void;
+  onSelect: (key: string) => void;
+  options: Option[];
 }
 
-export function TypeDropDown({ onClose }: Props) {
+export function TypeDropDown({
+  onClose,
+  onCreateNew,
+  onSelect,
+  options,
+}: Props) {
   const store = useStore();
 
   return (
@@ -37,24 +43,9 @@ export function TypeDropDown({ onClose }: Props) {
       />
       <FloatyDropdown>
         <SearchableDropDown
-          options={
-            Array.from(store.project.types.values()).map((f) => ({
-              key: f.id,
-              label: f.name,
-            })) || []
-          }
-          onCreateNew={(name) => {
-            console.log("onCreateNew");
-            //store.createNewFunction(position, name);
-            onClose();
-          }}
-          onSelect={(key) => {
-            const t = store.project.types.get(key);
-            if (t) {
-              store.activeFunction.addInputParam(t);
-            }
-            onClose();
-          }}
+          options={options}
+          onCreateNew={onCreateNew}
+          onSelect={onSelect}
         />
       </FloatyDropdown>
     </>
