@@ -30,7 +30,7 @@ export const FunctionInput = ({ input }: Props) => {
       {input.map((param) => (
         <FromType key={param.path} param={param} />
       ))}
-      <AddParam />
+      <AddParam isInput={true} />
     </InputBox>
   );
 };

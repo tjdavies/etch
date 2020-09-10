@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { ToType } from "./ToType";
 import { IPath } from "../../../model/Path";
+import { AddParam } from "./AddParam";
 
 const OutputBox = styled.div`
   gap: 5px;
@@ -28,6 +29,7 @@ export function FunctionOutput({ output }: Props) {
       {output.map((param) => (
         <ToType key={param.path} path={param} />
       ))}
+      <AddParam isInput={false} />
     </OutputBox>
   );
 }

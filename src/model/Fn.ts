@@ -67,6 +67,13 @@ export const Fn = types
       };
       self.input.push(newParam);
     },
+    addOutputParam(type: IType) {
+      const newParam: IParamIn = {
+        name: "new",
+        type: type.id,
+      };
+      self.output.push(newParam);
+    },
   }));
 
 export interface IFn extends Instance<typeof Fn> {}

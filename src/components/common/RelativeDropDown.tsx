@@ -1,8 +1,8 @@
 import React from "react";
-import { SearchableDropDown, Option } from "../../common/SearchableDropDown";
+import { SearchableDropDown, Option } from "./SearchableDropDown";
 import styled from "styled-components";
-import { Point } from "../../../types/types";
-import { useStore } from "../../../model/Store";
+import { Point } from "../../types/types";
+import { useStore } from "../../model/Store";
 
 const FloatyDropdown = styled.div`
   position: absolute;
@@ -25,7 +25,7 @@ interface Props {
   options: Option[];
 }
 
-export function TypeDropDown({
+export function RelativeDropDown({
   onClose,
   onCreateNew,
   onSelect,

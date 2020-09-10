@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { TypeIconBox } from "./TypeIcon";
 import { FormAdd } from "grommet-icons";
-import { TypeDropDown } from "./TypeDropDown";
+import { RelativeDropDown } from "../../common/RelativeDropDown";
 import styled from "styled-components";
 import { useStore } from "../../../model/Store";
 
@@ -10,14 +10,18 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-export function AddParam() {
+interface Props {
+  isInput: boolean;
+}
+
+export function AddParam({ isInput }: Props) {
   const [showSelect, setShowSelect] = useState(false);
   const store = useStore();
 
   return (
     <Wrapper>
       {showSelect && (
-        <TypeDropDown
+        <RelativeDropDown
           onClose={() => setShowSelect(false)}
           options={
             store.project.typeList.map((f) => ({
@@ -32,7 +36,11 @@ export function AddParam() {
           onSelect={(key) => {
             const t = store.project.types.get(key);
             if (t) {
-              store.activeFunction.addInputParam(t);
+              if (isInput) {
+                store.activeFunction.addInputParam(t);
+              } else {
+                store.activeFunction.addOutputParam(t);
+              }
             }
             setShowSelect(false);
           }}
