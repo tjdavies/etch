@@ -48,7 +48,6 @@ export function SearchableDropDown({
   };
 
   const onEnter = () => {
-    console.log(dynamicOptions);
     if (dynamicOptions.length > 0 && searchValue === dynamicOptions[0].label) {
       onSelect(searchValue);
     } else {
