@@ -9,19 +9,28 @@ export function loadProjectList(): any[] | undefined {
   const projectList = localStorage.getItem(PROJECT_LIST);
   if (projectList) {
     return JSON.parse(projectList);
+  } else {
+    return [];
   }
 }
 
 export function saveProject(data: any) {
   localStorage.setItem(PROJECT_PREFIX + data.id, JSON.stringify(data));
+  const projectList = loadProjectList();
+  if (projectList) {
+    const i = projectList.findIndex((p) => p.id === data.id);
+    if (i === -1) {
+      saveProjectList([...projectList, { id: data.id, name: data.name }]);
+    } else {
+      projectList[i].name = data.name;
+      saveProjectList(projectList);
+    }
+  }
 }
 
-export function loadProject(id: string): Promise<any> {
-  return new Promise((resolve, reject) => {
-    const saved = localStorage.getItem(PROJECT_PREFIX + id);
-    if (saved) {
-      resolve(JSON.parse(saved));
-    }
-    reject();
-  });
+export function loadProject(id: string): any {
+  const project = localStorage.getItem(PROJECT_PREFIX + id);
+  if (project) {
+    return JSON.parse(project);
+  }
 }

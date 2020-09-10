@@ -46,20 +46,18 @@ export function TokenDropDown({ position, onClose }: Props) {
       >
         <SearchableDropDown
           options={
-            (store.activeProject &&
-              Array.from(store.activeProject.functions.values()).map((f) => ({
-                key: f.id,
-                label: f.name,
-              }))) ||
-            []
+            Array.from(store.project.functions.values()).map((f) => ({
+              key: f.id,
+              label: f.name,
+            })) || []
           }
           onCreateNew={(name) => {
             store.createNewFunction(position, name);
             onClose();
           }}
           onSelect={(key) => {
-            if (store.activeFunction && store.activeProject) {
-              const f = store.activeProject.functions.get(key);
+            if (store.activeFunction) {
+              const f = store.project.functions.get(key);
               console.log(f);
               if (f) {
                 store.activeFunction.addToken(position, f);

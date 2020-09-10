@@ -1,54 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import { Colours } from "../../../Style";
 
 import { PageHeader } from "../../common/Header";
 import { useParams } from "react-router-dom";
-import { FunctionView } from "./FunctionView";
-import { observer } from "mobx-react-lite";
-import { useStore } from "../../../model/Store";
+
+import { Store, IStore, StoreProvider } from "../../../model/Store";
+import { loadProject, saveProject } from "../../../utils/Save";
+import { onSnapshot, getSnapshot } from "mobx-state-tree";
+import makeInspectable from "mobx-devtools-mst";
+import { ProjectView } from "./ProjectView";
 
 const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-`;
-
-const ProjectNameWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  height: 100%;
-  padding-left: 20px;
-  border-left: 2px solid ${Colours.lightText};
-`;
-
-const ProjectNameHeader = styled.input`
-  width: 100px;
-  font-size: 20px;
-  outline: 0px solid transparent;
-  background: none;
-  border: none;
-  color: ${Colours.lightText};
-  padding-right: 20px;
-`;
-
-const FnNameHeader = styled.div`
-  height: 100%;
-  display: flex;
-  align-items: center;
-  font-size: 20px;
-  padding-left: 20px;
-  border-left: 2px solid ${Colours.lightText};
-`;
-
-const RunButton = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 5px;
-  color: ${Colours.lightText};
-  background-color: ${Colours.primary};
-  cursor: pointer;
 `;
 
 const Error = styled.div`
@@ -58,28 +23,32 @@ const Error = styled.div`
   justify-content: center;
 `;
 
-export const ProjectPage = observer(() => {
+export const ProjectPage = () => {
   const { id } = useParams();
 
-  const store = useStore();
+  const initialState = loadProject(id);
 
-  store.setActiveProject(id);
+  console.log(initialState);
 
-  if (store.activeProject && store.activeFunction) {
+  if (initialState) {
+    const store: IStore = Store.create({
+      project: initialState,
+      activeFunction: initialState.mainFn,
+    });
+
+    makeInspectable(store);
+
+    onSnapshot(store, (snapShot) => saveProject(snapShot.project));
+
+    (window as any).out = () => {
+      console.log(getSnapshot(store));
+    };
+
     return (
       <PageWrapper>
-        <FunctionView fn={store.activeFunction} />
-        <PageHeader>
-          <ProjectNameWrapper />
-          <ProjectNameHeader
-            onChange={(e) => {
-              store.activeProject?.setName(e.target.value);
-            }}
-            value={store.activeProject.name}
-          />
-          <FnNameHeader>{store.activeFunction?.name}</FnNameHeader>
-        </PageHeader>
-        <RunButton onClick={store.run}> Run </RunButton>
+        <StoreProvider value={store}>
+          <ProjectView store={store} />
+        </StoreProvider>
       </PageWrapper>
     );
   }
@@ -90,4 +59,4 @@ export const ProjectPage = observer(() => {
       <Error>Sorry, no project found</Error>
     </PageWrapper>
   );
-});
+};

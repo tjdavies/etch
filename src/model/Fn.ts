@@ -62,8 +62,7 @@ export const FnRef = types.reference(Fn, {
     console.log("getting ");
     console.log(identifier);
     return (
-      getRoot<typeof Store>(parent).activeProject?.functions.get(identifier) ||
-      null
+      getRoot<typeof Store>(parent).project.functions.get(identifier) || null
     );
   },
 

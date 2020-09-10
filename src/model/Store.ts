@@ -18,42 +18,12 @@ import { coreTypes } from "./CoreTypes";
 
 export const Store = types
   .model("store", {
-    projects: types.array(Project),
-    activeProject: types.maybe(types.reference(Project)),
-    activeFunction: types.maybe(FnRef),
+    project: Project,
+    activeFunction: FnRef,
     activeDrag: types.maybe(Path),
     activeSocket: types.maybe(Path),
   })
   .actions((self) => ({
-    createNewProject() {
-      const inputCountParamter = {
-        id: "count",
-        name: "count",
-        type: "number",
-      };
-
-      const outputCountParamter = {
-        id: generateId(),
-        name: "count",
-        type: "number",
-      };
-
-      const mainFn: IFnIn = {
-        id: generateId(),
-        name: "main",
-        core: false,
-        input: [inputCountParamter],
-        output: [outputCountParamter],
-      };
-
-      self.projects.push({
-        id: generateId(),
-        name: "Project" + (self.projects.length + 1),
-        functions: { ...coreFunctions, [mainFn.id]: mainFn },
-        mainFn: mainFn.id,
-        types: { ...coreTypes },
-      });
-    },
     activeDragPlug(drag: IPath) {
       self.activeDrag = clone(drag);
     },
@@ -87,10 +57,6 @@ export const Store = types
     setActiveSocket(param: IPath | undefined) {
       self.activeSocket = param;
     },
-    setActiveProject(id: string) {
-      self.activeProject = self.projects.find((p) => p.id === id);
-      self.activeFunction = self.activeProject?.mainFn;
-    },
     createNewFunction(position: IPoint, name: string) {
       const newFn: IFnIn = {
         id: generateId(),
@@ -100,21 +66,49 @@ export const Store = types
         output: [],
       };
 
-      if (self.activeProject) {
-        self.activeProject.functions.put(newFn);
-        const f = self.activeProject.functions.get(newFn.id);
-        if (f) {
-          self.activeFunction?.addToken(position, f);
-        }
+      self.project.functions.put(newFn);
+      const f = self.project.functions.get(newFn.id);
+      if (f) {
+        self.activeFunction?.addToken(position, f);
       }
     },
     run() {
-      if (self.activeProject) {
-        const v = calculateFunction(self.activeProject.mainFn, { count: 2 });
-        console.log(v);
-      }
+      const v = calculateFunction(self.project.mainFn, { count: 2 });
+      console.log(v);
     },
   }));
+
+export interface IStore extends Instance<typeof Store> {}
+
+export function createNewProject(name: string) {
+  const inputCountParamter = {
+    id: "count",
+    name: "count",
+    type: "number",
+  };
+
+  const outputCountParamter = {
+    id: generateId(),
+    name: "count",
+    type: "number",
+  };
+
+  const mainFn: IFnIn = {
+    id: generateId(),
+    name: "main",
+    core: false,
+    input: [inputCountParamter],
+    output: [outputCountParamter],
+  };
+
+  return {
+    id: generateId(),
+    name: name,
+    functions: { ...coreFunctions, [mainFn.id]: mainFn },
+    mainFn: mainFn.id,
+    types: { ...coreTypes },
+  };
+}
 
 export function calculateFunction(
   fn: IFn,
