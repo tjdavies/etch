@@ -1,17 +1,10 @@
-import {
-  types,
-  Instance,
-  SnapshotIn,
-  getParent,
-  getRoot,
-} from "mobx-state-tree";
+import { types, Instance, SnapshotIn } from "mobx-state-tree";
 import { Param } from "./Param";
 import { Token, ITokenIn } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
 import { Wire } from "./Wire";
 import { IPath } from "./Path";
-import { Store } from "./Store";
 
 export const Fn = types
   .model("Fn", {

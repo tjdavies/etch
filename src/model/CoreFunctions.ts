@@ -6,6 +6,11 @@ export const coreFunctionProcesses: Record<string, any> = {
       r: a + b,
     };
   },
+  subtract: ({ as, bs }: Record<string, any>): Record<string, any> => {
+    return {
+      rs: as - bs,
+    };
+  },
 };
 
 const addFn: IFnIn = {
@@ -33,6 +38,32 @@ const addFn: IFnIn = {
   ],
 };
 
+const subtractFn: IFnIn = {
+  id: "subtract",
+  name: "subtract",
+  core: true,
+  input: [
+    {
+      id: "as",
+      name: "A",
+      type: "number",
+    },
+    {
+      id: "bs",
+      name: "B",
+      type: "number",
+    },
+  ],
+  output: [
+    {
+      id: "rs",
+      name: "A - B",
+      type: "number",
+    },
+  ],
+};
+
 export const coreFunctions = {
   add: addFn,
+  subtract: subtractFn,
 };

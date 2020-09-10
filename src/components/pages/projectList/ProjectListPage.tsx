@@ -6,8 +6,8 @@ import { ReactComponent as PlusIcon } from "../../../assets/plus.svg";
 import { Link, generatePath } from "react-router-dom";
 import { Routes } from "../../../Routes";
 import { PageHeader } from "../../common/Header";
-import { useStore, createNewProject } from "../../../model/Store";
-import { observer } from "mobx-react-lite";
+import { createNewProject } from "../../../model/Store";
+
 import { loadProjectList, saveProject } from "../../../utils/Save";
 
 const PageWrapper = styled.div``;

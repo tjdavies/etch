@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-
 import { PageHeader } from "../../common/Header";
-import { useParams } from "react-router-dom";
 import { FunctionView } from "./FunctionView";
 import { observer } from "mobx-react-lite";
-import { useStore, IStore } from "../../../model/Store";
+import { IStore } from "../../../model/Store";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -52,24 +50,20 @@ const RunButton = styled.div`
 `;
 
 export const ProjectView = observer(({ store }: { store: IStore }) => {
-  console.log(store);
-  if (store.activeFunction) {
-    return (
-      <PageWrapper>
-        <FunctionView fn={store.activeFunction} />
-        <PageHeader>
-          <ProjectNameWrapper />
-          <ProjectNameHeader
-            onChange={(e) => {
-              store.project.setName(e.target.value);
-            }}
-            value={store.project.name}
-          />
-          <FnNameHeader>{store.activeFunction?.name}</FnNameHeader>
-        </PageHeader>
-        <RunButton onClick={store.run}> Run </RunButton>
-      </PageWrapper>
-    );
-  }
-  return null;
+  return (
+    <PageWrapper>
+      <FunctionView fn={store.activeFunction} />
+      <PageHeader>
+        <ProjectNameWrapper />
+        <ProjectNameHeader
+          onChange={(e) => {
+            store.project.setName(e.target.value);
+          }}
+          value={store.project.name}
+        />
+        <FnNameHeader>{store.activeFunction?.name}</FnNameHeader>
+      </PageHeader>
+      <RunButton onClick={store.run}> Run </RunButton>
+    </PageWrapper>
+  );
 });

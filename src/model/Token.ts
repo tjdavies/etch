@@ -1,4 +1,4 @@
-import { types, Instance, SnapshotIn, IAnyModelType } from "mobx-state-tree";
+import { types, Instance, SnapshotIn } from "mobx-state-tree";
 import { Point, IPoint } from "./Point";
 import { IFn, Fn } from "./Fn";
 import { generateId } from "../utils/generateId";
