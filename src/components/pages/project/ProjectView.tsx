@@ -7,6 +7,7 @@ import { observer } from "mobx-react-lite";
 import { IStore } from "../../../model/Store";
 import { Revert } from "grommet-icons";
 import { useHistory } from "react-router-dom";
+import { InlineEdit } from "../../common/InlineEdit";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -87,7 +88,13 @@ export const ProjectView = observer(({ store }: { store: IStore }) => {
           }}
           value={store.project.name}
         />
-        <FnNameHeader>{store.activeFunction.name}</FnNameHeader>
+        <FnNameHeader>
+          <InlineEdit
+            type="text"
+            value={store.activeFunction.name}
+            onSave={store.activeFunction.setName}
+          />
+        </FnNameHeader>
       </PageHeader>
       {store.activeFunction.id !== store.project.mainFn.id && (
         <BackButton onClick={history.goBack}>

@@ -25,15 +25,17 @@ const StyledEdiText = styled(EdiText)`
     font-size: inherit;
     border: none;
     border-bottom: 1px dashed ${Colours.secondary};
+    background: transparent;
+    color: inherit;
   }
   div[editext="view-container"] {
     text-align: ${(p: EdiTextProps) => (p.buttonsAlign ? "right" : "left")};
-    border-bottom: 1px dashed ${Colours.background};
+    border-bottom: 1px;
   }
   div[editext="edit-container"] {
     width: 100px;
     text-align: ${(p: EdiTextProps) => (p.buttonsAlign ? "right" : "left")};
-    border-bottom: 1px dashed ${Colours.background};
+    border-bottom: 1px;
   }
 `;
 
