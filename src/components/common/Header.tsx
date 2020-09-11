@@ -8,10 +8,11 @@ const HeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   font-size: 40px;
-  height: 80px;
-  padding-right: 40px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  height: 70px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   width: fit-content;
   background-color: ${Colours.primary};
   color: ${Colours.lightText};
@@ -19,8 +20,9 @@ const HeaderWrapper = styled.div`
 `;
 
 const AppName = styled.span`
+  line-height: 60px;
   padding-right: 20px;
-  padding-left: ${Padding.default};
+  padding-bottom: 5px;
 `;
 
 interface props {

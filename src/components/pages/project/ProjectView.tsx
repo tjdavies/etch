@@ -24,6 +24,7 @@ const ProjectNameWrapper = styled.div`
 
 const ProjectNameHeader = styled.input`
   width: 100px;
+  height: 100%;
   font-size: 20px;
   outline: 0px solid transparent;
   background: none;
@@ -43,22 +44,34 @@ const FnNameHeader = styled.div`
 
 const RunButton = styled.div`
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0px;
+  right: 0px;
   padding: 5px;
+  height: 50px;
+  width: 50px;
   color: ${Colours.lightText};
   background-color: ${Colours.primary};
+  border-top-left-radius: 15px;
   cursor: pointer;
 `;
 
 const BackButton = styled.div`
   position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0px;
+  right: 0px;
+
+  height: 50px;
+  width: 50px;
   color: ${Colours.lightText};
   background-color: ${Colours.primary};
   cursor: pointer;
+  border-bottom-left-radius: 15px;
 `;
 
 export const ProjectView = observer(({ store }: { store: IStore }) => {
