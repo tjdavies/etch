@@ -1,5 +1,5 @@
 import { types, Instance, SnapshotIn, destroy } from "mobx-state-tree";
-import { Param, IParam, IParamIn } from "./Param";
+import { Param, IParamIn } from "./Param";
 import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";

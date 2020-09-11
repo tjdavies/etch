@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Connector } from "../Connector";
 import { Colours } from "../../../../Style";
@@ -16,16 +16,6 @@ const WireSVG = styled.svg`
 
 export const Wires = observer(() => {
   const { activeFunction } = useStore();
-  const [date, setDate] = useState(new Date());
-  const size = useWindowSize();
-
-  useEffect(() => {
-    setDate(new Date());
-  }, [size]);
-
-  (window as any).redraw = () => {
-    setDate(new Date());
-  };
 
   return (
     <WireSVG

@@ -5,6 +5,7 @@ import { ProjectListPage } from "./components/pages/projectList/ProjectListPage"
 import { Colours } from "./Style";
 import { Routes } from "./Routes";
 import { ProjectPage } from "./components/pages/project/ProjectPage";
+import "mobx-react-lite/batchingForReactDom";
 
 const AppWrapper = styled.div`
   min-width: 100vw;

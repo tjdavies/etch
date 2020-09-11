@@ -1,7 +1,6 @@
 import React from "react";
 import { SearchableDropDown, Option } from "./SearchableDropDown";
 import styled from "styled-components";
-import { Point } from "../../types/types";
 import { useStore } from "../../model/Store";
 
 const FloatyDropdown = styled.div`
@@ -31,8 +30,6 @@ export function RelativeDropDown({
   onSelect,
   options,
 }: Props) {
-  const store = useStore();
-
   return (
     <>
       <FloatyDropdownBlocker
