@@ -3,6 +3,7 @@ import { SearchableDropDown } from "../../common/SearchableDropDown";
 import styled from "styled-components";
 import { Point } from "../../../types/types";
 import { useStore } from "../../../model/Store";
+import { useHistory } from "react-router-dom";
 
 interface FloatyDropdownProps {
   position: Point;
@@ -47,15 +48,15 @@ export function TokenDropDown({ position, onClose }: Props) {
         }}
       >
         <SearchableDropDown
-          options={
-            Array.from(store.project.functions.values()).map((f) => ({
+          options={store.project.functionList
+            .filter((f) => f !== store.project.mainFn)
+            .map((f) => ({
               key: f.id,
               label: f.name,
-            })) || []
-          }
+            }))}
           onCreateNew={(name) => {
-            store.createNewFunction(position, name);
             onClose();
+            store.createNewFunction(position, name);
           }}
           onSelect={(key) => {
             if (store.activeFunction) {

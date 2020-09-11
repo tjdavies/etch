@@ -11,6 +11,11 @@ export const coreFunctionProcesses: Record<string, any> = {
       rs: as - bs,
     };
   },
+  multiply: ({ am, bm }: Record<string, any>): Record<string, any> => {
+    return {
+      rm: am * bm,
+    };
+  },
 };
 
 const addFn: IFnIn = {
@@ -63,7 +68,59 @@ const subtractFn: IFnIn = {
   ],
 };
 
+const multiplyFn: IFnIn = {
+  id: "multiply",
+  name: "multiply",
+  core: true,
+  input: [
+    {
+      id: "am",
+      name: "A",
+      type: "number",
+    },
+    {
+      id: "bm",
+      name: "B",
+      type: "number",
+    },
+  ],
+  output: [
+    {
+      id: "rm",
+      name: "A * B",
+      type: "number",
+    },
+  ],
+};
+
+const divideFn: IFnIn = {
+  id: "divide",
+  name: "divide",
+  core: true,
+  input: [
+    {
+      id: "ad",
+      name: "A",
+      type: "number",
+    },
+    {
+      id: "bd",
+      name: "B",
+      type: "number",
+    },
+  ],
+  output: [
+    {
+      id: "rd",
+      name: "A / B",
+      type: "number",
+    },
+  ],
+};
+
 export const coreFunctions = {
   add: addFn,
   subtract: subtractFn,
+  multiply: multiplyFn,
+  divide: divideFn,
 };

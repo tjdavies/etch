@@ -89,15 +89,21 @@ export const Store = types
 export interface IStore extends Instance<typeof Store> {}
 
 export function createNewProject(name: string) {
-  const inputCountParamter = {
-    id: "count",
-    name: "count",
+  const valueAParamter = {
+    id: "valueA",
+    name: "valueA",
+    type: "number",
+  };
+
+  const valueBParamter = {
+    id: "valueB",
+    name: "valueB",
     type: "number",
   };
 
   const outputCountParamter = {
     id: generateId(),
-    name: "count",
+    name: "result",
     type: "number",
   };
 
@@ -105,7 +111,7 @@ export function createNewProject(name: string) {
     id: generateId(),
     name: "main",
     core: false,
-    input: [inputCountParamter],
+    input: [valueAParamter, valueBParamter],
     output: [outputCountParamter],
   };
 

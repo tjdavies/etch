@@ -3,7 +3,7 @@ import { ProjectButton, ProjectButtonNew } from "./ProjectButton";
 import styled from "styled-components";
 import { Colours, Padding } from "../../../Style";
 import { ReactComponent as PlusIcon } from "../../../assets/plus.svg";
-import { Link, generatePath } from "react-router-dom";
+import { Link, generatePath, useHistory } from "react-router-dom";
 import { Routes } from "../../../Routes";
 import { PageHeader } from "../../common/Header";
 import { createNewProject } from "../../../model/Store";
@@ -35,6 +35,7 @@ const ProjectHeader = styled.div`
 
 export const ProjectListPage = () => {
   const loaded = loadProjectList();
+  const history = useHistory();
 
   const [projectList, setProjectList] = useState(loaded);
 
@@ -49,6 +50,7 @@ export const ProjectListPage = () => {
     if (loaded) {
       setProjectList(loaded);
     }
+    history.push(generatePath(Routes.project, { id: project.id }));
   };
 
   return (
