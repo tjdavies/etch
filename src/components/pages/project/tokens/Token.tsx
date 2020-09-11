@@ -21,7 +21,8 @@ const TokenWrapper = styled.div`
 const TokenHeader = styled.div`
   width: 100%;
   height: 30px;
-  background-color: ${Colours.primary};
+  background-color: ${(p: { isCore: boolean }) =>
+    p.isCore ? Colours.secondary : Colours.primary};
   color: ${Colours.lightText};
   display: flex;
   align-items: center;
@@ -40,15 +41,21 @@ const TokenBody = styled.div`
   flex: 1;
   display: flex;
   flex-direction: row;
-  padding: 10px;
+  padding: 6px;
   gap: 30px;
   border: 1px solid ${Colours.lightGrey};
   border-top: none;
-  border-bottom-right-radius: 6px;
-  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
 `;
 
 const CloseButton = styled.div`
+  cursor: pointer;
+`;
+
+const FnName = styled.span`
+  font-weight: bold;
+  margin-right: 4px;
   cursor: pointer;
 `;
 
@@ -77,10 +84,10 @@ export function Token({ token }: Props) {
       position={token.position}
     >
       <TokenWrapper onDoubleClick={onOpenToken}>
-        <TokenHeader className="header">
+        <TokenHeader className="header" isCore={token.fn.core}>
           <div>
+            <FnName>{token.fn.name}</FnName>
             {!token.fn.core && <Share color="white" size="small" />}
-            {token.fn.name}
           </div>
           <CloseButton onClick={token.remove}>
             <Close color="white" size="small" />
