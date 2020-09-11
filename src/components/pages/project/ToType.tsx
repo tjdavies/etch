@@ -5,6 +5,7 @@ import { TypeIcon } from "./TypeIcon";
 import { ToConnector } from "./ToConnector";
 import { observer } from "mobx-react-lite";
 import { IPath } from "../../../model/Path";
+import { InlineEdit } from "../../common/InlineEdit";
 
 const InputLabel = styled.div`
   position: relative;
@@ -26,10 +27,11 @@ const Indented = styled.div`
 */
 
 interface Props {
+  editable?: boolean;
   path: IPath;
 }
 
-export const ToType = observer(({ path }: Props) => {
+export const ToType = observer(({ path, editable }: Props) => {
   /*
   if (param.type.params) {
     return <RecordType type={param.type} refName={refName} />;
@@ -38,9 +40,16 @@ export const ToType = observer(({ path }: Props) => {
   return (
     <InputLabel>
       <ToConnector socket={path} />
-      {path.param?.type && <TypeIcon type={path.param.type} />}
 
-      {path.param.name}
+      {editable ? (
+        <InlineEdit
+          type="text"
+          value={path.param.name}
+          onSave={path.param.setName}
+        />
+      ) : (
+        path.param.name
+      )}
     </InputLabel>
   );
 });

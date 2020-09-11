@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { TypeIcon } from "./TypeIcon";
 import { FromConnector } from "./FromConnector";
 import { IPath } from "../../../model/Path";
+import { InlineEdit } from "../../common/InlineEdit";
 
 const InputLabel = styled.div`
   position: relative;
@@ -27,10 +27,11 @@ const Indented = styled.div`
 */
 
 interface Props {
+  editable?: boolean;
   param: IPath;
 }
 
-export function FromType({ param }: Props) {
+export function FromType({ param, editable }: Props) {
   /*
   if (param.type.params) {
     return <RecordType type={param.type} refName={"from." + param.id} />;
@@ -38,13 +39,22 @@ export function FromType({ param }: Props) {
   */
   return (
     <InputLabel>
-      {param.param.name}
-      {param.param?.type && <TypeIcon type={param.param.type} />}
+      {editable ? (
+        <InlineEdit
+          type="text"
+          value={param.param.name}
+          onSave={param.param.setName}
+          buttonsAlign="before"
+        />
+      ) : (
+        param.param.name
+      )}
 
       <FromConnector path={param.path} />
     </InputLabel>
   );
 }
+// {param.param?.type && <TypeIcon type={param.param.type} />}
 /* 
 function RecordType({ type, refName }: { refName: string; type: IType }) {
   const [expanded, setExpanded] = useState(false);

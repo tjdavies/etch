@@ -12,7 +12,7 @@ const InputBox = styled.div`
   align-items: flex-end;
   gap: 5px;
   border: 1px solid ${Colours.lightGrey};
-  width: 120px;
+  min-width: 120px;
   border-bottom-right-radius: 4px;
   border-top-right-radius: 4px;
   padding: 10px;
@@ -28,7 +28,7 @@ export const FunctionInput = ({ input }: Props) => {
   return (
     <InputBox>
       {input.map((param) => (
-        <FromType key={param.path} param={param} />
+        <FromType key={param.path} param={param} editable />
       ))}
       <AddParam isInput={true} />
     </InputBox>

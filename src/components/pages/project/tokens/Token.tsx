@@ -15,7 +15,6 @@ const TokenWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${Colours.white};
-  user-select: none;
 `;
 
 const TokenHeader = styled.div`
@@ -31,6 +30,7 @@ const TokenHeader = styled.div`
   padding-right: 10px;
   cursor: move;
   gap: 10px;
+  user-select: none;
 `;
 
 interface Props {

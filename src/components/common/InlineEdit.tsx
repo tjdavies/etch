@@ -1,0 +1,51 @@
+import React from "react";
+import styled from "styled-components";
+import EdiText, { EdiTextProps } from "react-editext";
+import { Colours } from "../../Style";
+
+const StyledEdiText = styled(EdiText)`
+  button {
+    background: none;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    min-width: 0px;
+  }
+  button[editext="edit-button"] {
+  }
+  button[editext="save-button"] {
+  }
+  button[editext="cancel-button"] {
+  }
+  input,
+  textarea {
+    text-align: ${(p: EdiTextProps) => (p.buttonsAlign ? "right" : "left")};
+    padding: 0px;
+    margin-bottom: 0px;
+    font-size: inherit;
+    border: none;
+    border-bottom: 1px dashed ${Colours.secondary};
+  }
+  div[editext="view-container"] {
+    text-align: ${(p: EdiTextProps) => (p.buttonsAlign ? "right" : "left")};
+    border-bottom: 1px dashed ${Colours.background};
+  }
+  div[editext="edit-container"] {
+    width: 100px;
+    text-align: ${(p: EdiTextProps) => (p.buttonsAlign ? "right" : "left")};
+    border-bottom: 1px dashed ${Colours.background};
+  }
+`;
+
+export function InlineEdit(props: EdiTextProps) {
+  return (
+    <StyledEdiText
+      tabIndex={1}
+      startEditingOnFocus
+      submitOnUnfocus
+      submitOnEnter
+      cancelOnEscape
+      {...props}
+    />
+  );
+}

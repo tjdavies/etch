@@ -11,7 +11,7 @@ const OutputBox = styled.div`
   flex-direction: column;
   align-items: flex-start;
   border: 1px solid ${Colours.lightGrey};
-  width: 120px;
+  min-width: 120px;
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
   padding: 10px;
@@ -27,7 +27,7 @@ export function FunctionOutput({ output }: Props) {
   return (
     <OutputBox>
       {output.map((param) => (
-        <ToType key={param.path} path={param} />
+        <ToType key={param.path} path={param} editable />
       ))}
       <AddParam isInput={false} />
     </OutputBox>
