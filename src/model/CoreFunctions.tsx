@@ -16,6 +16,11 @@ export const coreFunctionProcesses: Record<string, any> = {
       rm: am * bm,
     };
   },
+  rect: ({ x, y }: Record<string, any>): Record<string, any> => {
+    return {
+      rect: { x: x, y: y },
+    };
+  },
 };
 
 const addFn: IFnIn = {
@@ -118,9 +123,35 @@ const divideFn: IFnIn = {
   ],
 };
 
+const rectFn: IFnIn = {
+  id: "rect",
+  name: "rect",
+  core: true,
+  input: [
+    {
+      id: "x",
+      name: "x",
+      type: "number",
+    },
+    {
+      id: "y",
+      name: "y",
+      type: "number",
+    },
+  ],
+  output: [
+    {
+      id: "rect",
+      name: "rect",
+      type: "shape",
+    },
+  ],
+};
+
 export const coreFunctions = {
   add: addFn,
   subtract: subtractFn,
   multiply: multiplyFn,
   divide: divideFn,
+  rect: rectFn,
 };

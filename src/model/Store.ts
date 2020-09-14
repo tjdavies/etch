@@ -81,7 +81,7 @@ export const Store = types
       }
     },
     run() {
-      const v = calculateFunction(self.project.mainFn, { count: 2 });
+      const v = calculateFunction(self.project.mainFn, { time: 0 });
       console.log(v);
     },
   }));
@@ -90,28 +90,22 @@ export interface IStore extends Instance<typeof Store> {}
 
 export function createNewProject(name: string) {
   const valueAParamter = {
-    id: "valueA",
-    name: "valueA",
-    type: "number",
-  };
-
-  const valueBParamter = {
-    id: "valueB",
-    name: "valueB",
+    id: "time",
+    name: "time",
     type: "number",
   };
 
   const outputCountParamter = {
     id: generateId(),
-    name: "result",
-    type: "number",
+    name: "scene",
+    type: "scene",
   };
 
   const mainFn: IFnIn = {
     id: generateId(),
     name: "main",
     core: false,
-    input: [valueAParamter, valueBParamter],
+    input: [valueAParamter],
     output: [outputCountParamter],
   };
 
@@ -135,6 +129,10 @@ export function calculateFunction(
   let values = mapInputToValues(fn.plugs, inputValue);
 
   const output = getValuesForSockets(fn, fn.sockets, values);
+
+  console.log("output");
+
+  console.log(output);
 
   const results = mapPlugsToOutput(fn.wires, fn.sockets, output);
 
@@ -235,6 +233,18 @@ export function mapInputToValues(
     return {
       ...accumulator,
       [plug.path]: inputValue[plug.param.id],
+    };
+  }, {});
+}
+
+export function mapOutputToValues(
+  plugs: IPath[],
+  value: Record<string, any>
+): Record<string, any> {
+  return plugs.reduce((accumulator, plug) => {
+    return {
+      ...accumulator,
+      [plug.param.name]: value[plug.param.id],
     };
   }, {});
 }

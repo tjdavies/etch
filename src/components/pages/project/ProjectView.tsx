@@ -8,6 +8,7 @@ import { IStore } from "../../../model/Store";
 import { Revert } from "grommet-icons";
 import { useHistory } from "react-router-dom";
 import { InlineEdit } from "../../common/InlineEdit";
+import { RunTimeView } from "./runTime/RunTimeView";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -102,7 +103,7 @@ export const ProjectView = observer(({ store }: { store: IStore }) => {
         </BackButton>
       )}
 
-      <RunButton onClick={store.run}> Run </RunButton>
+      <RunTimeView />
     </PageWrapper>
   );
 });
