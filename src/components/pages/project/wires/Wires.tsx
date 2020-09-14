@@ -11,7 +11,7 @@ import { IWire } from "../../../../model/Wire";
 const WireSVG = styled.svg`
   position: absolute;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
 `;
 
 export const Wires = observer(() => {

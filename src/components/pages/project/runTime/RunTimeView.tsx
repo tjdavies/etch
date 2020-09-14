@@ -6,10 +6,11 @@ import {
   calculateFunction,
   mapOutputToValues,
 } from "../../../../model/Store";
-import { Expand, Play } from "grommet-icons";
+import { Expand, Contract } from "grommet-icons";
 import { RunTimeStage } from "./RunTimeStage";
 import { RunTimeControls } from "./RunTimeControls";
 import { useInterval } from "../../../../utils/hooks/useInterval";
+import Draggable from "react-draggable";
 
 const RunButton = styled.div`
   position: absolute;
@@ -60,20 +61,25 @@ export const RunTimeView = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [time, setTime] = useState(0);
 
-  const [expanded, setExpanded] = useState(false);
+  const [state, setState] = useState<"min" | "float">("min");
 
   useInterval(
     () => {
       // Your custom logic here
-      setTime(time + 0.1);
+      setTime(time + 0.04);
     },
     // Delay in milliseconds or null to stop it
-    isPlaying ? 100 : null
+    isPlaying ? 40 : null
   );
 
   const onStop = () => {
     setIsPlaying(false);
     setTime(0);
+  };
+
+  const minimise = () => {
+    setIsPlaying(false);
+    setState("min");
   };
 
   const output = calculateFunction(store.project.mainFn, { time: time });
@@ -83,28 +89,30 @@ export const RunTimeView = () => {
 
   console.log(time);
 
-  if (expanded) {
+  if (state == "float") {
     return (
-      <RunTimeBox>
-        <RunTimeHeader>
-          <Expand
-            color={Colours.lightText}
-            size="small"
-            onClick={() => setExpanded(false)}
-          />
-          <RunTimeControls
-            isPlaying={isPlaying}
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-            onStop={() => onStop()}
-          />
-        </RunTimeHeader>
-        <RunTimeStage scene={result?.scene} />
-      </RunTimeBox>
+      <Draggable handle={".header"}>
+        <RunTimeBox>
+          <RunTimeHeader className="header">
+            <Contract
+              color={Colours.lightText}
+              size="small"
+              onClick={() => minimise()}
+            />
+            <RunTimeControls
+              isPlaying={isPlaying}
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+              onStop={() => onStop()}
+            />
+          </RunTimeHeader>
+          <RunTimeStage scene={result?.scene} />
+        </RunTimeBox>
+      </Draggable>
     );
   } else {
     return (
-      <RunButton onClick={() => setExpanded(true)}>
+      <RunButton onClick={() => setState("float")}>
         <Expand color={Colours.lightText} size="small" />
       </RunButton>
     );
