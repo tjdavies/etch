@@ -14,7 +14,7 @@ const OutputBox = styled.div`
   min-width: 120px;
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
-  padding: 10px;
+  padding: 6px;
   background-color: ${Colours.white};
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 `;

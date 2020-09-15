@@ -14,10 +14,14 @@ const Connector = styled.div`
 
 const ConnectorWrapper = styled.div`
   position: absolute;
-  display: block;
-  left: -30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 100%;
   top: -1px;
   padding: 6px;
+  margin-right: 6px;
+  padding-left: 12px;
 `;
 
 interface Props {
