@@ -87,8 +87,6 @@ export const RunTimeView = () => {
   const result =
     output && mapOutputToValues(store.project.mainFn.sockets, output);
 
-  console.log(time);
-
   if (state == "float") {
     return (
       <Draggable handle={".header"}>

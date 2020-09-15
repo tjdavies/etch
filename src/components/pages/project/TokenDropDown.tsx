@@ -61,7 +61,6 @@ export function TokenDropDown({ position, onClose }: Props) {
           onSelect={(key) => {
             if (store.activeFunction) {
               const f = store.project.functions.get(key);
-              console.log(f);
               if (f) {
                 store.activeFunction.addToken(position, f);
               }

@@ -30,7 +30,6 @@ export function AddParam({ isInput }: Props) {
             })) || []
           }
           onCreateNew={(name) => {
-            console.log("onCreateNew");
             setShowSelect(false);
           }}
           onSelect={(key) => {

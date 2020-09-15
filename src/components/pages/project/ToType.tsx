@@ -26,8 +26,6 @@ interface Props {
 export const ToType = observer(({ path, editable }: Props) => {
   const store = useStore();
   const [isDataInput, setIsDataInput] = useState(false);
-  console.log("value");
-  console.log(path.value);
   return (
     <InputLabel
       onMouseOver={() => store.setActiveSocket(path)}

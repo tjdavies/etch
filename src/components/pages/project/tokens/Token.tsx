@@ -9,6 +9,7 @@ import { Share, Close } from "grommet-icons";
 import { useStore } from "../../../../model/Store";
 import { useHistory, generatePath } from "react-router-dom";
 import { Routes } from "../../../../Routes";
+import { observer } from "mobx-react-lite";
 
 const TokenWrapper = styled.div`
   position: fixed;
@@ -60,7 +61,7 @@ const FnName = styled.span`
   cursor: pointer;
 `;
 
-export function Token({ token }: Props) {
+export const Token = observer(({ token }: Props) => {
   const history = useHistory();
   const store = useStore();
 
@@ -100,4 +101,4 @@ export function Token({ token }: Props) {
       </TokenWrapper>
     </Draggable>
   );
-}
+});

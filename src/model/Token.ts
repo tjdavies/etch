@@ -12,7 +12,6 @@ export const Token = types
   })
   .views((self) => ({
     get sockets() {
-      console.log("cokets");
       const parentValues = getParent<IFn>(self, 2).values;
       return self.fn.input.map((param: IParam) => {
         const path = self.id + "/" + param.id;

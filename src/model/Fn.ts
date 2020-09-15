@@ -62,7 +62,6 @@ export const Fn = types
       const connected = self.wires.filter(
         (wire) => wire.from.target === token || wire.to.target === token
       );
-      console.log(connected);
       connected.forEach((element) => {
         destroy(element);
       });
