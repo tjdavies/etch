@@ -32,11 +32,16 @@ export const ToType = observer(({ path, editable }: Props) => {
       onMouseOut={() => store.setActiveSocket(undefined)}
       onClick={() => setIsDataInput(true)}
     >
-      {path.value && <Value>{path.value}</Value>}
+      {path.value !== undefined && <Value>{path.value}</Value>}
       {isDataInput && (
         <DataInput
           onEnter={(value) => {
-            store.activeFunction.addValue(path.path, Number(value));
+            const v = value !== "" && Number(value);
+            if (value !== "") {
+              store.activeFunction.addValue(path.path, Number(v));
+            } else {
+              store.activeFunction.removeValue(path.path);
+            }
             setIsDataInput(false);
           }}
         />

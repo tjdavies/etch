@@ -84,6 +84,9 @@ export const Fn = types
     addValue(path: string, value: number) {
       self.values.set(path, value);
     },
+    removeValue(path: string) {
+      self.values.delete(path);
+    },
   }));
 
 export interface IFn extends Instance<typeof Fn> {}

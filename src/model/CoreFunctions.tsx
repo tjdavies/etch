@@ -16,9 +16,9 @@ export const coreFunctionProcesses: Record<string, any> = {
       rm: am * bm,
     };
   },
-  rect: ({ x, y }: Record<string, any>): Record<string, any> => {
+  rect: ({ x, width, y, height }: Record<string, any>): Record<string, any> => {
     return {
-      rect: { x: x, y: y },
+      rect: { x, y, width, height },
     };
   },
   branch: ({ data, branch }: Record<string, any>): Record<string, any> => {
@@ -168,6 +168,16 @@ const rectFn: IFnIn = {
     {
       id: "y",
       name: "y",
+      type: "number",
+    },
+    {
+      id: "width",
+      name: "height",
+      type: "number",
+    },
+    {
+      id: "height",
+      name: "height",
       type: "number",
     },
   ],
