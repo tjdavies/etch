@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { ToType } from "../ToType";
-import { IPath } from "../../../../model/Path";
+import { ISocket } from "../../../../model/Fn";
+import { observer } from "mobx-react-lite";
 
 const InputWrapper = styled.div`
   display: flex;
@@ -11,10 +12,10 @@ const InputWrapper = styled.div`
 `;
 
 interface Props {
-  input: IPath[];
+  input: ISocket[];
 }
 
-export function TokenInput({ input }: Props) {
+export const TokenInput = observer(({ input }: Props) => {
   return (
     <InputWrapper>
       {input.map((param) => (
@@ -22,4 +23,4 @@ export function TokenInput({ input }: Props) {
       ))}
     </InputWrapper>
   );
-}
+});

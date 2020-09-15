@@ -8,6 +8,7 @@ import { IPath } from "../../../model/Path";
 import { InlineEdit } from "../../common/InlineEdit";
 import { useStore } from "../../../model/Store";
 import { DataInput } from "./DataInput";
+import { ISocket } from "../../../model/Fn";
 
 const InputLabel = styled.div`
   position: relative;
@@ -19,19 +20,29 @@ const InputLabel = styled.div`
 
 interface Props {
   editable?: boolean;
-  path: IPath;
+  path: ISocket;
 }
 
 export const ToType = observer(({ path, editable }: Props) => {
   const store = useStore();
   const [isDataInput, setIsDataInput] = useState(false);
+  console.log("value");
+  console.log(path.value);
   return (
     <InputLabel
       onMouseOver={() => store.setActiveSocket(path)}
       onMouseOut={() => store.setActiveSocket(undefined)}
       onClick={() => setIsDataInput(true)}
     >
-      {isDataInput && <DataInput onEnter={() => setIsDataInput(false)} />}
+      {path.value && <Value>{path.value}</Value>}
+      {isDataInput && (
+        <DataInput
+          onEnter={(value) => {
+            store.activeFunction.addValue(path.path, Number(value));
+            setIsDataInput(false);
+          }}
+        />
+      )}
       <ToConnector socket={path} />
       {editable ? (
         <InlineEdit
@@ -45,3 +56,17 @@ export const ToType = observer(({ path, editable }: Props) => {
     </InputLabel>
   );
 });
+
+const Value = styled.div`
+  position: absolute;
+  display: block;
+  right: 100%;
+  top: -2px;
+  padding: 2px;
+  margin-right: 26px;
+  border: 1px solid ${Colours.lightGrey};
+  color: inherit;
+  input {
+    text-align: right;
+  }
+`;

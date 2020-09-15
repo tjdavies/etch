@@ -6,6 +6,11 @@ import { generateId } from "../utils/generateId";
 import { Wire } from "./Wire";
 import { IPath } from "./Path";
 import { IType } from "./Type";
+import { Value } from "./Value";
+
+export interface ISocket extends IPath {
+  value?: number;
+}
 
 export const Fn = types
   .model("Fn", {
@@ -16,6 +21,7 @@ export const Fn = types
     output: types.array(Param),
     tokens: types.array(Token),
     wires: types.array(Wire),
+    values: types.map(types.number),
   })
   .views((self) => ({
     get plugs(): IPath[] {
@@ -27,12 +33,14 @@ export const Fn = types
         };
       });
     },
-    get sockets(): IPath[] {
+    get sockets(): ISocket[] {
       return self.output.map((param) => {
+        const path = self.id + "/" + param.id;
         return {
           target: self,
           param: param,
-          path: self.id + "/" + param.id,
+          path,
+          value: self.values.get(path),
         };
       });
     },
@@ -73,6 +81,9 @@ export const Fn = types
         type: type.id,
       };
       self.output.push(newParam);
+    },
+    addValue(path: string, value: number) {
+      self.values.set(path, value);
     },
   }));
 
