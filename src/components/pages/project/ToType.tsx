@@ -6,6 +6,7 @@ import { ToConnector } from "./ToConnector";
 import { observer } from "mobx-react-lite";
 import { IPath } from "../../../model/Path";
 import { InlineEdit } from "../../common/InlineEdit";
+import { useStore } from "../../../model/Store";
 
 const InputLabel = styled.div`
   position: relative;
@@ -14,33 +15,19 @@ const InputLabel = styled.div`
   gap: 5px;
 `;
 
-/*
-const Indented = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
-  margin-left: 5px;
-  width: 100%;
-`;
-*/
-
 interface Props {
   editable?: boolean;
   path: IPath;
 }
 
 export const ToType = observer(({ path, editable }: Props) => {
-  /*
-  if (param.type.params) {
-    return <RecordType type={param.type} refName={refName} />;
-  }
-*/
+  const store = useStore();
   return (
-    <InputLabel>
+    <InputLabel
+      onMouseOver={() => store.setActiveSocket(path)}
+      onMouseOut={() => store.setActiveSocket(undefined)}
+    >
       <ToConnector socket={path} />
-
       {editable ? (
         <InlineEdit
           type="text"
@@ -53,44 +40,3 @@ export const ToType = observer(({ path, editable }: Props) => {
     </InputLabel>
   );
 });
-
-/*
-function RecordType({ type, refName }: { refName: string; type: IType }) {
-  const [expanded, setExpanded] = useState(false);
-
-  const toggleExpanded = () => {
-    setExpanded(!expanded);
-  };
-
-  useLayoutEffect(() => {
-    (window as any)?.dirty();
-  }, [expanded]);
-
-  const thisRefId = [refName, type.id].join(".");
-
-  return (
-    <>
-      <InputLabel>
-        <TypeIconBox onClick={() => toggleExpanded()}>
-          {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
-        </TypeIconBox>
-        {type.name}
-      </InputLabel>
-      {expanded && (
-        <Indented>
-          {/*
-          type.params?.map((type) => (
-            <ToType
-              key={type.id}
-              type={type}
-              refName={thisRefId + "." + type.name}
-            />
-          ))
-         }
-          <NewType />
-        </Indented>
-      )}
-    </>
-  );
-}
- */

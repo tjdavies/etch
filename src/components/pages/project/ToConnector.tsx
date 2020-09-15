@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { useStore } from "../../../model/Store";
-import { observer } from "mobx-react-lite";
 import { IPath } from "../../../model/Path";
 
 const Connector = styled.div`
@@ -18,23 +16,18 @@ const ConnectorWrapper = styled.div`
   position: absolute;
   display: block;
   left: -30px;
-  display: block;
-  padding: 5px;
+  top: -1px;
+  padding: 6px;
 `;
 
 interface Props {
   socket: IPath;
 }
 
-export const ToConnector = observer(({ socket }: Props) => {
-  const store = useStore();
-
+export const ToConnector = ({ socket }: Props) => {
   return (
-    <ConnectorWrapper
-      onMouseOver={() => store.setActiveSocket(socket)}
-      onMouseOut={() => store.setActiveSocket(undefined)}
-    >
+    <ConnectorWrapper>
       <Connector id={socket.path} highlight={false} />
     </ConnectorWrapper>
   );
-});
+};
