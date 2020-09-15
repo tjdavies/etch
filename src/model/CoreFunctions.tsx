@@ -6,9 +6,9 @@ export const coreFunctionProcesses: Record<string, any> = {
       r: a + b,
     };
   },
-  subtract: ({ as, bs }: Record<string, any>): Record<string, any> => {
+  subtract: ({ suba, subb }: Record<string, any>): Record<string, any> => {
     return {
-      rs: as - bs,
+      subr: suba - subb,
     };
   },
   multiply: ({ am, bm }: Record<string, any>): Record<string, any> => {
@@ -20,6 +20,38 @@ export const coreFunctionProcesses: Record<string, any> = {
     return {
       rect: { x: x, y: y },
     };
+  },
+  branch: ({ data, branch }: Record<string, any>): Record<string, any> => {
+    if (branch) {
+      return {
+        true: data,
+      };
+    } else {
+      return {
+        false: data,
+      };
+    }
+  },
+  greaterThan: ({ ga, gb }: Record<string, any>): Record<string, any> => {
+    return {
+      gr: ga > gb,
+    };
+  },
+  select: ({
+    select1,
+    select2,
+    select3,
+  }: Record<string, any>): Record<string, any> => {
+    console.log(select1);
+    if (select1) {
+      return {
+        selectOut: select2,
+      };
+    } else {
+      return {
+        selectOut: select3,
+      };
+    }
   },
 };
 
@@ -54,19 +86,19 @@ const subtractFn: IFnIn = {
   core: true,
   input: [
     {
-      id: "as",
+      id: "suba",
       name: "A",
       type: "number",
     },
     {
-      id: "bs",
+      id: "subb",
       name: "B",
       type: "number",
     },
   ],
   output: [
     {
-      id: "rs",
+      id: "subr",
       name: "A - B",
       type: "number",
     },
@@ -148,10 +180,98 @@ const rectFn: IFnIn = {
   ],
 };
 
+const branchFn: IFnIn = {
+  id: "branch",
+  name: "branch",
+  core: true,
+  input: [
+    {
+      id: "data",
+      name: "data",
+      type: "through",
+    },
+    {
+      id: "branch",
+      name: "switch",
+      type: "boolean",
+    },
+  ],
+  output: [
+    {
+      id: "dataTrue",
+      name: "true",
+      type: "through",
+    },
+    {
+      id: "dataFalse",
+      name: "false",
+      type: "through",
+    },
+  ],
+};
+
+const selectFn: IFnIn = {
+  id: "select",
+  name: "select",
+  core: true,
+  input: [
+    {
+      id: "select1",
+      name: "switch",
+      type: "boolean",
+    },
+    {
+      id: "select2",
+      name: "true",
+      type: "through",
+    },
+    {
+      id: "select3",
+      name: "false",
+      type: "through",
+    },
+  ],
+  output: [
+    {
+      id: "selectOut",
+      name: "data",
+      type: "through",
+    },
+  ],
+};
+
+const greaterThanFn: IFnIn = {
+  id: "greaterThan",
+  name: ">",
+  core: true,
+  input: [
+    {
+      id: "ga",
+      name: "A",
+      type: "number",
+    },
+    {
+      id: "gb",
+      name: "B",
+      type: "number",
+    },
+  ],
+  output: [
+    {
+      id: "gr",
+      name: "A > B",
+      type: "boolean",
+    },
+  ],
+};
+
 export const coreFunctions = {
   add: addFn,
   subtract: subtractFn,
   multiply: multiplyFn,
   divide: divideFn,
   rect: rectFn,
+  branch: branchFn,
+  greaterThan: greaterThanFn,
+  select: selectFn,
 };
