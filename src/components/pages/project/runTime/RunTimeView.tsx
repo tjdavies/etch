@@ -139,7 +139,7 @@ function FloatingView({
   scene,
 }: ViewProps) {
   return (
-    <Draggable handle={".header"}>
+    <Draggable handle={".header"} bounds="parent">
       <RunTimeBox>
         <RunTimeHeader className="header">
           <SizeButtons>
