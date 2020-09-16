@@ -2,15 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../../Style";
 
-import {
-  Play,
-  Pause,
-  PauseFill,
-  PlayFill,
-  StopFill,
-  Next,
-  Previous,
-} from "grommet-icons";
+import { PauseFill, PlayFill, StopFill } from "grommet-icons";
 
 const RunTimeControlBox = styled.div`
   align-items: center;

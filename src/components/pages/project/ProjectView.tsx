@@ -8,7 +8,7 @@ import { IStore } from "../../../model/Store";
 import { Revert } from "grommet-icons";
 import { useHistory } from "react-router-dom";
 import { InlineEdit } from "../../common/InlineEdit";
-import { RunTimeView } from "./runTime/RunTimeView";
+import { RunTime } from "./runTime/RunTime";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -102,8 +102,7 @@ export const ProjectView = observer(({ store }: { store: IStore }) => {
           <Revert color={Colours.lightText} />
         </BackButton>
       )}
-
-      <RunTimeView />
+      <RunTime />
     </PageWrapper>
   );
 });
