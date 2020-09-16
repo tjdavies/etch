@@ -44,22 +44,6 @@ const FnNameHeader = styled.div`
   border-left: 2px solid ${Colours.lightText};
 `;
 
-const RunButton = styled.div`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  bottom: 0px;
-  right: 0px;
-  padding: 5px;
-  height: 50px;
-  width: 50px;
-  color: ${Colours.lightText};
-  background-color: ${Colours.primary};
-  border-top-left-radius: 15px;
-  cursor: pointer;
-`;
-
 const BackButton = styled.div`
   position: absolute;
   display: flex;

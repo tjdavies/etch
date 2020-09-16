@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { TypeIcon } from "./TypeIcon";
 import { ToConnector } from "./ToConnector";
 import { observer } from "mobx-react-lite";
-import { IPath } from "../../../model/Path";
 import { InlineEdit } from "../../common/InlineEdit";
 import { useStore } from "../../../model/Store";
 import { DataInput } from "./DataInput";

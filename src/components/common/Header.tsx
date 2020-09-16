@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Colours, Padding } from "../../Style";
+import { Colours } from "../../Style";
 import { Link } from "react-router-dom";
 
 const HeaderWrapper = styled.div`

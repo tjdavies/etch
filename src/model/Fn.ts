@@ -6,7 +6,6 @@ import { generateId } from "../utils/generateId";
 import { Wire } from "./Wire";
 import { IPath } from "./Path";
 import { IType } from "./Type";
-import { Value } from "./Value";
 
 export interface ISocket extends IPath {
   value?: number;

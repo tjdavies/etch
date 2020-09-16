@@ -1,7 +1,6 @@
 import React from "react";
 import { SearchableDropDown, Option } from "./SearchableDropDown";
 import styled from "styled-components";
-import { useStore } from "../../model/Store";
 
 const FloatyDropdown = styled.div`
   position: absolute;

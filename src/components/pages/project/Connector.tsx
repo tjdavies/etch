@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 
 import { DraggableWire } from "./DraggableWire";
 import { useStore } from "../../../model/Store";
@@ -29,14 +29,14 @@ export const Connector = observer(({ from, to }: Props) => {
     //document.title = `You clicked ${count} times`;
 
     setAPos(getLocation(from.path));
-  }, [posA?.x, posA?.y, size, inputs, outputs]);
+  }, [posA?.x, posA?.y, size, inputs, outputs, from.path]);
 
   useLayoutEffect(() => {
     // Update the document title using the browser API
     //document.title = `You clicked ${count} times`;
 
     setBPos(getLocation(to.path));
-  }, [posB?.x, posB?.y, size, inputs, outputs]);
+  }, [posB?.x, posB?.y, size, inputs, outputs, to.path]);
 
   if (aPos && bPos) {
     return (

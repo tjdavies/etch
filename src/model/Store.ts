@@ -82,9 +82,6 @@ export const Store = types
         self.activeFunction?.addToken(position, f);
       }
     },
-    run() {
-      const v = calculateFunction(self.project.mainFn, { time: 0 });
-    },
   }));
 
 export interface IStore extends Instance<typeof Store> {}
@@ -212,10 +209,6 @@ function mapSocketsToValues(
 
 function findWireTo(wires: IWire[], path: string): IWire | undefined {
   return wires.find((wire) => wire.to.path === path);
-}
-
-function isNotNill<TValue>(value: TValue | null | undefined): value is TValue {
-  return value !== null && value !== undefined;
 }
 
 export function mapInputToValues(

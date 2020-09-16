@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { observer } from "mobx-react-lite";
 import { Connector } from "../Connector";
 import { Colours } from "../../../../Style";
 import { useStore } from "../../../../model/Store";
-import { useWindowSize } from "../../../../utils/hooks/useWindowSize";
 import styled from "styled-components";
 import { IPath } from "../../../../model/Path";
 import { IWire } from "../../../../model/Wire";
