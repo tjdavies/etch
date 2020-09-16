@@ -15,7 +15,6 @@ export const Token = types
       const parentValues = getParent<IFn>(self, 2).values;
       return self.fn.input.map((param: IParam) => {
         const path = self.id + "/" + param.id;
-
         return {
           target: self,
           param: param,

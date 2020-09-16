@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FromType } from "../FromType";
 import { IPath } from "../../../../model/Path";
+import { pathOr } from "ramda";
 
 const OutputWrapper = styled.div`
   display: flex;
@@ -17,8 +18,8 @@ interface Props {
 export function TokenOutput({ output }: Props) {
   return (
     <OutputWrapper>
-      {output.map((param) => (
-        <FromType key={param.path} param={param} />
+      {output.map((path) => (
+        <FromType key={path.path} path={path} />
       ))}
     </OutputWrapper>
   );

@@ -28,8 +28,8 @@ interface Props {
 export const FunctionInput = ({ input, editable }: Props) => {
   return (
     <InputBox>
-      {input.map((param) => (
-        <FromType key={param.path} param={param} editable={editable} />
+      {input.map((path) => (
+        <FromType key={path.path} path={path} editable={editable} />
       ))}
       {editable && <AddParam isInput={true} />}
     </InputBox>

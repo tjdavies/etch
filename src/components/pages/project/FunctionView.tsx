@@ -35,7 +35,6 @@ export const FunctionView = observer(({ fn }: Props) => {
   const [showTokenDropdown, setShowTokenDropdown] = useState<Point | null>(
     null
   );
-  const store = useStore();
   return (
     <FunctionViewWrapper>
       <BackGround

@@ -28,32 +28,39 @@ const Indented = styled.div`
 
 interface Props {
   editable?: boolean;
-  param: IPath;
+  path: IPath;
 }
 
-export function FromType({ param, editable }: Props) {
-  /*
-  if (param.type.params) {
-    return <RecordType type={param.type} refName={"from." + param.id} />;
+export function FromType({ path, editable }: Props) {
+  if (path.param.type.params) {
+    return <RecordType path={path} />;
   }
-  */
+
+  return <Input path={path} editable={editable} />;
+}
+
+function Input({ path, editable }: Props) {
   return (
     <InputLabel>
       {editable ? (
         <InlineEdit
           type="text"
-          value={param.param.name}
-          onSave={param.param.setName}
+          value={path.param.name}
+          onSave={path.param.setName}
           buttonsAlign="before"
         />
       ) : (
-        param.param.name
+        path.param.name
       )}
-
-      <FromConnector path={param.path} />
+      <FromConnector path={path.path} />
     </InputLabel>
   );
 }
+
+function RecordType({ path }: { path: IPath }) {
+  return <Input path={path} />;
+}
+
 // {param.param?.type && <TypeIcon type={param.param.type} />}
 /* 
 function RecordType({ type, refName }: { refName: string; type: IType }) {
