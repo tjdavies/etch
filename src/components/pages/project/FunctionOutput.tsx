@@ -20,16 +20,17 @@ const OutputBox = styled.div`
 `;
 
 interface Props {
+  editable: boolean;
   output: IPath[];
 }
 
-export function FunctionOutput({ output }: Props) {
+export function FunctionOutput({ output, editable }: Props) {
   return (
     <OutputBox>
       {output.map((param) => (
-        <ToType key={param.path} path={param} editable />
+        <ToType key={param.path} path={param} editable={editable} />
       ))}
-      <AddParam isInput={false} />
+      {editable && <AddParam isInput={false} />}
     </OutputBox>
   );
 }

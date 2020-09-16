@@ -1,4 +1,4 @@
-import { types, Instance, SnapshotIn, destroy } from "mobx-state-tree";
+import { types, Instance, SnapshotIn, destroy, getRoot } from "mobx-state-tree";
 import { Param, IParamIn } from "./Param";
 import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
@@ -6,6 +6,7 @@ import { generateId } from "../utils/generateId";
 import { Wire } from "./Wire";
 import { IPath } from "./Path";
 import { IType } from "./Type";
+import { IStore } from "./Store";
 
 export interface ISocket extends IPath {
   value?: number;
@@ -42,6 +43,9 @@ export const Fn = types
           value: self.values.get(path),
         };
       });
+    },
+    get isMain(): boolean {
+      return self.id !== getRoot<IStore>(self).project.mainFn.id;
     },
   }))
   .actions((self) => ({

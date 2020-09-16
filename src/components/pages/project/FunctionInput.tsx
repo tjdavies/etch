@@ -15,22 +15,23 @@ const InputBox = styled.div`
   min-width: 120px;
   border-bottom-right-radius: 4px;
   border-top-right-radius: 4px;
-  padding: 10px;
+  padding: 6px;
   background-color: ${Colours.white};
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 interface Props {
+  editable: boolean;
   input: IPath[];
 }
 
-export const FunctionInput = ({ input }: Props) => {
+export const FunctionInput = ({ input, editable }: Props) => {
   return (
     <InputBox>
       {input.map((param) => (
-        <FromType key={param.path} param={param} editable />
+        <FromType key={param.path} param={param} editable={editable} />
       ))}
-      <AddParam isInput={true} />
+      {editable && <AddParam isInput={true} />}
     </InputBox>
   );
 };

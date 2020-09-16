@@ -275,6 +275,20 @@ const greaterThanFn: IFnIn = {
   ],
 };
 
+const splitFn: IFnIn = {
+  id: "split",
+  name: "split",
+  core: true,
+  input: [
+    {
+      id: "split",
+      name: "split",
+      type: "object",
+    },
+  ],
+  output: [],
+};
+
 export const coreFunctions = {
   add: addFn,
   subtract: subtractFn,
@@ -284,4 +298,5 @@ export const coreFunctions = {
   branch: branchFn,
   greaterThan: greaterThanFn,
   select: selectFn,
+  split: splitFn,
 };

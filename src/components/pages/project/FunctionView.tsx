@@ -8,6 +8,7 @@ import { TokenDropDown } from "./TokenDropDown";
 import { Point } from "../../../types/types";
 import { Token } from "./tokens/Token";
 import { observer } from "mobx-react-lite";
+import { useStore } from "../../../model/Store";
 
 const FunctionViewWrapper = styled.div`
   display: flex;
@@ -34,6 +35,7 @@ export const FunctionView = observer(({ fn }: Props) => {
   const [showTokenDropdown, setShowTokenDropdown] = useState<Point | null>(
     null
   );
+  const store = useStore();
   return (
     <FunctionViewWrapper>
       <BackGround
@@ -43,8 +45,8 @@ export const FunctionView = observer(({ fn }: Props) => {
         <Token key={t.id} token={t} />
       ))}
 
-      <FunctionInput input={fn.plugs} />
-      <FunctionOutput output={fn.sockets} />
+      <FunctionInput input={fn.plugs} editable={fn.isMain} />
+      <FunctionOutput output={fn.sockets} editable={fn.isMain} />
       <Wires />
       {showTokenDropdown && (
         <TokenDropDown
