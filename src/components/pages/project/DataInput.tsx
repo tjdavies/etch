@@ -15,21 +15,22 @@ const InputWrapper = styled.div`
 `;
 
 interface Props {
+  value: string | undefined;
   onEnter: (value: any) => void;
 }
 
-export function DataInput({ onEnter }: Props) {
-  const [value, setValue] = useState("");
+export function DataInput({ value, onEnter }: Props) {
+  const [editValue, setValue] = useState(value);
   return (
     <InputWrapper>
       <input
         autoFocus
-        value={value}
+        value={editValue}
         onChange={(e) => setValue(e.target.value)}
-        onBlur={() => onEnter(value)}
+        onBlur={() => onEnter(editValue)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            onEnter(value);
+            onEnter(editValue);
           }
         }}
       />

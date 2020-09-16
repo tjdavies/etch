@@ -9,17 +9,17 @@ export const Token = types
     id: types.optional(types.identifier, generateId),
     position: Point,
     fn: types.late((): any => types.reference(Fn)),
+    values: types.map(types.number),
   })
   .views((self) => ({
     get sockets() {
-      const parentValues = getParent<IFn>(self, 2).values;
       return self.fn.input.map((param: IParam) => {
         const path = self.id + "/" + param.id;
         return {
           target: self,
           param: param,
           path,
-          value: parentValues.get(path),
+          value: self.values.get(path),
         };
       });
     },
@@ -39,6 +39,12 @@ export const Token = types
     },
     remove() {
       getParent<IFn>(self, 2).removeToken(self as IToken);
+    },
+    addValue(path: string, value: number) {
+      self.values.set(path, value);
+    },
+    removeValue(path: string) {
+      self.values.delete(path);
     },
   }));
 

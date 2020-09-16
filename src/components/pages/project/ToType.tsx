@@ -34,15 +34,18 @@ export const ToType = observer(({ path, editable }: Props) => {
         onClick={() => setIsDataInput(true)}
         filled={path.value !== undefined}
       />
-      {path.value !== undefined && !isDataInput && <Value>{path.value}</Value>}
+      {path.value !== undefined && !isDataInput && (
+        <Value onClick={() => setIsDataInput(true)}>{path.value}</Value>
+      )}
       {isDataInput && (
         <DataInput
+          value={path.value !== undefined ? path.value + "" : undefined}
           onEnter={(value) => {
             const v = value !== "" && Number(value);
             if (value !== "") {
-              store.activeFunction.addValue(path.path, Number(v));
+              path.target.addValue(path.path, Number(v));
             } else {
-              store.activeFunction.removeValue(path.path);
+              path.target.removeValue(path.path);
             }
             setIsDataInput(false);
           }}
