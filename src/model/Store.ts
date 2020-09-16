@@ -15,6 +15,7 @@ import { IPath, Path } from "./Path";
 import { IWire } from "./Wire";
 import { Token, IToken } from "./Token";
 import { coreTypes } from "./CoreTypes";
+import { ITypeIn } from "./Type";
 
 export const Store = types
   .model("store", {
@@ -93,18 +94,42 @@ export function createNewProject(name: string) {
     type: "number",
   };
 
+  const stateParamter = {
+    id: "state",
+    name: "state",
+    type: "state",
+  };
+
   const outputCountParamter = {
     id: generateId(),
     name: "scene",
     type: "scene",
   };
 
+  const outputStateParamter = {
+    id: generateId(),
+    name: "state",
+    type: "state",
+  };
+
   const mainFn: IFnIn = {
     id: generateId(),
     name: "main",
     core: false,
-    input: [valueAParamter],
-    output: [outputCountParamter],
+    input: [stateParamter, valueAParamter],
+    output: [outputStateParamter, outputCountParamter],
+  };
+
+  const state: ITypeIn = {
+    id: "state",
+    name: "state",
+    params: [
+      {
+        id: "xPos",
+        name: "xPos",
+        type: "number",
+      },
+    ],
   };
 
   return {
@@ -112,7 +137,7 @@ export function createNewProject(name: string) {
     name: name,
     functions: { ...coreFunctions, [mainFn.id]: mainFn },
     mainFn: mainFn.id,
-    types: { ...coreTypes },
+    types: { ...coreTypes, state },
   };
 }
 

@@ -6,9 +6,7 @@ export const Type = types
   .model("type", {
     id: types.optional(types.identifier, generateId),
     name: types.string,
-    params: types.maybe(
-      types.reference(types.late((): IAnyModelType => Param))
-    ),
+    params: types.maybe(types.array(types.late((): IAnyModelType => Param))),
   })
   .actions((self) => ({
     setName(name: string) {
