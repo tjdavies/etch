@@ -4,12 +4,15 @@ import { Colours } from "../../../Style";
 import { IPath } from "../../../model/Path";
 
 const Connector = styled.div`
-  border: 1px solid;
-  border-color: ${(props: { highlight: boolean }) =>
-    props.highlight ? Colours.primary : Colours.lightGrey};
+  border: 1px solid
+    ${(props: { filled: boolean }) =>
+      props.filled ? Colours.primary : Colours.lightGrey};
   width: 10px;
   height: 10px;
   border-radius: 50%;
+
+  background-color: ${(props: { filled: boolean }) =>
+    props.filled ? Colours.primary : "none"};
 `;
 
 const ConnectorWrapper = styled.div`
@@ -25,13 +28,15 @@ const ConnectorWrapper = styled.div`
 `;
 
 interface Props {
+  filled: boolean;
   socket: IPath;
+  onClick: () => void;
 }
 
-export const ToConnector = ({ socket }: Props) => {
+export const ToConnector = ({ socket, onClick, filled }: Props) => {
   return (
-    <ConnectorWrapper>
-      <Connector id={socket.path} highlight={false} />
+    <ConnectorWrapper onClick={onClick}>
+      <Connector id={socket.path} filled={filled} />
     </ConnectorWrapper>
   );
 };

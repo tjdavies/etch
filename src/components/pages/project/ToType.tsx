@@ -30,9 +30,13 @@ export const ToType = observer(({ path, editable }: Props) => {
     <InputLabel
       onMouseOver={() => store.setActiveSocket(path)}
       onMouseOut={() => store.setActiveSocket(undefined)}
-      onClick={() => setIsDataInput(true)}
     >
-      {path.value !== undefined && <Value>{path.value}</Value>}
+      <ToConnector
+        socket={path}
+        onClick={() => setIsDataInput(true)}
+        filled={path.value !== undefined}
+      />
+      {path.value !== undefined && !isDataInput && <Value>{path.value}</Value>}
       {isDataInput && (
         <DataInput
           onEnter={(value) => {
@@ -46,7 +50,7 @@ export const ToType = observer(({ path, editable }: Props) => {
           }}
         />
       )}
-      <ToConnector socket={path} />
+
       {editable ? (
         <InlineEdit
           type="text"
@@ -67,9 +71,10 @@ const Value = styled.div`
   top: -2px;
   padding: 2px;
   margin-right: 26px;
-  border: 1px solid ${Colours.lightGrey};
+  border: 1px solid ${Colours.primary};
   color: inherit;
   input {
     text-align: right;
   }
+  background-color: ${Colours.background};
 `;

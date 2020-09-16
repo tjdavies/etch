@@ -11,6 +11,7 @@ const InputWrapper = styled.div`
   input {
     text-align: right;
   }
+  width: fit-content;
 `;
 
 interface Props {
