@@ -41,6 +41,8 @@ export const Store = types
         );
 
         if (self.activeSocket) {
+          self.activeFunction.clearAnyConnections(self.activeSocket.path);
+
           if (index > -1) {
             self.activeFunction.wires[index].to = clone(self.activeSocket);
           } else {

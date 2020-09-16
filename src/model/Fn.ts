@@ -87,6 +87,14 @@ export const Fn = types
     removeValue(path: string) {
       self.values.delete(path);
     },
+    clearAnyConnections(path: string) {
+      /*
+      const index = self.wires.findIndex((i: any) => i.to.path === path);
+      if (index > -1) {
+        self.wires.splice(index, 1);
+      }*/
+      self.values.delete(path);
+    },
   }));
 
 export interface IFn extends Instance<typeof Fn> {}
