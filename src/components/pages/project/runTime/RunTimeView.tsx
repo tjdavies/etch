@@ -125,8 +125,8 @@ interface ViewProps {
 }
 
 const FloatyScene = styled.div`
-  width: 400px;
-  height: 300px;
+  width: 266.666px;
+  height: 200px;
 `;
 
 function FloatingView({
