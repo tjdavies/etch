@@ -6,6 +6,7 @@ import { useStore } from "../../../../model/Store";
 import styled from "styled-components";
 import { IPath } from "../../../../model/Path";
 import { IWire } from "../../../../model/Wire";
+import { IPlug } from "../../../../model/Plug";
 
 const WireSVG = styled.svg`
   position: absolute;
@@ -25,14 +26,6 @@ export const Wires = observer(() => {
     >
       {activeFunction?.wires.map((c: IWire) => {
         return <Connector key={c.to.path} from={c.from} to={c.to} />;
-      })}
-      {activeFunction?.plugs.map((c: IPath) => {
-        return <Connector key={c.path} from={c} to={c} />;
-      })}
-      {activeFunction?.tokens.flatMap((token: any) => {
-        return token.plugs.map((c: IPath) => {
-          return <Connector key={c.path} from={c} to={c} />;
-        });
       })}
     </WireSVG>
   );

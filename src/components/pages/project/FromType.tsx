@@ -4,6 +4,9 @@ import { Colours } from "../../../Style";
 import { FromConnector } from "./FromConnector";
 import { IPath } from "../../../model/Path";
 import { InlineEdit } from "../../common/InlineEdit";
+import { IPlug } from "../../../model/Plug";
+import { Connector } from "./Connector";
+import { DraggableWire } from "./DraggableWire";
 
 const InputLabel = styled.div`
   position: relative;
@@ -28,10 +31,13 @@ const Indented = styled.div`
 
 interface Props {
   editable?: boolean;
-  path: IPath;
+  path: IPlug;
 }
 
 export function FromType({ path, editable }: Props) {
+  if (path.params) {
+    return <RecordType path={path} />;
+  }
   return <Input path={path} editable={editable} />;
 }
 
@@ -48,13 +54,20 @@ function Input({ path, editable }: Props) {
       ) : (
         path.param.name
       )}
-      <FromConnector path={path.path} />
+      <FromConnector path={path} />
     </InputLabel>
   );
 }
 
-function RecordType({ path }: { path: IPath }) {
-  return <Input path={path} />;
+function RecordType({ path }: { path: IPlug }) {
+  return (
+    <>
+      <Input path={path} />
+      {path.params?.map((p) => (
+        <Input path={p} />
+      ))}
+    </>
+  );
 }
 
 // {param.param?.type && <TypeIcon type={param.param.type} />}
