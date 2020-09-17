@@ -42,13 +42,13 @@ export const Store = types
         );
 
         if (self.activeSocket) {
-          self.activeFunction.clearAnyConnections(self.activeSocket.path);
+          self.activeSocket.target.removeValue(self.activeSocket.path);
 
           if (index > -1) {
             self.activeFunction.wires[index].to = clone(self.activeSocket);
           } else {
             self.activeFunction.wires.push({
-              id: self.activeDrag.path,
+              id: self.activeSocket.path,
               from: clone(self.activeDrag),
               to: clone(self.activeSocket),
             });
