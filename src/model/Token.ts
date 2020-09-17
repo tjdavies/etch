@@ -12,6 +12,7 @@ import { IParam } from "./Param";
 import { Wire } from "./Wire";
 import { findWireTo } from "./Store";
 import { createPlugs } from "./Path";
+import { createSockets, ISocket } from "./Sockets";
 
 export const Token = types
   .model("Token", {
@@ -21,17 +22,14 @@ export const Token = types
     values: types.map(types.number),
   })
   .views((self) => ({
-    get sockets() {
-      return self.fn.input.map((param: IParam) => {
-        const path = self.id + "/" + param.id;
-        return {
-          target: self,
-          param: param,
-          path,
-          value: self.values.get(path),
-          connection: findWireTo(getParent<IFn>(self, 2).wires, path),
-        };
-      });
+    get sockets(): ISocket[] {
+      return createSockets(
+        self as any,
+        self.fn.input,
+        getParent<IFn>(self, 2).wires,
+        self.values,
+        self.id
+      );
     },
     get plugs() {
       return createPlugs(self as any, self.fn.output, self.id);

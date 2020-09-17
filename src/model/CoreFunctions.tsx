@@ -185,7 +185,7 @@ const rectFn: IFnIn = {
     {
       id: "rect",
       name: "rect",
-      type: "shape",
+      type: "scene",
     },
   ],
 };
