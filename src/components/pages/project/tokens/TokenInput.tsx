@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { ToType } from "../ToType";
-import { ISocket } from "../../../../model/Fn";
+
 import { observer } from "mobx-react-lite";
+import { ISocket } from "../../../../model/Sockets";
 
 const InputWrapper = styled.div`
   display: flex;

@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite";
 import { InlineEdit } from "../../common/InlineEdit";
 import { useStore } from "../../../model/Store";
 import { DataInput } from "./DataInput";
-import { ISocket } from "../../../model/Fn";
+import { ISocket } from "../../../model/Sockets";
 
 const InputLabel = styled.div`
   position: relative;

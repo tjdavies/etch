@@ -8,7 +8,7 @@ import {
 } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";
-import { IFnIn, IFn, Fn, ISocket } from "./Fn";
+import { IFnIn, IFn, Fn } from "./Fn";
 import { IPoint } from "./Point";
 import { coreFunctions, coreFunctionProcesses } from "./CoreFunctions";
 import { IPath, Path } from "./Path";
@@ -16,6 +16,7 @@ import { IWire } from "./Wire";
 import { Token, IToken } from "./Token";
 import { coreTypes } from "./CoreTypes";
 import { ITypeIn } from "./Type";
+import { ISocket } from "./Sockets";
 
 export const Store = types
   .model("store", {

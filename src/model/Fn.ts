@@ -6,19 +6,15 @@ import {
   getRoot,
   resolveIdentifier,
 } from "mobx-state-tree";
-import { Param, IParamIn } from "./Param";
+import { Param, IParamIn, IParam } from "./Param";
 import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
-import { Wire, IWire } from "./Wire";
-import { IPath } from "./Path";
+import { Wire } from "./Wire";
+import { IPath, createPlugs } from "./Path";
 import { IType } from "./Type";
-import { IStore, findWireTo } from "./Store";
-
-export interface ISocket extends IPath {
-  value?: number;
-  connection?: IWire;
-}
+import { IStore } from "./Store";
+import { ISocket, createSockets } from "./Sockets";
 
 export const Fn = types
   .model("Fn", {
@@ -33,25 +29,16 @@ export const Fn = types
   })
   .views((self) => ({
     get plugs(): IPath[] {
-      return self.input.map((param) => {
-        return {
-          target: self,
-          param: param,
-          path: self.id + "/" + param.id,
-        };
-      });
+      return createPlugs(self as any, self.input, self.id);
     },
     get sockets(): ISocket[] {
-      return self.output.map((param) => {
-        const path = self.id + "/" + param.id;
-        return {
-          target: self,
-          param: param,
-          path,
-          value: self.values.get(path),
-          connection: findWireTo(self.wires, path),
-        };
-      });
+      return createSockets(
+        self as any,
+        self.output,
+        self.wires,
+        self.values,
+        self.id
+      );
     },
     get isMain(): boolean {
       return self.id !== getRoot<IStore>(self).project.mainFn.id;

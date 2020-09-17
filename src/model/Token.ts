@@ -11,6 +11,7 @@ import { generateId } from "../utils/generateId";
 import { IParam } from "./Param";
 import { Wire } from "./Wire";
 import { findWireTo } from "./Store";
+import { createPlugs } from "./Path";
 
 export const Token = types
   .model("Token", {
@@ -33,13 +34,7 @@ export const Token = types
       });
     },
     get plugs() {
-      return self.fn.output.map((param: IParam) => {
-        return {
-          target: self,
-          param: param,
-          path: self.id + "/" + param.id,
-        };
-      });
+      return createPlugs(self as any, self.fn.output, self.id);
     },
   }))
   .actions((self) => ({

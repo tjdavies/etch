@@ -32,10 +32,6 @@ interface Props {
 }
 
 export function FromType({ path, editable }: Props) {
-  if (path.param.type.params) {
-    return <RecordType path={path} />;
-  }
-
   return <Input path={path} editable={editable} />;
 }
 

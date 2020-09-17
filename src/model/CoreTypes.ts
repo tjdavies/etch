@@ -13,4 +13,30 @@ export const coreTypes: Record<string, ITypeIn> = {
     id: "shape",
     name: "shape",
   },
+  scene: {
+    id: "scene",
+    name: "scene",
+    params: [
+      {
+        id: "x",
+        name: "x",
+        type: "number",
+      },
+      {
+        id: "y",
+        name: "y",
+        type: "number",
+      },
+      {
+        id: "height",
+        name: "height",
+        type: "number",
+      },
+      {
+        id: "width",
+        name: "width",
+        type: "number",
+      },
+    ],
+  },
 };

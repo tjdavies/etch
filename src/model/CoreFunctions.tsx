@@ -172,7 +172,7 @@ const rectFn: IFnIn = {
     },
     {
       id: "width",
-      name: "height",
+      name: "width",
       type: "number",
     },
     {

@@ -1,4 +1,4 @@
-import { Type } from "./Type";
+import { Type, IType } from "./Type";
 import { types, Instance, SnapshotIn, IAnyModelType } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 
@@ -21,5 +21,7 @@ export const Param = types
     },
   }));
 
-export interface IParam extends Instance<typeof Param> {}
+export interface IParam extends Instance<typeof Param> {
+  type: IType;
+}
 export interface IParamIn extends SnapshotIn<typeof Param> {}
