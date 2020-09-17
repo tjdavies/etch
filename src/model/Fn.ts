@@ -1,20 +1,13 @@
-import {
-  types,
-  Instance,
-  SnapshotIn,
-  destroy,
-  getRoot,
-  resolveIdentifier,
-} from "mobx-state-tree";
-import { Param, IParamIn, IParam } from "./Param";
+import { types, Instance, SnapshotIn, destroy, getRoot } from "mobx-state-tree";
+import { Param, IParamIn } from "./Param";
 import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
 import { Wire } from "./Wire";
-import { IPath, createPlugs } from "./Path";
 import { IType } from "./Type";
 import { IStore } from "./Store";
 import { ISocket, createSockets } from "./Sockets";
+import { createPlugs, IPlug } from "./Plug";
 
 export const Fn = types
   .model("Fn", {
@@ -28,7 +21,7 @@ export const Fn = types
     values: types.map(types.number),
   })
   .views((self) => ({
-    get plugs(): IPath[] {
+    get plugs(): IPlug[] {
       return createPlugs(self as any, self.input, self.id);
     },
     get sockets(): ISocket[] {

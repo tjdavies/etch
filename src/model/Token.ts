@@ -1,18 +1,9 @@
-import {
-  types,
-  Instance,
-  SnapshotIn,
-  getParent,
-  resolveIdentifier,
-} from "mobx-state-tree";
+import { types, Instance, SnapshotIn, getParent } from "mobx-state-tree";
 import { Point, IPoint } from "./Point";
 import { IFn, Fn } from "./Fn";
 import { generateId } from "../utils/generateId";
-import { IParam } from "./Param";
-import { Wire } from "./Wire";
-import { findWireTo } from "./Store";
-import { createPlugs } from "./Path";
 import { createSockets, ISocket } from "./Sockets";
+import { createPlugs } from "./Plug";
 
 export const Token = types
   .model("Token", {
