@@ -5,17 +5,16 @@ import { DraggableWire } from "./DraggableWire";
 import { useStore } from "../../../model/Store";
 import { IPath } from "../../../model/Path";
 
-const Connector = styled.div`
+export const ConnectorCircle = styled.div`
   border: 1px solid ${Colours.lightGrey};
   width: 10px;
   height: 10px;
   border-radius: 50%;
 `;
 
-const ConnectorWrapper = styled.div`
+export const ConnectorWrapper = styled.div`
   position: absolute;
   right: -30px;
-  display: block;
   padding: 5px;
   z-index: -1;
   cursor: pointer;
@@ -37,7 +36,7 @@ export function FromConnector({ path }: Props) {
   return (
     <>
       <ConnectorWrapper>
-        <Connector id={path.path} />
+        <ConnectorCircle id={path.path} />
         <WireSVG fill={Colours.primary} stroke={Colours.primary}>
           <DraggableWire
             from={{ x: 0, y: 0 }}

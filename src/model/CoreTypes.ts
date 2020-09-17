@@ -18,12 +18,12 @@ export const coreTypes: Record<string, ITypeIn> = {
     name: "scene",
     params: [
       {
-        id: "x",
+        id: "scenex",
         name: "x",
         type: "number",
       },
       {
-        id: "y",
+        id: "sceney",
         name: "y",
         type: "number",
       },

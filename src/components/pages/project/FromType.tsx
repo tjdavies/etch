@@ -5,7 +5,6 @@ import { FromConnector } from "./FromConnector";
 import { IPath } from "../../../model/Path";
 import { InlineEdit } from "../../common/InlineEdit";
 import { IPlug } from "../../../model/Plug";
-import { Connector } from "./Connector";
 import { DraggableWire } from "./DraggableWire";
 import { TypeIconBox } from "./TypeIcon";
 import { FormDown, FormNext } from "grommet-icons";
@@ -63,6 +62,25 @@ function Input({ path, editable, expanded, onToggleExpanded }: Props) {
   );
 }
 
+const ListConnectorWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  right: -30px;
+  top: 6px;
+  padding: 5px;
+  z-index: -1;
+`;
+
+const ConnectorCircle = styled.div`
+  border: 1px solid ${Colours.lightGrey};
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-bottom: -6px;
+  background-color: ${Colours.background};
+`;
+
 function ExpandableInput({
   path,
   editable,
@@ -84,6 +102,13 @@ function ExpandableInput({
       <TypeIconBox onClick={() => onToggleExpanded && onToggleExpanded()}>
         {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
       </TypeIconBox>
+      {!expanded && (
+        <ListConnectorWrapper>
+          {path.params?.map((p) => (
+            <ConnectorCircle id={p.path} />
+          ))}
+        </ListConnectorWrapper>
+      )}
       <FromConnector path={path} />
     </InputLabel>
   );
