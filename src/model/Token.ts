@@ -11,6 +11,7 @@ export const Token = types
     position: Point,
     fn: types.late((): any => types.reference(Fn)),
     values: types.map(types.number),
+    expandedParams: types.map(types.boolean),
   })
   .views((self) => ({
     get sockets(): ISocket[] {
@@ -23,7 +24,12 @@ export const Token = types
       );
     },
     get plugs() {
-      return createPlugs(self as any, self.fn.output, self.id);
+      return createPlugs(
+        self as any,
+        self.fn.output,
+        self.id,
+        self.expandedParams
+      );
     },
   }))
   .actions((self) => ({
@@ -38,6 +44,12 @@ export const Token = types
     },
     removeValue(path: string) {
       self.values.delete(path);
+    },
+    expandParam(path: string) {
+      self.expandedParams.set(path, true);
+    },
+    shrinkParam(path: string) {
+      self.expandedParams.delete(path);
     },
   }));
 

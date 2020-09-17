@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { FromType } from "../FromType";
 import { IPath } from "../../../../model/Path";
 import { pathOr } from "ramda";
+import { IPlug } from "../../../../model/Plug";
 
 const OutputWrapper = styled.div`
   display: flex;
@@ -12,7 +13,7 @@ const OutputWrapper = styled.div`
 `;
 
 interface Props {
-  output: IPath[];
+  output: IPlug[];
 }
 
 export function TokenOutput({ output }: Props) {

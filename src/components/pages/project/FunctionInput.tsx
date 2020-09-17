@@ -4,6 +4,7 @@ import { Colours } from "../../../Style";
 import { FromType } from "./FromType";
 import { IPath } from "../../../model/Path";
 import { AddParam } from "./AddParam";
+import { IPlug } from "../../../model/Plug";
 
 const InputBox = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ const InputBox = styled.div`
 
 interface Props {
   editable: boolean;
-  input: IPath[];
+  input: IPlug[];
 }
 
 export const FunctionInput = ({ input, editable }: Props) => {

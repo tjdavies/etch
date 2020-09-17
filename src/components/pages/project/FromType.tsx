@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { FromConnector } from "./FromConnector";
@@ -7,6 +7,8 @@ import { InlineEdit } from "../../common/InlineEdit";
 import { IPlug } from "../../../model/Plug";
 import { Connector } from "./Connector";
 import { DraggableWire } from "./DraggableWire";
+import { TypeIconBox } from "./TypeIcon";
+import { FormDown, FormNext } from "grommet-icons";
 
 const InputLabel = styled.div`
   position: relative;
@@ -31,7 +33,9 @@ const Indented = styled.div`
 
 interface Props {
   editable?: boolean;
+  expanded?: boolean;
   path: IPlug;
+  onToggleExpanded?: () => void;
 }
 
 export function FromType({ path, editable }: Props) {
@@ -41,7 +45,7 @@ export function FromType({ path, editable }: Props) {
   return <Input path={path} editable={editable} />;
 }
 
-function Input({ path, editable }: Props) {
+function Input({ path, editable, expanded, onToggleExpanded }: Props) {
   return (
     <InputLabel>
       {editable ? (
@@ -59,13 +63,46 @@ function Input({ path, editable }: Props) {
   );
 }
 
+function ExpandableInput({
+  path,
+  editable,
+  expanded,
+  onToggleExpanded,
+}: Props) {
+  return (
+    <InputLabel>
+      {editable ? (
+        <InlineEdit
+          type="text"
+          value={path.param.name}
+          onSave={path.param.setName}
+          buttonsAlign="before"
+        />
+      ) : (
+        path.param.name
+      )}
+      <TypeIconBox onClick={() => onToggleExpanded && onToggleExpanded()}>
+        {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
+      </TypeIconBox>
+      <FromConnector path={path} />
+    </InputLabel>
+  );
+}
+
 function RecordType({ path }: { path: IPlug }) {
   return (
     <>
-      <Input path={path} />
-      {path.params?.map((p) => (
-        <Input path={p} />
-      ))}
+      <ExpandableInput
+        path={path}
+        expanded={path.expanded}
+        onToggleExpanded={() =>
+          path.expanded
+            ? path.target.shrinkParam(path.path)
+            : path.target.expandParam(path.path)
+        }
+      />
+
+      {path.expanded && path.params?.map((p) => <FromType path={p} />)}
     </>
   );
 }

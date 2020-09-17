@@ -4,9 +4,8 @@ import { Connector } from "../Connector";
 import { Colours } from "../../../../Style";
 import { useStore } from "../../../../model/Store";
 import styled from "styled-components";
-import { IPath } from "../../../../model/Path";
+
 import { IWire } from "../../../../model/Wire";
-import { IPlug } from "../../../../model/Plug";
 
 const WireSVG = styled.svg`
   position: absolute;
