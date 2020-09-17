@@ -1,15 +1,23 @@
-import { types, Instance, SnapshotIn, destroy, getRoot } from "mobx-state-tree";
+import {
+  types,
+  Instance,
+  SnapshotIn,
+  destroy,
+  getRoot,
+  resolveIdentifier,
+} from "mobx-state-tree";
 import { Param, IParamIn } from "./Param";
 import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
-import { Wire } from "./Wire";
+import { Wire, IWire } from "./Wire";
 import { IPath } from "./Path";
 import { IType } from "./Type";
-import { IStore } from "./Store";
+import { IStore, findWireTo } from "./Store";
 
 export interface ISocket extends IPath {
   value?: number;
+  connection?: IWire;
 }
 
 export const Fn = types
@@ -41,6 +49,7 @@ export const Fn = types
           param: param,
           path,
           value: self.values.get(path),
+          connection: findWireTo(self.wires, path),
         };
       });
     },

@@ -8,7 +8,7 @@ import {
 } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";
-import { IFnIn, IFn, Fn } from "./Fn";
+import { IFnIn, IFn, Fn, ISocket } from "./Fn";
 import { IPoint } from "./Point";
 import { coreFunctions, coreFunctionProcesses } from "./CoreFunctions";
 import { IPath, Path } from "./Path";
@@ -165,11 +165,11 @@ export function calculateFunction(
 
 function getValuesForSockets(
   fn: IFn,
-  sockets: IPath[],
+  sockets: ISocket[],
   plugValues: Record<string, any>
 ): Record<string, any> {
   return sockets.reduce((accumulator, socket) => {
-    const wire = findWireTo(fn.wires, socket.path);
+    const wire = socket.connection;
     if (wire) {
       return findPlugValue(fn, wire, accumulator);
     } else {
@@ -213,14 +213,15 @@ function mapSocketsToValues(
   token: IToken,
   plugValues: Record<string, any>
 ) {
-  const input = (token.sockets as IPath[]).reduce((accumulator, socket) => {
-    if (plugValues[socket.path]) {
+  const input = (token.sockets as ISocket[]).reduce((accumulator, socket) => {
+    if (socket.value) {
       return {
-        [socket.param.id]: plugValues[socket.path],
+        [socket.param.id]: socket.value,
         ...accumulator,
       };
     }
-    const wire = findWireTo(fn.wires, socket.path);
+
+    const wire = socket.connection;
     if (wire) {
       return {
         [socket.param.id]: plugValues[wire.from.path],
@@ -232,7 +233,7 @@ function mapSocketsToValues(
   return input;
 }
 
-function findWireTo(wires: IWire[], path: string): IWire | undefined {
+export function findWireTo(wires: IWire[], path: string): IWire | undefined {
   return wires.find((wire) => wire.to.path === path);
 }
 
@@ -262,11 +263,11 @@ export function mapOutputToValues(
 
 function mapPlugsToOutput(
   wires: IWire[],
-  sockets: IPath[],
+  sockets: ISocket[],
   values: Record<string, any>
 ): Record<string, any> {
   return sockets.reduce((accumulator, socket) => {
-    const wire = findWireTo(wires, socket.path);
+    const wire = socket.connection;
 
     if (wire) {
       return {

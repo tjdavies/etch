@@ -85,6 +85,8 @@ export const RunTimeView = ({ onDock }: Props) => {
   const result =
     output && mapOutputToValues(store.project.mainFn.sockets, output);
 
+  console.log(result);
+
   const props: ViewProps = {
     isPlaying,
     onPlay: () => {

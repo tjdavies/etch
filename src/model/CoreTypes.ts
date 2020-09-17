@@ -9,4 +9,8 @@ export const coreTypes: Record<string, ITypeIn> = {
     id: "number",
     name: "number",
   },
+  shape: {
+    id: "shape",
+    name: "shape",
+  },
 };
