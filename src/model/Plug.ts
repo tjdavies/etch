@@ -3,7 +3,9 @@ import { IFn } from "./Fn";
 import { IToken } from "./Token";
 import { IParam } from "./Param";
 
-export interface IPlug extends IPath {}
+export interface IPlug extends IPath {
+  params?: IPlug[];
+}
 
 export function paramToPath(
   target: IFn | IToken,
@@ -15,6 +17,7 @@ export function paramToPath(
     target,
     param,
     path,
+    params: param.type.params && createPlugs(target, param.type.params, path),
   };
 }
 
@@ -23,16 +26,7 @@ export function createPlugs(
   params: IParam[],
   parentPath: string
 ): IPlug[] {
-  return params.flatMap((param) => {
-    const masterPlug = paramToPath(target as any, param, parentPath);
-
-    if (param.type.params) {
-      return [
-        masterPlug,
-        ...createPlugs(target as any, param.type.params, masterPlug.path),
-      ];
-    }
-
-    return masterPlug;
+  return params.map((param) => {
+    return paramToPath(target as any, param, parentPath);
   });
 }
