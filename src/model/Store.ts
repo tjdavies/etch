@@ -139,6 +139,11 @@ export function createNewProject(name: string) {
         name: "xPos",
         type: "number",
       },
+      {
+        id: "yPos",
+        name: "yPos",
+        type: "number",
+      },
     ],
   };
 
@@ -171,9 +176,6 @@ export function calculateFunction(
   const output: any = getValuesForSockets(fn, fn.sockets, combinedState);
 
   const results = output[fn.id];
-
-  // debugger;
-  // const results = mapPlugsToOutput(fn.wires, fn.sockets, output);
 
   return results;
 }
@@ -302,32 +304,6 @@ export function mapOutputToValues(
     return {
       ...accumulator,
       [plug.param.name]: value[plug.param.id],
-    };
-  }, {});
-}
-
-function mapPlugsToOutput(
-  wires: IWire[],
-  sockets: ISocket[],
-  values: Record<string, any>
-): Record<string, any> {
-  return sockets.reduce((accumulator, socket) => {
-    if (socket.params) {
-      return {
-        ...accumulator,
-        [socket.param.id]: mapPlugsToOutput(wires, socket.params, values),
-      };
-    }
-    const wire = socket.connection;
-    if (wire) {
-      return {
-        ...accumulator,
-        [socket.param.id]: values[wire.from.path],
-      };
-    }
-    return {
-      ...accumulator,
-      [socket.param.id]: values[socket.path],
     };
   }, {});
 }

@@ -65,7 +65,7 @@ interface Props {
   onDock: () => void;
 }
 
-let state = { xPos: 0 };
+let state = { xPos: 0, yPos: 0 };
 
 export const RunTimeView = ({ onDock }: Props) => {
   const store = useStore();
@@ -87,7 +87,12 @@ export const RunTimeView = ({ onDock }: Props) => {
 
   const output = calculateFunction(store.project.mainFn, {
     time: time,
-    input: { keyDown: keysDown["ArrowRight"] },
+    input: {
+      rightArrow: keysDown["ArrowRight"],
+      leftArrow: keysDown["ArrowLeft"],
+      upArrow: keysDown["ArrowUp"],
+      downArrow: keysDown["ArrowDown"],
+    },
     state: state,
   });
 
@@ -105,6 +110,7 @@ export const RunTimeView = ({ onDock }: Props) => {
       setIsPlaying(false);
     },
     onStop: () => {
+      state = { xPos: 0, yPos: 0 };
       setIsPlaying(false);
       setTime(0);
     },
