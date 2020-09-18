@@ -19,7 +19,7 @@ import { ITypeIn } from "./Type";
 import { ISocket } from "./Sockets";
 import { IPlug } from "./Plug";
 import { IKeyValueMap } from "mobx";
-import { any, assocPath } from "ramda";
+import { any, assocPath, hasPath, mergeDeepLeft, path } from "ramda";
 
 export const Store = types
   .model("store", {
@@ -164,15 +164,16 @@ export function calculateFunction(
   const constValues = fn.values.toJSON();
   const unFlatConst = unFlatten(constValues);
 
-  const combinedState = { ...calculatedState, ...unFlatConst };
+  const combinedState = mergeDeepLeft(calculatedState, unFlatConst);
 
-  const inputValues = mapInputToValues(fn.plugs, inputValue);
+  //const inputValues = mapInputToValues(fn.plugs, inputValue);
 
-  const output = getValuesForSockets(fn, fn.sockets, {
-    ...inputValues,
-    ...constValues,
-  });
-  const results = mapPlugsToOutput(fn.wires, fn.sockets, output);
+  const output: any = getValuesForSockets(fn, fn.sockets, combinedState);
+
+  const results = output[fn.id];
+
+  // debugger;
+  // const results = mapPlugsToOutput(fn.wires, fn.sockets, output);
 
   return results;
 }
@@ -193,46 +194,53 @@ function setValue(path: string, value: any, object: Object): Object {
 function getValuesForSockets(
   fn: IFn,
   sockets: ISocket[],
-  plugValues: Record<string, any>
-): Record<string, any> {
-  debugger;
+  calculatedState: Object
+): Object {
   return sockets.reduce((accumulator, socket) => {
     const wire = socket.connection;
+
     if (wire) {
       return findPlugValue(fn, wire, accumulator);
+    } else if (socket.params) {
+      return getValuesForSockets(fn, socket.params, calculatedState);
     } else {
       return accumulator;
     }
-  }, plugValues);
+  }, calculatedState);
 }
 
-function findPlugValue(fn: IFn, wire: IWire, plugValues: Record<string, any>) {
-  if (plugValues[wire.from.path]) {
-    return plugValues;
+function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
+  console.log("findPlugValue");
+  console.log(wire.from.path);
+  if (hasPath(wire.from.path.split("."), calculatedState)) {
+    return calculatedState;
   } else {
     if (getType(wire.from.target) === Token) {
       const token = wire.from.target as IToken;
-      const computedValues = getValuesForSockets(fn, token.sockets, plugValues);
+
+      const computedValues: any = getValuesForSockets(
+        fn,
+        token.sockets,
+        calculatedState
+      );
+
       const outPutValue = runToken(fn, token, computedValues);
 
       if (outPutValue) {
         const outValue = outPutValue[wire.from.param.id];
-        return {
-          [wire.from.path]: outValue,
-          [wire.to.path]: outValue,
-          ...computedValues,
-        };
+        return setValue(wire.to.path, outValue, computedValues);
       }
 
-      return plugValues;
+      return calculatedState;
     } else {
-      return plugValues;
+      return calculatedState;
     }
   }
 }
 
-function runToken(fn: IFn, token: IToken, plugValues: Record<string, any>) {
+function runToken(fn: IFn, token: IToken, plugValues: Object) {
   const input = mapSocketsToValues(fn, token, plugValues);
+  console.log(input);
   return calculateFunction(token.fn, input);
 }
 
@@ -252,7 +260,7 @@ function mapSocketsToValues(
     const wire = socket.connection;
     if (wire) {
       return {
-        [socket.param.id]: plugValues[wire.from.path],
+        [socket.param.id]: path(wire.from.path.split("."), plugValues),
         ...accumulator,
       };
     }
