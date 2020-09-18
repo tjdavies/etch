@@ -10,14 +10,14 @@ const Box = styled.div`
 `;
 
 export interface IScene {
-  x: number;
-  y: number;
+  scenex: number;
+  sceney: number;
   width: number;
   height: number;
 }
 
 interface Props {
-  scene: { x: number; y: number; width: number; height: number } | null;
+  scene: IScene | null;
 }
 
 const stageWidth = 800;
@@ -37,8 +37,8 @@ export const RunTimeStage = ({ scene }: Props) => {
         <Layer>
           {scene && (
             <Rect
-              x={scene.x}
-              y={scene.y}
+              x={scene.scenex}
+              y={scene.sceney}
               width={scene.width}
               height={scene.height}
               fill="red"

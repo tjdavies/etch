@@ -158,7 +158,6 @@ export function calculateFunction(
     ...inputValues,
     ...constValues,
   });
-
   const results = mapPlugsToOutput(fn.wires, fn.sockets, output);
 
   return results;
@@ -267,15 +266,25 @@ function mapPlugsToOutput(
   sockets: ISocket[],
   values: Record<string, any>
 ): Record<string, any> {
+  console.log(sockets);
   return sockets.reduce((accumulator, socket) => {
+    if (socket.params) {
+      return {
+        ...accumulator,
+        [socket.param.id]: mapPlugsToOutput(wires, socket.params, values),
+      };
+    }
     const wire = socket.connection;
-
     if (wire) {
       return {
         ...accumulator,
         [socket.param.id]: values[wire.from.path],
       };
     }
+    return {
+      ...accumulator,
+      [socket.param.id]: values[socket.path],
+    };
     return accumulator;
   }, {});
 }

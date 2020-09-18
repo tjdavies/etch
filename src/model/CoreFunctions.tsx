@@ -16,11 +16,6 @@ export const coreFunctionProcesses: Record<string, any> = {
       rm: am * bm,
     };
   },
-  rect: ({ x, width, y, height }: Record<string, any>): Record<string, any> => {
-    return {
-      rect: { x, y, width, height },
-    };
-  },
   branch: ({ data, branch }: Record<string, any>): Record<string, any> => {
     if (branch) {
       return {
@@ -155,41 +150,6 @@ const divideFn: IFnIn = {
   ],
 };
 
-const rectFn: IFnIn = {
-  id: "rect",
-  name: "rect",
-  core: true,
-  input: [
-    {
-      id: "x",
-      name: "x",
-      type: "number",
-    },
-    {
-      id: "y",
-      name: "y",
-      type: "number",
-    },
-    {
-      id: "width",
-      name: "width",
-      type: "number",
-    },
-    {
-      id: "height",
-      name: "height",
-      type: "number",
-    },
-  ],
-  output: [
-    {
-      id: "rect",
-      name: "rect",
-      type: "scene",
-    },
-  ],
-};
-
 const branchFn: IFnIn = {
   id: "branch",
   name: "branch",
@@ -294,7 +254,6 @@ export const coreFunctions = {
   subtract: subtractFn,
   multiply: multiplyFn,
   divide: divideFn,
-  rect: rectFn,
   branch: branchFn,
   greaterThan: greaterThanFn,
   select: selectFn,
