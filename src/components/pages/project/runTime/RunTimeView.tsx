@@ -11,6 +11,7 @@ import { RunTimeStage, IScene } from "./RunTimeStage";
 import { RunTimeControls } from "./RunTimeControls";
 import { useInterval } from "../../../../utils/hooks/useInterval";
 import Draggable from "react-draggable";
+import { useKeyDown } from "../../../../utils/hooks/useKeyDown";
 
 const RunTimeBox = styled.div`
   position: absolute;
@@ -80,12 +81,15 @@ export const RunTimeView = ({ onDock }: Props) => {
     isPlaying ? 40 : null
   );
 
-  const output = calculateFunction(store.project.mainFn, { time: time });
+  const arrowKeyDown = useKeyDown("ArrowRight");
+
+  const output = calculateFunction(store.project.mainFn, {
+    time: time,
+    input: { keyDown: arrowKeyDown },
+  });
 
   const result =
     output && mapOutputToValues(store.project.mainFn.sockets, output);
-
-  console.log(result);
 
   const props: ViewProps = {
     isPlaying,

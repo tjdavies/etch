@@ -17,6 +17,9 @@ import { Token, IToken } from "./Token";
 import { coreTypes } from "./CoreTypes";
 import { ITypeIn } from "./Type";
 import { ISocket } from "./Sockets";
+import { IPlug } from "./Plug";
+import { IKeyValueMap } from "mobx";
+import { any, assocPath } from "ramda";
 
 export const Store = types
   .model("store", {
@@ -101,6 +104,12 @@ export function createNewProject(name: string) {
     type: "state",
   };
 
+  const inputParamter = {
+    id: "input",
+    name: "input",
+    type: "input",
+  };
+
   const outputCountParamter = {
     id: generateId(),
     name: "scene",
@@ -117,7 +126,7 @@ export function createNewProject(name: string) {
     id: generateId(),
     name: "main",
     core: false,
-    input: [stateParamter, valueAParamter],
+    input: [stateParamter, inputParamter, valueAParamter],
     output: [outputStateParamter, outputCountParamter],
   };
 
@@ -150,9 +159,14 @@ export function calculateFunction(
     return (coreFunctionProcesses[fn.id] as any)(inputValue);
   }
 
-  const inputValues = mapInputToValues(fn.plugs, inputValue);
+  const calculatedState = { [fn.id]: inputValue };
 
   const constValues = fn.values.toJSON();
+  const unFlatConst = unFlatten(constValues);
+
+  const combinedState = { ...calculatedState, ...unFlatConst };
+
+  const inputValues = mapInputToValues(fn.plugs, inputValue);
 
   const output = getValuesForSockets(fn, fn.sockets, {
     ...inputValues,
@@ -163,11 +177,25 @@ export function calculateFunction(
   return results;
 }
 
+function unFlatten(constValues: IKeyValueMap<any>): any {
+  return Object.entries(constValues).reduce(
+    (accumulator: any, keyValue: any) => {
+      return setValue(keyValue[0], keyValue[1], accumulator);
+    },
+    {}
+  );
+}
+
+function setValue(path: string, value: any, object: Object): Object {
+  return assocPath(path.split("."), value, object);
+}
+
 function getValuesForSockets(
   fn: IFn,
   sockets: ISocket[],
   plugValues: Record<string, any>
 ): Record<string, any> {
+  debugger;
   return sockets.reduce((accumulator, socket) => {
     const wire = socket.connection;
     if (wire) {
@@ -238,12 +266,16 @@ export function findWireTo(wires: IWire[], path: string): IWire | undefined {
 }
 
 export function mapInputToValues(
-  plugs: IPath[],
+  plugs: IPlug[],
   inputValue: Record<string, any>
 ): Record<string, any> {
   return plugs.reduce((accumulator, plug) => {
+    const acc =
+      plug.params && inputValue[plug.param.id]
+        ? mapInputToValues(plug.params, inputValue[plug.param.id])
+        : accumulator;
     return {
-      ...accumulator,
+      ...acc,
       [plug.path]: inputValue[plug.param.id],
     };
   }, {});
@@ -266,7 +298,6 @@ function mapPlugsToOutput(
   sockets: ISocket[],
   values: Record<string, any>
 ): Record<string, any> {
-  console.log(sockets);
   return sockets.reduce((accumulator, socket) => {
     if (socket.params) {
       return {
@@ -285,7 +316,6 @@ function mapPlugsToOutput(
       ...accumulator,
       [socket.param.id]: values[socket.path],
     };
-    return accumulator;
   }, {});
 }
 

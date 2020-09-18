@@ -32,6 +32,11 @@ export const coreFunctionProcesses: Record<string, any> = {
       gr: ga > gb,
     };
   },
+  equal: ({ ea, eb }: Record<string, any>): Record<string, any> => {
+    return {
+      er: ea === eb,
+    };
+  },
   select: ({
     select1,
     select2,
@@ -235,6 +240,31 @@ const greaterThanFn: IFnIn = {
   ],
 };
 
+const equalFn: IFnIn = {
+  id: "equal",
+  name: "=",
+  core: true,
+  input: [
+    {
+      id: "ea",
+      name: "A",
+      type: "through",
+    },
+    {
+      id: "eb",
+      name: "B",
+      type: "through",
+    },
+  ],
+  output: [
+    {
+      id: "er",
+      name: "A = B",
+      type: "boolean",
+    },
+  ],
+};
+
 const splitFn: IFnIn = {
   id: "split",
   name: "split",
@@ -258,4 +288,5 @@ export const coreFunctions = {
   greaterThan: greaterThanFn,
   select: selectFn,
   split: splitFn,
+  equal: equalFn,
 };

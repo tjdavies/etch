@@ -9,6 +9,14 @@ export const coreTypes: Record<string, ITypeIn> = {
     id: "number",
     name: "number",
   },
+  boolean: {
+    id: "boolean",
+    name: "boolean",
+  },
+  through: {
+    id: "through",
+    name: "through",
+  },
   shape: {
     id: "shape",
     name: "shape",
@@ -36,6 +44,17 @@ export const coreTypes: Record<string, ITypeIn> = {
         id: "width",
         name: "width",
         type: "number",
+      },
+    ],
+  },
+  input: {
+    id: "input",
+    name: "input",
+    params: [
+      {
+        id: "keyDown",
+        name: "keyDown",
+        type: "string",
       },
     ],
   },
