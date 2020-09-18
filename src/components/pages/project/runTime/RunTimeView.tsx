@@ -65,6 +65,8 @@ interface Props {
   onDock: () => void;
 }
 
+let state = { xPos: 0 };
+
 export const RunTimeView = ({ onDock }: Props) => {
   const store = useStore();
   const [maximise, setMaximised] = useState(false);
@@ -86,10 +88,14 @@ export const RunTimeView = ({ onDock }: Props) => {
   const output = calculateFunction(store.project.mainFn, {
     time: time,
     input: { keyDown: arrowKeyDown },
+    state: state,
   });
 
   const result =
     output && mapOutputToValues(store.project.mainFn.sockets, output);
+
+  state = result?.state;
+  console.log(result);
 
   const props: ViewProps = {
     isPlaying,

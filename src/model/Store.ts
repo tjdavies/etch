@@ -187,6 +187,10 @@ function unFlatten(constValues: IKeyValueMap<any>): any {
   );
 }
 
+function getValue(p: string, object: any): any {
+  return path(p.split("."), object);
+}
+
 function setValue(path: string, value: any, object: Object): Object {
   return assocPath(path.split("."), value, object);
 }
@@ -202,7 +206,7 @@ function getValuesForSockets(
     if (wire) {
       return findPlugValue(fn, wire, accumulator);
     } else if (socket.params) {
-      return getValuesForSockets(fn, socket.params, calculatedState);
+      return getValuesForSockets(fn, socket.params, accumulator);
     } else {
       return accumulator;
     }
@@ -210,10 +214,9 @@ function getValuesForSockets(
 }
 
 function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
-  console.log("findPlugValue");
-  console.log(wire.from.path);
-  if (hasPath(wire.from.path.split("."), calculatedState)) {
-    return calculatedState;
+  const val = getValue(wire.from.path, calculatedState);
+  if (val !== undefined) {
+    return setValue(wire.to.path, val, calculatedState);
   } else {
     if (getType(wire.from.target) === Token) {
       const token = wire.from.target as IToken;
@@ -228,10 +231,12 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
 
       if (outPutValue) {
         const outValue = outPutValue[wire.from.param.id];
-        return setValue(wire.to.path, outValue, computedValues);
+        const cc = setValue(wire.from.path, outValue, computedValues);
+        const c = setValue(wire.to.path, outValue, cc);
+        return c;
       }
 
-      return calculatedState;
+      return computedValues;
     } else {
       return calculatedState;
     }
@@ -240,7 +245,7 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
 
 function runToken(fn: IFn, token: IToken, plugValues: Object) {
   const input = mapSocketsToValues(fn, token, plugValues);
-  console.log(input);
+
   return calculateFunction(token.fn, input);
 }
 
@@ -250,7 +255,7 @@ function mapSocketsToValues(
   plugValues: Record<string, any>
 ) {
   const input = (token.sockets as ISocket[]).reduce((accumulator, socket) => {
-    if (socket.value) {
+    if (socket.value !== undefined) {
       return {
         [socket.param.id]: socket.value,
         ...accumulator,
