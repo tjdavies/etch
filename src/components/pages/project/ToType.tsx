@@ -7,6 +7,8 @@ import { InlineEdit } from "../../common/InlineEdit";
 import { useStore } from "../../../model/Store";
 import { DataInput } from "./DataInput";
 import { ISocket } from "../../../model/Sockets";
+import { TypeIconBox } from "./TypeIcon";
+import { FormDown, FormNext } from "grommet-icons";
 
 const InputLabel = styled.div`
   position: relative;
@@ -17,11 +19,20 @@ const InputLabel = styled.div`
 `;
 
 interface Props {
+  expanded?: boolean;
   editable?: boolean;
   path: ISocket;
+  onToggleExpanded?: () => void;
 }
 
 export const ToType = observer(({ path, editable }: Props) => {
+  if (path.params) {
+    return <RecordType path={path} />;
+  }
+  return <Input path={path} editable={editable} />;
+});
+
+const Input = observer(({ path, editable }: Props) => {
   const store = useStore();
   const [isDataInput, setIsDataInput] = useState(false);
   return (
@@ -51,7 +62,6 @@ export const ToType = observer(({ path, editable }: Props) => {
           }}
         />
       )}
-
       {editable ? (
         <InlineEdit
           type="text"
@@ -64,6 +74,97 @@ export const ToType = observer(({ path, editable }: Props) => {
     </InputLabel>
   );
 });
+
+const ListConnectorWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: -30px;
+  padding: 5px;
+  z-index: -1;
+`;
+
+const ConnectorCircle = styled.div`
+  border: 1px solid ${Colours.lightGrey};
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-bottom: -6px;
+  background-color: ${Colours.background};
+`;
+
+const ExpandableInput = observer(
+  ({ path, editable, onToggleExpanded, expanded }: Props) => {
+    const store = useStore();
+    const [isDataInput, setIsDataInput] = useState(false);
+    return (
+      <InputLabel
+        onMouseOver={() => store.setActiveSocket(path)}
+        onMouseOut={() => store.setActiveSocket(undefined)}
+      >
+        <ToConnector
+          socket={path}
+          onClick={() => setIsDataInput(true)}
+          filled={path.value !== undefined}
+        />
+        {!expanded && (
+          <ListConnectorWrapper>
+            {path.params?.map((p) => (
+              <ConnectorCircle id={p.path} />
+            ))}
+          </ListConnectorWrapper>
+        )}
+        {path.value !== undefined && !isDataInput && (
+          <Value onClick={() => setIsDataInput(true)}>{path.value}</Value>
+        )}
+        <TypeIconBox onClick={() => onToggleExpanded && onToggleExpanded()}>
+          {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
+        </TypeIconBox>
+        {isDataInput && (
+          <DataInput
+            value={path.value !== undefined ? path.value + "" : undefined}
+            onEnter={(value) => {
+              const v = value !== "" && Number(value);
+              if (value !== "") {
+                path.target.addValue(path.path, Number(v));
+              } else {
+                path.target.removeValue(path.path);
+              }
+              setIsDataInput(false);
+            }}
+          />
+        )}
+        {editable ? (
+          <InlineEdit
+            type="text"
+            value={path.param.name}
+            onSave={path.param.setName}
+          />
+        ) : (
+          path.param.name
+        )}
+      </InputLabel>
+    );
+  }
+);
+
+function RecordType({ path }: { path: ISocket }) {
+  return (
+    <>
+      <ExpandableInput
+        path={path}
+        expanded={path.expanded}
+        onToggleExpanded={() =>
+          path.expanded
+            ? path.target.shrinkParam(path.path)
+            : path.target.expandParam(path.path)
+        }
+      />
+
+      {path.expanded && path.params?.map((p) => <ToType path={p} />)}
+    </>
+  );
+}
 
 const Value = styled.div`
   position: absolute;

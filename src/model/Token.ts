@@ -20,7 +20,8 @@ export const Token = types
         self.fn.input,
         getParent<IFn>(self, 2).wires,
         self.values,
-        self.id
+        self.id,
+        self.expandedParams
       );
     },
     get plugs() {

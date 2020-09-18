@@ -22,21 +22,22 @@ export const Connector = observer(({ from, to }: Props) => {
   const inputs = to.target.input && to.target.input.length;
   const outputs = to.target.output?.length;
   const size = useWindowSize();
-  const expand = from.target && from.target?.expandedParams.size;
+  const expandFrom = from.target && from.target?.expandedParams.size;
+  const expandTo = to.target && to.target?.expandedParams.size;
 
   useLayoutEffect(() => {
     // Update the document title using the browser API
     //document.title = `You clicked ${count} times`;
 
     setAPos(getLocation(from.path));
-  }, [posA?.x, posA?.y, size, inputs, outputs, from.path, expand]);
+  }, [posA?.x, posA?.y, size, inputs, outputs, from.path, expandFrom]);
 
   useLayoutEffect(() => {
     // Update the document title using the browser API
     //document.title = `You clicked ${count} times`;
 
     setBPos(getLocation(to.path));
-  }, [posB?.x, posB?.y, size, inputs, outputs, to.path, expand]);
+  }, [posB?.x, posB?.y, size, inputs, outputs, to.path, expandTo]);
 
   if (aPos && bPos) {
     return (

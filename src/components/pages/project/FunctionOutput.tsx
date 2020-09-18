@@ -4,6 +4,7 @@ import { Colours } from "../../../Style";
 import { ToType } from "./ToType";
 import { IPath } from "../../../model/Path";
 import { AddParam } from "./AddParam";
+import { ISocket } from "../../../model/Sockets";
 
 const OutputBox = styled.div`
   gap: 5px;
@@ -21,7 +22,7 @@ const OutputBox = styled.div`
 
 interface Props {
   editable: boolean;
-  output: IPath[];
+  output: ISocket[];
 }
 
 export function FunctionOutput({ output, editable }: Props) {

@@ -9,6 +9,7 @@ export interface ISocket extends IPath {
   value?: number;
   connection?: IWire;
   params?: ISocket[];
+  expanded: boolean;
 }
 
 export function paramToSocket(
@@ -16,7 +17,8 @@ export function paramToSocket(
   param: IParam,
   wires: IWire[],
   values: any,
-  parentPath: string
+  parentPath: string,
+  expandedParams: any
 ): ISocket {
   const path = parentPath + "." + param.id;
   return {
@@ -27,7 +29,15 @@ export function paramToSocket(
     connection: findWireTo(wires, path),
     params:
       param.type.params &&
-      createSockets(target, param.type.params, wires, values, path),
+      createSockets(
+        target,
+        param.type.params,
+        wires,
+        values,
+        path,
+        expandedParams
+      ),
+    expanded: expandedParams.get(path),
   };
 }
 
@@ -36,9 +46,17 @@ export function createSockets(
   params: IParam[],
   wires: IWire[],
   values: any,
-  parentPath: string
+  parentPath: string,
+  expandedParams: any
 ): ISocket[] {
   return params.map((param) => {
-    return paramToSocket(target as any, param, wires, values, parentPath);
+    return paramToSocket(
+      target as any,
+      param,
+      wires,
+      values,
+      parentPath,
+      expandedParams
+    );
   });
 }

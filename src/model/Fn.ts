@@ -31,7 +31,8 @@ export const Fn = types
         self.output,
         self.wires,
         self.values,
-        self.id
+        self.id,
+        self.expandedParams
       );
     },
     get isMain(): boolean {
