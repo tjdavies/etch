@@ -83,11 +83,11 @@ export const RunTimeView = ({ onDock }: Props) => {
     isPlaying ? 40 : null
   );
 
-  const arrowKeyDown = useKeyDown("ArrowRight");
+  const keysDown = useKeyDown();
 
   const output = calculateFunction(store.project.mainFn, {
     time: time,
-    input: { keyDown: arrowKeyDown },
+    input: { keyDown: keysDown["ArrowRight"] },
     state: state,
   });
 
@@ -95,7 +95,6 @@ export const RunTimeView = ({ onDock }: Props) => {
     output && mapOutputToValues(store.project.mainFn.sockets, output);
 
   state = result?.state;
-  console.log(result);
 
   const props: ViewProps = {
     isPlaying,

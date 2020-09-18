@@ -1,23 +1,18 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
-export function useKeyDown(targetKey: string) {
+var keys: any = {};
+export function useKeyDown() {
   // State for keeping track of whether key is pressed
-  const [keyPressed, setKeyPressed] = useState(false);
-
+  //const [keyPressed, setKeyPressed] = useState(false);
   // If pressed key is our target key then set to true
-  function downHandler({ key }: any) {
-    if (key === targetKey) {
-      setKeyPressed(true);
-    }
-  }
+  const downHandler = ({ key }: any) => {
+    keys[key] = true;
+  };
 
   // If released key is our target key then set to false
   const upHandler = ({ key }: any) => {
-    if (key === targetKey) {
-      setKeyPressed(false);
-    }
+    delete keys[key];
   };
-
   // Add event listeners
   useEffect(() => {
     window.addEventListener("keydown", downHandler);
@@ -29,5 +24,5 @@ export function useKeyDown(targetKey: string) {
     };
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
-  return keyPressed;
+  return keys;
 }

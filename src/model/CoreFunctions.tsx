@@ -42,7 +42,6 @@ export const coreFunctionProcesses: Record<string, any> = {
     select2,
     select3,
   }: Record<string, any>): Record<string, any> => {
-    console.log(select1);
     if (select1) {
       return {
         selectOut: select2,
