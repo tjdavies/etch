@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { FromType } from "./FromType";
-import { IPath } from "../../../model/Path";
 import { AddParam } from "./AddParam";
 import { IPlug } from "../../../model/Plug";
+import { useStore } from "../../../model/Store";
 
 const InputBox = styled.div`
   display: flex;
@@ -27,12 +27,14 @@ interface Props {
 }
 
 export const FunctionInput = ({ input, editable }: Props) => {
+  const store = useStore();
+
   return (
     <InputBox>
       {input.map((path) => (
         <FromType key={path.path} path={path} editable={editable} />
       ))}
-      {editable && <AddParam isInput={true} />}
+      {editable && <AddParam onSelect={store.activeFunction.addInputParam} />}
     </InputBox>
   );
 };

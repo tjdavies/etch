@@ -61,19 +61,25 @@ export const Fn = types
       });
       destroy(token);
     },
-    addInputParam(type: IType) {
-      const newParam: IParamIn = {
-        name: "new",
-        type: type.id,
-      };
-      self.input.push(newParam);
+    addInputParam(typeId: string) {
+      const type = getRoot<IStore>(self).project.types.get(typeId);
+      if (type) {
+        const newParam: IParamIn = {
+          name: "new",
+          type: type.id,
+        };
+        self.input.push(newParam);
+      }
     },
-    addOutputParam(type: IType) {
-      const newParam: IParamIn = {
-        name: "new",
-        type: type.id,
-      };
-      self.output.push(newParam);
+    addOutputParam(typeId: string) {
+      const type = getRoot<IStore>(self).project.types.get(typeId);
+      if (type) {
+        const newParam: IParamIn = {
+          name: "new",
+          type: type.id,
+        };
+        self.output.push(newParam);
+      }
     },
     addValue(path: string, value: number) {
       self.values.set(path, value);

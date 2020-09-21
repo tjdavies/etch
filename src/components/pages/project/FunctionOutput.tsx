@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { ToType } from "./ToType";
-import { IPath } from "../../../model/Path";
 import { AddParam } from "./AddParam";
 import { ISocket } from "../../../model/Sockets";
+import { useStore } from "../../../model/Store";
 
 const OutputBox = styled.div`
   gap: 5px;
@@ -26,12 +26,13 @@ interface Props {
 }
 
 export function FunctionOutput({ output, editable }: Props) {
+  const store = useStore();
   return (
     <OutputBox>
       {output.map((param) => (
         <ToType key={param.path} path={param} editable={editable} />
       ))}
-      {editable && <AddParam isInput={false} />}
+      {editable && <AddParam onSelect={store.activeFunction.addOutputParam} />}
     </OutputBox>
   );
 }

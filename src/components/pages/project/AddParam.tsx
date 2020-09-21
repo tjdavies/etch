@@ -11,10 +11,10 @@ const Wrapper = styled.div`
 `;
 
 interface Props {
-  isInput: boolean;
+  onSelect: (typeId: string) => void;
 }
 
-export function AddParam({ isInput }: Props) {
+export function AddParam({ onSelect }: Props) {
   const [showSelect, setShowSelect] = useState(false);
   const store = useStore();
 
@@ -33,14 +33,7 @@ export function AddParam({ isInput }: Props) {
             setShowSelect(false);
           }}
           onSelect={(key) => {
-            const t = store.project.types.get(key);
-            if (t) {
-              if (isInput) {
-                store.activeFunction.addInputParam(t);
-              } else {
-                store.activeFunction.addOutputParam(t);
-              }
-            }
+            onSelect(key);
             setShowSelect(false);
           }}
         />

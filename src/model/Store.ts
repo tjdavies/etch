@@ -133,6 +133,7 @@ export function createNewProject(name: string) {
   const state: ITypeIn = {
     id: "state",
     name: "state",
+    core: false,
     params: [
       {
         id: "xPos",

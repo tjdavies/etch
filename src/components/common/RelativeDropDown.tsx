@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const FloatyDropdown = styled.div`
   position: absolute;
+  z-index: 10;
 `;
 
 const FloatyDropdownBlocker = styled.div`
