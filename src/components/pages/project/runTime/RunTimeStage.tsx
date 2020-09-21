@@ -9,11 +9,15 @@ const Box = styled.div`
   background-color: white;
 `;
 
-export interface IScene {
-  scenex: number;
-  sceney: number;
+export interface IRect {
+  x: number;
+  y: number;
   width: number;
   height: number;
+}
+
+export interface IScene {
+  children: IRect[];
 }
 
 interface Props {
@@ -35,15 +39,16 @@ export const RunTimeStage = ({ scene }: Props) => {
         scale={{ x: scale, y: scale }}
       >
         <Layer>
-          {scene && (
-            <Rect
-              x={scene.scenex}
-              y={scene.sceney}
-              width={scene.width}
-              height={scene.height}
-              fill="red"
-            />
-          )}
+          {scene &&
+            scene.children.map((rect) => (
+              <Rect
+                x={rect.x}
+                y={rect.y}
+                width={rect.width}
+                height={rect.height}
+                fill="red"
+              />
+            ))}
         </Layer>
       </Stage>
     </Box>

@@ -26,13 +26,25 @@ interface Props {
 }
 
 export const ToType = observer(({ path, editable }: Props) => {
+  const onSetValue = (value: string) => {
+    if (value !== "" && !isNaN(Number(value))) {
+      path.target.addValue(path.path, Number(value));
+    } else {
+      path.target.removeValue(path.path);
+    }
+  };
+
   if (path.params) {
-    return <RecordType path={path} />;
+    return <RecordType path={path} onSetValue={onSetValue} />;
   }
-  return <Input path={path} editable={editable} />;
+  return <Input path={path} editable={editable} onSetValue={onSetValue} />;
 });
 
-const Input = observer(({ path, editable }: Props) => {
+interface LocalProp extends Props {
+  onSetValue: (value: string) => void;
+}
+
+const Input = observer(({ path, editable, onSetValue }: LocalProp) => {
   const store = useStore();
   const [isDataInput, setIsDataInput] = useState(false);
   return (
@@ -52,11 +64,7 @@ const Input = observer(({ path, editable }: Props) => {
         <DataInput
           value={path.value !== undefined ? path.value + "" : undefined}
           onEnter={(value) => {
-            if (value !== "" && !isNaN(value)) {
-              path.target.addValue(path.path, Number(value));
-            } else {
-              path.target.removeValue(path.path);
-            }
+            onSetValue(value);
             setIsDataInput(false);
           }}
         />
@@ -93,7 +101,7 @@ const ConnectorCircle = styled.div`
 `;
 
 const ExpandableInput = observer(
-  ({ path, editable, onToggleExpanded, expanded }: Props) => {
+  ({ path, editable, onToggleExpanded, expanded, onSetValue }: LocalProp) => {
     const store = useStore();
     const [isDataInput, setIsDataInput] = useState(false);
     return (
@@ -123,12 +131,7 @@ const ExpandableInput = observer(
           <DataInput
             value={path.value !== undefined ? path.value + "" : undefined}
             onEnter={(value) => {
-              const v = value !== "" && Number(value);
-              if (value !== "") {
-                path.target.addValue(path.path, Number(v));
-              } else {
-                path.target.removeValue(path.path);
-              }
+              onSetValue(value);
               setIsDataInput(false);
             }}
           />
@@ -147,7 +150,7 @@ const ExpandableInput = observer(
   }
 );
 
-function RecordType({ path }: { path: ISocket }) {
+function RecordType({ path, onSetValue }: LocalProp) {
   return (
     <>
       <ExpandableInput
@@ -158,6 +161,7 @@ function RecordType({ path }: { path: ISocket }) {
             ? path.target.shrinkParam(path.path)
             : path.target.expandParam(path.path)
         }
+        onSetValue={onSetValue}
       />
 
       {path.expanded && path.params?.map((p) => <ToType path={p} />)}

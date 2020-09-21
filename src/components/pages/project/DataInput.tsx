@@ -15,7 +15,7 @@ const InputWrapper = styled.div`
 `;
 
 interface Props {
-  value: string | undefined;
+  value?: string;
   onEnter: (value: any) => void;
 }
 

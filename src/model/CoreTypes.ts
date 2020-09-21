@@ -24,23 +24,24 @@ export const coreTypes: Record<string, ITypeIn> = {
     id: "through",
     name: "through",
   },
-  shape: {
+  list: {
     core: true,
-    id: "shape",
-    name: "shape",
+    id: "list",
+    name: "list",
+    defaultValue: [],
   },
-  scene: {
+  rect: {
     core: true,
-    id: "scene",
-    name: "scene",
+    id: "rect",
+    name: "rect",
     params: [
       {
-        id: "scenex",
+        id: "recxtx",
         name: "x",
         type: "number",
       },
       {
-        id: "sceney",
+        id: "y",
         name: "y",
         type: "number",
       },
@@ -53,6 +54,18 @@ export const coreTypes: Record<string, ITypeIn> = {
         id: "width",
         name: "width",
         type: "number",
+      },
+    ],
+  },
+  scene: {
+    core: true,
+    id: "scene",
+    name: "scene",
+    params: [
+      {
+        id: "children",
+        name: "children",
+        type: "list",
       },
     ],
   },

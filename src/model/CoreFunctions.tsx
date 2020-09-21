@@ -16,17 +16,6 @@ export const coreFunctionProcesses: Record<string, any> = {
       rm: am * bm,
     };
   },
-  branch: ({ data, branch }: Record<string, any>): Record<string, any> => {
-    if (branch) {
-      return {
-        true: data,
-      };
-    } else {
-      return {
-        false: data,
-      };
-    }
-  },
   greaterThan: ({ ga, gb }: Record<string, any>): Record<string, any> => {
     return {
       gr: ga > gb,
@@ -66,6 +55,14 @@ export const coreFunctionProcesses: Record<string, any> = {
         selectOut: select3,
       };
     }
+  },
+  push: ({
+    pushArray,
+    pushValue,
+  }: Record<string, any>): Record<string, any> => {
+    return {
+      pushReturn: [...pushArray, pushValue],
+    };
   },
 };
 
@@ -165,36 +162,6 @@ const divideFn: IFnIn = {
       id: "rd",
       name: "A / B",
       type: "number",
-    },
-  ],
-};
-
-const branchFn: IFnIn = {
-  id: "branch",
-  name: "branch",
-  core: true,
-  input: [
-    {
-      id: "data",
-      name: "data",
-      type: "through",
-    },
-    {
-      id: "branch",
-      name: "switch",
-      type: "boolean",
-    },
-  ],
-  output: [
-    {
-      id: "dataTrue",
-      name: "true",
-      type: "through",
-    },
-    {
-      id: "dataFalse",
-      name: "false",
-      type: "through",
     },
   ],
 };
@@ -354,18 +321,29 @@ const equalFn: IFnIn = {
   ],
 };
 
-const splitFn: IFnIn = {
-  id: "split",
-  name: "split",
+const pushFn: IFnIn = {
+  id: "push",
+  name: "push",
   core: true,
   input: [
     {
-      id: "split",
-      name: "split",
-      type: "object",
+      id: "pushArray",
+      name: "list",
+      type: "list",
+    },
+    {
+      id: "pushValue",
+      name: "value",
+      type: "number",
     },
   ],
-  output: [],
+  output: [
+    {
+      id: "pushReturn",
+      name: "list",
+      type: "list",
+    },
+  ],
 };
 
 export const coreFunctions = {
@@ -373,12 +351,11 @@ export const coreFunctions = {
   subtract: subtractFn,
   multiply: multiplyFn,
   divide: divideFn,
-  branch: branchFn,
   greaterThan: greaterThanFn,
   lessThan: lessThanFn,
   select: selectFn,
-  split: splitFn,
   equal: equalFn,
   and: andFn,
   or: orFn,
+  push: pushFn,
 };

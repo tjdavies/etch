@@ -161,8 +161,6 @@ export function calculateFunction(
 
   const combinedState = mergeDeepLeft(calculatedState, unFlatConst);
 
-  //const inputValues = mapInputToValues(fn.plugs, inputValue);
-
   const output: any = getValuesForSockets(fn, fn.sockets, combinedState);
 
   const results = output[fn.id];
@@ -240,20 +238,16 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
 }
 
 function runToken(token: IToken, plugValues: Object) {
+  console.log("computedValues");
+  console.log(plugValues);
   const input = mapSocketsToValues(token, plugValues);
-  //console.log(input);
+  console.log("mapSocketsToValues");
+  console.log(input);
   return calculateFunction(token.fn, input);
 }
 
 function mapSocketsToValues(token: IToken, plugValues: Record<string, any>) {
   return token.sockets.reduce((accumulator, socket) => {
-    if (socket.value !== undefined) {
-      return {
-        [socket.param.id]: socket.value,
-        ...accumulator,
-      };
-    }
-
     const wire = socket.connection;
     if (wire) {
       return {
@@ -261,28 +255,23 @@ function mapSocketsToValues(token: IToken, plugValues: Record<string, any>) {
         ...accumulator,
       };
     }
-    return accumulator;
+
+    if (socket.value !== undefined) {
+      return {
+        [socket.param.id]: socket.value,
+        ...accumulator,
+      };
+    } else {
+      return {
+        [socket.param.id]: socket.param.type.defaultValue,
+        ...accumulator,
+      };
+    }
   }, {});
 }
 
 export function findWireTo(wires: IWire[], path: string): IWire | undefined {
   return wires.find((wire) => wire.to.path === path);
-}
-
-export function mapInputToValues(
-  plugs: IPlug[],
-  inputValue: Record<string, any>
-): Record<string, any> {
-  return plugs.reduce((accumulator, plug) => {
-    const acc =
-      plug.params && inputValue[plug.param.id]
-        ? mapInputToValues(plug.params, inputValue[plug.param.id])
-        : accumulator;
-    return {
-      ...acc,
-      [plug.path]: inputValue[plug.param.id],
-    };
-  }, {});
 }
 
 export function mapOutputToValues(

@@ -15,9 +15,7 @@ export const Type = types
     name: types.string,
     params: types.maybe(types.array(types.late((): IAnyModelType => Param))),
     core: types.boolean,
-    defaultValue: types.maybe(
-      types.union(types.boolean, types.number, types.string)
-    ),
+    defaultValue: types.maybe(types.frozen()),
   })
   .actions((self) => ({
     setName(name: string) {

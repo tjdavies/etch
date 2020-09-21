@@ -1,7 +1,7 @@
 import { IParam } from "./Param";
 import { IToken } from "./Token";
 import { IWire } from "./Wire";
-import { findWireTo, mapInputToValues } from "./Store";
+import { findWireTo } from "./Store";
 import { IFn } from "./Fn";
 import { IPath } from "./Path";
 
