@@ -26,6 +26,15 @@ export const coreFunctionProcesses: Record<string, any> = {
       lr: la < lb,
     };
   },
+  lessThanEql: ({
+    lessThanOrEqla,
+    lessThanOrEqlb,
+  }: Record<string, any>): Record<string, any> => {
+    return {
+      lessThanOrEqlr: lessThanOrEqla < lessThanOrEqlb,
+    };
+  },
+
   equal: ({ ea, eb }: Record<string, any>): Record<string, any> => {
     return {
       er: ea === eb,
@@ -321,6 +330,56 @@ const equalFn: IFnIn = {
   ],
 };
 
+const lessThanEqlFn: IFnIn = {
+  id: "lessThanOrEql",
+  name: "<=",
+  core: true,
+  input: [
+    {
+      id: "lessThanOrEqla",
+      name: "A",
+      type: "number",
+    },
+    {
+      id: "lessThanOrEqlb",
+      name: "B",
+      type: "number",
+    },
+  ],
+  output: [
+    {
+      id: "lessThanOrEqlr",
+      name: "A <= B",
+      type: "boolean",
+    },
+  ],
+};
+
+const greaterThanEqlFn: IFnIn = {
+  id: "greaterThanOrEql",
+  name: ">=",
+  core: true,
+  input: [
+    {
+      id: "greaterThanOrEqla",
+      name: "A",
+      type: "number",
+    },
+    {
+      id: "greaterThanOrEqlb",
+      name: "B",
+      type: "number",
+    },
+  ],
+  output: [
+    {
+      id: "greaterThanOrEqr",
+      name: "A >= B",
+      type: "boolean",
+    },
+  ],
+};
+
 const pushFn: IFnIn = {
   id: "push",
   name: "push",
@@ -358,4 +417,6 @@ export const coreFunctions = {
   and: andFn,
   or: orFn,
   push: pushFn,
+  lessThanEql: lessThanEqlFn,
+  greaterThanEql: greaterThanEqlFn,
 };
