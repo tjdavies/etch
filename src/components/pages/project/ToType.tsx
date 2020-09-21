@@ -52,9 +52,8 @@ const Input = observer(({ path, editable }: Props) => {
         <DataInput
           value={path.value !== undefined ? path.value + "" : undefined}
           onEnter={(value) => {
-            const v = value !== "" && Number(value);
-            if (value !== "") {
-              path.target.addValue(path.path, Number(v));
+            if (value !== "" && !isNaN(value)) {
+              path.target.addValue(path.path, Number(value));
             } else {
               path.target.removeValue(path.path);
             }

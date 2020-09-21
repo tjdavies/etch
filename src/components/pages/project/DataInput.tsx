@@ -24,6 +24,7 @@ export function DataInput({ value, onEnter }: Props) {
   return (
     <InputWrapper>
       <input
+        type="number"
         autoFocus
         value={editValue}
         onChange={(e) => setValue(e.target.value)}
