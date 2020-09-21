@@ -65,7 +65,7 @@ interface Props {
   onDock: () => void;
 }
 
-let state = { xPos: 0, yPos: 0 };
+let state = {};
 
 export const RunTimeView = ({ onDock }: Props) => {
   const store = useStore();
@@ -110,7 +110,7 @@ export const RunTimeView = ({ onDock }: Props) => {
       setIsPlaying(false);
     },
     onStop: () => {
-      state = { xPos: 0, yPos: 0 };
+      state = {};
       setIsPlaying(false);
       setTime(0);
     },

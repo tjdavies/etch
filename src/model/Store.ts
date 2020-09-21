@@ -134,18 +134,7 @@ export function createNewProject(name: string) {
     id: "state",
     name: "state",
     core: false,
-    params: [
-      {
-        id: "xPos",
-        name: "xPos",
-        type: "number",
-      },
-      {
-        id: "yPos",
-        name: "yPos",
-        type: "number",
-      },
-    ],
+    params: [],
   };
 
   return {
@@ -230,7 +219,7 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
         calculatedState
       );
 
-      const outPutValue = runToken(fn, token, computedValues);
+      const outPutValue = runToken(token, computedValues);
 
       if (outPutValue) {
         const outValue = outPutValue[wire.from.param.id];
@@ -241,23 +230,23 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
 
       return computedValues;
     } else {
-      return calculatedState;
+      return setValue(
+        wire.from.path,
+        wire.from.param.type.defaultValue,
+        calculatedState
+      );
     }
   }
 }
 
-function runToken(fn: IFn, token: IToken, plugValues: Object) {
-  const input = mapSocketsToValues(fn, token, plugValues);
-
+function runToken(token: IToken, plugValues: Object) {
+  const input = mapSocketsToValues(token, plugValues);
+  //console.log(input);
   return calculateFunction(token.fn, input);
 }
 
-function mapSocketsToValues(
-  fn: IFn,
-  token: IToken,
-  plugValues: Record<string, any>
-) {
-  const input = (token.sockets as ISocket[]).reduce((accumulator, socket) => {
+function mapSocketsToValues(token: IToken, plugValues: Record<string, any>) {
+  return token.sockets.reduce((accumulator, socket) => {
     if (socket.value !== undefined) {
       return {
         [socket.param.id]: socket.value,
@@ -274,7 +263,6 @@ function mapSocketsToValues(
     }
     return accumulator;
   }, {});
-  return input;
 }
 
 export function findWireTo(wires: IWire[], path: string): IWire | undefined {

@@ -5,16 +5,19 @@ export const coreTypes: Record<string, ITypeIn> = {
     core: true,
     id: "string",
     name: "string",
+    defaultValue: "",
   },
   number: {
     core: true,
     id: "number",
     name: "number",
+    defaultValue: 0,
   },
   boolean: {
     core: true,
     id: "boolean",
     name: "boolean",
+    defaultValue: false,
   },
   through: {
     core: true,

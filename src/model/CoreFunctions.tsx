@@ -32,9 +32,24 @@ export const coreFunctionProcesses: Record<string, any> = {
       gr: ga > gb,
     };
   },
+  lessThan: ({ la, lb }: Record<string, any>): Record<string, any> => {
+    return {
+      lr: la < lb,
+    };
+  },
   equal: ({ ea, eb }: Record<string, any>): Record<string, any> => {
     return {
       er: ea === eb,
+    };
+  },
+  and: ({ aa, ab }: Record<string, any>): Record<string, any> => {
+    return {
+      ar: aa && ab,
+    };
+  },
+  or: ({ oa, ob }: Record<string, any>): Record<string, any> => {
+    return {
+      or: oa || ob,
     };
   },
   select: ({
@@ -214,6 +229,56 @@ const selectFn: IFnIn = {
   ],
 };
 
+const andFn: IFnIn = {
+  id: "and",
+  name: "AND",
+  core: true,
+  input: [
+    {
+      id: "aa",
+      name: "A",
+      type: "number",
+    },
+    {
+      id: "ab",
+      name: "B",
+      type: "number",
+    },
+  ],
+  output: [
+    {
+      id: "ar",
+      name: "A AND B",
+      type: "boolean",
+    },
+  ],
+};
+
+const orFn: IFnIn = {
+  id: "or",
+  name: "OR",
+  core: true,
+  input: [
+    {
+      id: "oa",
+      name: "A",
+      type: "number",
+    },
+    {
+      id: "ob",
+      name: "B",
+      type: "number",
+    },
+  ],
+  output: [
+    {
+      id: "or",
+      name: "A OR B",
+      type: "boolean",
+    },
+  ],
+};
+
 const greaterThanFn: IFnIn = {
   id: "greaterThan",
   name: ">",
@@ -234,6 +299,31 @@ const greaterThanFn: IFnIn = {
     {
       id: "gr",
       name: "A > B",
+      type: "boolean",
+    },
+  ],
+};
+
+const lessThanFn: IFnIn = {
+  id: "lessThan",
+  name: "<",
+  core: true,
+  input: [
+    {
+      id: "la",
+      name: "A",
+      type: "number",
+    },
+    {
+      id: "lb",
+      name: "B",
+      type: "number",
+    },
+  ],
+  output: [
+    {
+      id: "lr",
+      name: "A < B",
       type: "boolean",
     },
   ],
@@ -285,7 +375,10 @@ export const coreFunctions = {
   divide: divideFn,
   branch: branchFn,
   greaterThan: greaterThanFn,
+  lessThan: lessThanFn,
   select: selectFn,
   split: splitFn,
   equal: equalFn,
+  and: andFn,
+  or: orFn,
 };
