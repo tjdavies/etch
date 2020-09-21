@@ -36,7 +36,7 @@ export const coreTypes: Record<string, ITypeIn> = {
     name: "rect",
     params: [
       {
-        id: "recxtx",
+        id: "x",
         name: "x",
         type: "number",
       },
