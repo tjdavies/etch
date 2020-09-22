@@ -4,9 +4,10 @@ import { Point } from "../../../../types/types";
 interface Props {
   from: Point;
   to: Point;
+  color: string;
 }
 
-export function Wire({ from, to }: Props) {
+export function Wire({ from, to, color }: Props) {
   const x1 = from.x;
   const y1 = from.y;
   const x2 = to.x;
@@ -16,6 +17,7 @@ export function Wire({ from, to }: Props) {
   return (
     <path
       d={`M ${x1} ${y1} h ${hoz / 2} v ${y2 - y1} h ${hoz / 2}`}
+      stroke={color}
       fill="none"
     />
   );

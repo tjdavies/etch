@@ -33,16 +33,18 @@ const WireSVG = styled.svg`
 
 export function FromConnector({ path }: Props) {
   const store = useStore();
+
   return (
     <>
       <ConnectorWrapper>
         <ConnectorCircle id={path.path} />
-        <WireSVG fill={Colours.primary} stroke={Colours.primary}>
+        <WireSVG>
           <DraggableWire
             from={{ x: 0, y: 0 }}
             to={{ x: 0, y: 0 }}
             onStartDrag={() => store.startDrag(path)}
             onStopDrag={() => store.stopDrag()}
+            color={path.param.type.colour}
           />
         </WireSVG>
       </ConnectorWrapper>

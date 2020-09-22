@@ -50,6 +50,7 @@ export const Connector = observer(({ from, to }: Props) => {
         to={bPos}
         onStartDrag={() => store.startDrag(to)}
         onStopDrag={() => store.stopDrag()}
+        color={from.param.type.colour}
       />
     );
   }

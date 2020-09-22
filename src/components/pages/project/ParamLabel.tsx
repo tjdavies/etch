@@ -148,6 +148,7 @@ export function ParamLabel({
           socket={path}
           onClick={() => setIsDataInput(true)}
           filled={path.value !== undefined}
+          colour={path.param.type.colour}
         />
       ) : (
         <FromConnector path={path} />

@@ -9,6 +9,8 @@ import {
 import { IParam, IParamIn, Param } from "./Param";
 import { generateId } from "../utils/generateId";
 import { IStore } from "./Store";
+import { TypeColours } from "./CoreTypes";
+import { Colours } from "../Style";
 
 export const Type = types
   .model("type", {
@@ -18,6 +20,11 @@ export const Type = types
     core: types.boolean,
     defaultValue: types.maybe(types.frozen()),
   })
+  .views((self) => ({
+    get colour(): string {
+      return TypeColours[self.id] || Colours.primary;
+    },
+  }))
   .actions((self) => ({
     setName(name: string) {
       self.name = name;

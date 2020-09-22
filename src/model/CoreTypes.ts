@@ -1,5 +1,11 @@
 import { ITypeIn } from "./Type";
 
+export const TypeColours: any = {
+  string: "#8fd1a5",
+  number: "#8fcfd1",
+  boolean: "#b48fd1",
+};
+
 export const coreTypes: Record<string, ITypeIn> = {
   string: {
     core: true,
