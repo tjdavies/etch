@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { FromConnector } from "./FromConnector";
@@ -11,6 +11,8 @@ import { FormDown, FormNext } from "grommet-icons";
 import { Options } from "./Options";
 import { ToConnector } from "./ToConnector";
 import { useStore } from "../../../model/Store";
+import { DataInput } from "./DataInput";
+import { ISocket } from "../../../model/Sockets";
 
 const InputWrapper = styled.div`
   position: relative;
@@ -46,17 +48,32 @@ const BlankConnector = styled.div`
 `;
 
 interface SocketProps {
-  socket: boolean;
+  socket?: boolean;
 }
 
 interface InputProps {
-  socket: boolean;
+  socket?: boolean;
   editable?: boolean;
-  path: IPlug;
+  path: ISocket;
   expanded?: boolean;
   expandable: boolean;
   onToggleExpanded?: () => void;
 }
+
+const Value = styled.div`
+  position: absolute;
+  display: block;
+  right: 100%;
+  top: -2px;
+  padding: 2px;
+  margin-right: 26px;
+  border: 1px solid ${Colours.primary};
+  color: inherit;
+  input {
+    text-align: right;
+  }
+  background-color: ${Colours.background};
+`;
 
 export function ParamLabel({
   path,
@@ -67,6 +84,16 @@ export function ParamLabel({
   socket,
 }: InputProps) {
   const store = useStore();
+  const [isDataInput, setIsDataInput] = useState(false);
+
+  const onSetValue = (value: string) => {
+    if (value !== "" && !isNaN(Number(value))) {
+      path.target.addValue(path.path, Number(value));
+    } else {
+      path.target.removeValue(path.path);
+    }
+  };
+
   return (
     <InputWrapper
       socket={socket}
@@ -97,6 +124,18 @@ export function ParamLabel({
           </TypeIconBox>
         )}
       </LabelWrapper>
+      {path.value !== undefined && !isDataInput && (
+        <Value onClick={() => setIsDataInput(true)}>{path.value}</Value>
+      )}
+      {isDataInput && (
+        <DataInput
+          value={path.value !== undefined ? path.value + "" : undefined}
+          onEnter={(value) => {
+            onSetValue(value);
+            setIsDataInput(false);
+          }}
+        />
+      )}
       {!expanded && (
         <>
           {path.params?.map((p) => (
@@ -105,7 +144,11 @@ export function ParamLabel({
         </>
       )}
       {socket ? (
-        <ToConnector socket={path} onClick={() => null} filled={false} />
+        <ToConnector
+          socket={path}
+          onClick={() => setIsDataInput(true)}
+          filled={path.value !== undefined}
+        />
       ) : (
         <FromConnector path={path} />
       )}

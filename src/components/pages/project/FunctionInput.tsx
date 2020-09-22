@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { FromType } from "./FromType";
 import { AddParam } from "./AddParam";
 import { IPlug } from "../../../model/Plug";
 import { useStore } from "../../../model/Store";
+import { ParamView } from "./ParamView";
 
 const InputBox = styled.div`
   position: relative;
@@ -33,10 +33,10 @@ export const FunctionInput = ({ input, editable }: Props) => {
   return (
     <InputBox>
       {input.map((path) => (
-        <FromType
-          key={path.path}
+        <ParamView
           path={path}
           editable={editable}
+          socket={false}
           editableTypes
         />
       ))}

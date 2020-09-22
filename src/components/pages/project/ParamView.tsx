@@ -4,7 +4,7 @@ import { AddParam } from "./AddParam";
 import { ParamLabel } from "./ParamLabel";
 
 interface Props {
-  socket: boolean;
+  socket?: boolean;
   editable?: boolean;
   editableTypes?: boolean;
   path: IPlug;
