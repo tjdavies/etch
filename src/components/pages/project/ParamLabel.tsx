@@ -24,7 +24,7 @@ const InputWrapper = styled.div`
     props.socket ? "row-reverse" : "row"};
   height: 20px;
   width: 100%;
-  opacity: ${(props: SocketProps) => (props.fade ? "0.5" : "1")};
+  opacity: ${(props: SocketProps) => (props.fade ? "0.3" : "1")};
 `;
 
 const LabelWrapper = styled.div`
@@ -34,7 +34,6 @@ const LabelWrapper = styled.div`
   flex-direction: ${(props: SocketProps) =>
     props.socket ? "row-reverse" : "row"};
   justify-content: flex-end;
-
   gap: 6px;
 `;
 
@@ -93,6 +92,7 @@ export const ParamLabel = observer(
       (socket &&
         store.activeDrag &&
         path.param.type.name !== "through" &&
+        store.activeDrag?.param.type.name !== "through" &&
         store.activeDrag?.param.type !== path.param.type) ||
       false;
 

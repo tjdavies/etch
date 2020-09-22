@@ -220,12 +220,12 @@ const andFn: IFnIn = {
     {
       id: "aa",
       name: "A",
-      type: "number",
+      type: "boolean",
     },
     {
       id: "ab",
       name: "B",
-      type: "number",
+      type: "boolean",
     },
   ],
   output: [
@@ -245,12 +245,12 @@ const orFn: IFnIn = {
     {
       id: "oa",
       name: "A",
-      type: "number",
+      type: "boolean",
     },
     {
       id: "ob",
       name: "B",
-      type: "number",
+      type: "boolean",
     },
   ],
   output: [
