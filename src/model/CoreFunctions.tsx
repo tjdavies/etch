@@ -400,7 +400,7 @@ const pushFn: IFnIn = {
     {
       id: "pushValue",
       name: "value",
-      type: "number",
+      type: "through",
     },
   ],
   output: [
