@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { ToType } from "./ToType";
 import { AddParam } from "./AddParam";
 import { ISocket } from "../../../model/Sockets";
 import { useStore } from "../../../model/Store";
+import { ParamView } from "./ParamView";
 
 const OutputBox = styled.div`
   gap: 5px;
@@ -30,9 +30,10 @@ export function FunctionOutput({ output, editable }: Props) {
   return (
     <OutputBox>
       {output.map((param) => (
-        <ToType
+        <ParamView
           key={param.path}
           path={param}
+          socket
           editable={editable}
           editableTypes
         />

@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { ToType } from "../ToType";
-
 import { observer } from "mobx-react-lite";
 import { ISocket } from "../../../../model/Sockets";
+import { ParamView } from "../ParamView";
 
 const InputWrapper = styled.div`
   display: flex;
@@ -20,7 +19,7 @@ export const TokenInput = observer(({ input }: Props) => {
   return (
     <InputWrapper>
       {input.map((param) => (
-        <ToType key={param.path} path={param} />
+        <ParamView key={param.path} path={param} socket />
       ))}
     </InputWrapper>
   );
