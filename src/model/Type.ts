@@ -22,7 +22,7 @@ export const Type = types
   })
   .views((self) => ({
     get colour(): string {
-      return TypeColours[self.id] || Colours.primary;
+      return TypeColours[self.id] || Colours.lightGrey;
     },
   }))
   .actions((self) => ({
