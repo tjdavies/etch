@@ -30,7 +30,12 @@ export function FunctionOutput({ output, editable }: Props) {
   return (
     <OutputBox>
       {output.map((param) => (
-        <ToType key={param.path} path={param} editable={editable} />
+        <ToType
+          key={param.path}
+          path={param}
+          editable={editable}
+          editableTypes
+        />
       ))}
       {editable && <AddParam onSelect={store.activeFunction.addOutputParam} />}
     </OutputBox>

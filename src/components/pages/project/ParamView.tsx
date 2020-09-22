@@ -6,6 +6,7 @@ import { ParamLabel } from "./ParamLabel";
 interface Props {
   socket: boolean;
   editable?: boolean;
+  editableTypes?: boolean;
   path: IPlug;
 }
 
@@ -22,8 +23,9 @@ interface InputProps extends Props {
   onToggleExpanded?: () => void;
 }
 
-function RecordType({ path, editable, socket }: InputProps) {
+function RecordType({ path, editable, socket, editableTypes }: InputProps) {
   const isEditableType = !path.param.type.core;
+  const isEditable = editableTypes && isEditableType;
   return (
     <>
       <ParamLabel
@@ -36,12 +38,13 @@ function RecordType({ path, editable, socket }: InputProps) {
             ? path.target.shrinkParam(path.path)
             : path.target.expandParam(path.path)
         }
+        socket={socket}
       />
       {path.expanded &&
         path.params?.map((p) => (
-          <ParamView path={p} editable={isEditableType} socket={socket} />
+          <ParamView path={p} editable={isEditable} socket={socket} />
         ))}
-      {isEditableType && path.expanded && (
+      {isEditable && path.expanded && (
         <AddParam onSelect={path.param.type.addParam} />
       )}
     </>

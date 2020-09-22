@@ -1,9 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
+interface AlignProps {
+  align: "left" | "right";
+}
+
 const FloatyDropdown = styled.div`
   position: absolute;
-  top: 0px;
+  top: ${(props: AlignProps) => (props.align === "left" ? "0px" : "")};
+  right: ${(props: AlignProps) => (props.align === "right" ? "0px" : "")};
   z-index: 10;
 `;
 
@@ -18,11 +23,12 @@ const FloatyDropdownBlocker = styled.div`
 `;
 
 interface Props {
+  align?: "left" | "right";
   onClose: () => void;
   children: React.ReactNode;
 }
 
-export function RelativeDropDown({ onClose, children }: Props) {
+export function RelativeDropDown({ onClose, children, align = "left" }: Props) {
   return (
     <>
       <FloatyDropdownBlocker
@@ -31,7 +37,7 @@ export function RelativeDropDown({ onClose, children }: Props) {
           onClose();
         }}
       />
-      <FloatyDropdown>{children}</FloatyDropdown>
+      <FloatyDropdown align={align}>{children}</FloatyDropdown>
     </>
   );
 }

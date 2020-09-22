@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import EdiText, { EdiTextProps } from "react-editext";
-import { Colours } from "../../Style";
 
 const StyledEdiText = styled(EdiText)`
   button {
@@ -25,14 +24,13 @@ const StyledEdiText = styled(EdiText)`
     margin-bottom: 0px;
     font-size: inherit;
     border: none;
-    border-bottom: 1px dashed ${Colours.secondary};
+
     background: transparent;
     color: inherit;
   }
   div[editext="view-container"] {
     text-align: ${(p: EdiTextProps) => (p.buttonsAlign ? "right" : "left")};
     border-bottom: 1px;
-    border-bottom: 1px dashed ${Colours.secondary};
   }
   div[editext="edit-container"] {
     width: 100px;

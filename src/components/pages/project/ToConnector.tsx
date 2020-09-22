@@ -10,7 +10,6 @@ const Connector = styled.div`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-
   background-color: ${(props: { filled: boolean }) =>
     props.filled ? Colours.primary : "none"};
 `;

@@ -9,13 +9,16 @@ import { IPlug } from "../../../model/Plug";
 import { TypeIconBox } from "./TypeIcon";
 import { FormDown, FormNext } from "grommet-icons";
 import { Options } from "./Options";
+import { ToConnector } from "./ToConnector";
+import { useStore } from "../../../model/Store";
 
 const InputWrapper = styled.div`
   position: relative;
   color: ${Colours.darkText};
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  flex-direction: ${(props: SocketProps) =>
+    props.socket ? "row-reverse" : "row"};
   height: 20px;
   width: 100%;
 `;
@@ -24,38 +27,30 @@ const LabelWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  flex-direction: ${(props: SocketProps) =>
+    props.socket ? "row-reverse" : "row"};
   justify-content: flex-end;
+
   gap: 6px;
-`;
-
-const ListConnectorWrapper = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: row-reverse;
-  right: -29px;
-  width: 50px;
-  top: 6px;
-  z-index: -1;
-`;
-
-const ConnectorCircle = styled.div`
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  margin-left: -6px;
-  background-color: ${Colours.primary};
 `;
 
 const BlankConnector = styled.div`
   position: absolute;
   top: 6px;
-  right: -10px;
+
+  right: ${(props: SocketProps) => (props.socket ? "" : "-10px")};
+  left: ${(props: SocketProps) => (props.socket ? "-22px" : "")};
   width: 2px;
   height: 2px;
   margin-left: 0px;
 `;
 
+interface SocketProps {
+  socket: boolean;
+}
+
 interface InputProps {
+  socket: boolean;
   editable?: boolean;
   path: IPlug;
   expanded?: boolean;
@@ -69,18 +64,29 @@ export function ParamLabel({
   expanded,
   onToggleExpanded,
   expandable,
+  socket,
 }: InputProps) {
+  const store = useStore();
   return (
-    <InputWrapper>
-      {editable && <Options onDelete={() => path.param.delete()} />}
+    <InputWrapper
+      socket={socket}
+      onMouseOver={() => socket && store.setActiveSocket(path)}
+      onMouseOut={() => socket && store.setActiveSocket(undefined)}
+    >
+      {editable && (
+        <Options
+          align={socket ? "right" : "left"}
+          onDelete={() => path.param.delete()}
+        />
+      )}
 
-      <LabelWrapper>
+      <LabelWrapper socket={socket}>
         {editable ? (
           <InlineEdit
             type="text"
             value={path.param.name}
             onSave={path.param.setName}
-            buttonsAlign="before"
+            buttonsAlign={socket ? "after" : "before"}
           />
         ) : (
           path.param.name
@@ -93,17 +99,16 @@ export function ParamLabel({
       </LabelWrapper>
       {!expanded && (
         <>
-          <ListConnectorWrapper>
-            {path.params?.map((p) => (
-              <ConnectorCircle />
-            ))}
-          </ListConnectorWrapper>
           {path.params?.map((p) => (
-            <BlankConnector id={p.path} />
+            <BlankConnector socket={socket} id={p.path} />
           ))}
         </>
       )}
-      <FromConnector path={path} />
+      {socket ? (
+        <ToConnector socket={path} onClick={() => null} filled={false} />
+      ) : (
+        <FromConnector path={path} />
+      )}
     </InputWrapper>
   );
 }

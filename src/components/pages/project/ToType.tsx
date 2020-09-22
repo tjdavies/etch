@@ -9,6 +9,7 @@ import { DataInput } from "./DataInput";
 import { ISocket } from "../../../model/Sockets";
 import { TypeIconBox } from "./TypeIcon";
 import { FormDown, FormNext } from "grommet-icons";
+import { ParamView } from "./ParamView";
 
 const InputLabel = styled.div`
   position: relative;
@@ -21,11 +22,13 @@ const InputLabel = styled.div`
 interface Props {
   expanded?: boolean;
   editable?: boolean;
+  editableTypes?: boolean;
   path: ISocket;
   onToggleExpanded?: () => void;
 }
 
-export const ToType = observer(({ path, editable }: Props) => {
+export const ToType = observer(({ path, editable, editableTypes }: Props) => {
+  /*
   const onSetValue = (value: string) => {
     if (value !== "" && !isNaN(Number(value))) {
       path.target.addValue(path.path, Number(value));
@@ -33,13 +36,24 @@ export const ToType = observer(({ path, editable }: Props) => {
       path.target.removeValue(path.path);
     }
   };
+  */
 
+  return (
+    <ParamView
+      path={path}
+      editable={editable}
+      socket={true}
+      editableTypes={editableTypes}
+    />
+  );
+  /*
   if (path.params) {
     return (
       <RecordType path={path} onSetValue={onSetValue} editable={editable} />
     );
   }
   return <Input path={path} editable={editable} onSetValue={onSetValue} />;
+  */
 });
 
 interface LocalProp extends Props {

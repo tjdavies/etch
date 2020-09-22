@@ -27,19 +27,27 @@ const DropDownMenu = styled.div`
 `;
 
 interface Props {
+  align: "left" | "right";
   onDelete: () => void;
 }
 
-export function Options({ onDelete }: Props) {
+export function Options({ onDelete, align }: Props) {
   const [showSelect, setShowSelect] = useState(false);
 
   return (
     <div>
       {showSelect && (
-        <RelativeDropDown onClose={() => setShowSelect(false)}>
+        <RelativeDropDown onClose={() => setShowSelect(false)} align={align}>
           <DropDownMenu>
             <ul>
-              <li onClick={onDelete}>delete</li>
+              <li
+                onClick={() => {
+                  setShowSelect(false);
+                  onDelete();
+                }}
+              >
+                delete
+              </li>
             </ul>
           </DropDownMenu>
         </RelativeDropDown>

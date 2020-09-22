@@ -5,9 +5,17 @@ import { ParamView } from "./ParamView";
 
 interface Props {
   editable?: boolean;
+  editableTypes?: boolean;
   path: IPlug;
 }
 
-export function FromType({ path, editable }: Props) {
-  return <ParamView path={path} editable={editable} socket={false} />;
+export function FromType({ path, editable, editableTypes }: Props) {
+  return (
+    <ParamView
+      path={path}
+      editable={editable}
+      socket={false}
+      editableTypes={editableTypes}
+    />
+  );
 }

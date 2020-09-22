@@ -33,7 +33,12 @@ export const FunctionInput = ({ input, editable }: Props) => {
   return (
     <InputBox>
       {input.map((path) => (
-        <FromType key={path.path} path={path} editable={editable} />
+        <FromType
+          key={path.path}
+          path={path}
+          editable={editable}
+          editableTypes
+        />
       ))}
       {editable && <AddParam onSelect={store.activeFunction.addInputParam} />}
     </InputBox>
