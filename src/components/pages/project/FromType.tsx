@@ -9,15 +9,21 @@ import { IPlug } from "../../../model/Plug";
 import { TypeIconBox } from "./TypeIcon";
 import { FormDown, FormNext } from "grommet-icons";
 import { AddParam } from "./AddParam";
+import { OptionsIcon } from "./OptionsIcon";
 
-const InputLabel = styled.div`
+const InputWrapper = styled.div`
   position: relative;
   color: ${Colours.darkText};
   display: flex;
   align-items: flex-start;
-  gap: 5px;
+  justify-content: space-between;
   height: 20px;
-  max-width: 100px;
+  width: 100%;
+`;
+
+const LabelWrapper = styled.div`
+  display: flex;
+  gap: 6px;
 `;
 
 interface Props {
@@ -35,20 +41,28 @@ export function FromType({ path, editable }: Props) {
 const ListConnectorWrapper = styled.div`
   position: absolute;
   display: flex;
-  flex-direction: column;
-  right: -30px;
+  flex-direction: row-reverse;
+  right: -29px;
+  width: 50px;
   top: 6px;
-  padding: 5px;
   z-index: -1;
 `;
 
 const ConnectorCircle = styled.div`
-  border: 1px solid ${Colours.lightGrey};
-  width: 10px;
-  height: 10px;
+  width: 2px;
+  height: 2px;
   border-radius: 50%;
-  margin-bottom: -6px;
-  background-color: ${Colours.background};
+  margin-left: -6px;
+  background-color: ${Colours.primary};
+`;
+
+const BlankConnector = styled.div`
+  position: absolute;
+  top: 6px;
+  right: -10px;
+  width: 2px;
+  height: 2px;
+  margin-left: 0px;
 `;
 
 interface InputProps extends Props {
@@ -65,31 +79,39 @@ function Input({
   expandable,
 }: InputProps) {
   return (
-    <InputLabel>
-      {editable ? (
-        <InlineEdit
-          type="text"
-          value={path.param.name}
-          onSave={path.param.setName}
-          buttonsAlign="before"
-        />
-      ) : (
-        path.param.name
-      )}
-      {expandable && (
-        <TypeIconBox onClick={() => onToggleExpanded && onToggleExpanded()}>
-          {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
-        </TypeIconBox>
-      )}
+    <InputWrapper>
+      <OptionsIcon />
+      <LabelWrapper>
+        {editable ? (
+          <InlineEdit
+            type="text"
+            value={path.param.name}
+            onSave={path.param.setName}
+            buttonsAlign="before"
+          />
+        ) : (
+          path.param.name
+        )}
+        {expandable && (
+          <TypeIconBox onClick={() => onToggleExpanded && onToggleExpanded()}>
+            {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
+          </TypeIconBox>
+        )}
+      </LabelWrapper>
       {!expanded && (
-        <ListConnectorWrapper>
+        <>
+          <ListConnectorWrapper>
+            {path.params?.map((p) => (
+              <ConnectorCircle />
+            ))}
+          </ListConnectorWrapper>
           {path.params?.map((p) => (
-            <ConnectorCircle id={p.path} />
+            <BlankConnector id={p.path} />
           ))}
-        </ListConnectorWrapper>
+        </>
       )}
       <FromConnector path={path} />
-    </InputLabel>
+    </InputWrapper>
   );
 }
 

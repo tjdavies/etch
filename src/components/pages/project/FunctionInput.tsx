@@ -7,6 +7,7 @@ import { IPlug } from "../../../model/Plug";
 import { useStore } from "../../../model/Store";
 
 const InputBox = styled.div`
+  position: relative;
   display: flex;
   z-index: 2;
   flex-direction: column;

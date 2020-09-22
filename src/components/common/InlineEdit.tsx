@@ -5,6 +5,7 @@ import { Colours } from "../../Style";
 
 const StyledEdiText = styled(EdiText)`
   button {
+    display: none;
     background: none;
     border: none;
     margin: 0px;
@@ -31,7 +32,7 @@ const StyledEdiText = styled(EdiText)`
   div[editext="view-container"] {
     text-align: ${(p: EdiTextProps) => (p.buttonsAlign ? "right" : "left")};
     border-bottom: 1px;
-    border-bottom: 1px dashed ${Colours.lightGrey};
+    border-bottom: 1px dashed ${Colours.secondary};
   }
   div[editext="edit-container"] {
     width: 100px;
