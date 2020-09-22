@@ -13,6 +13,7 @@ import { ToConnector } from "./ToConnector";
 import { useStore } from "../../../model/Store";
 import { DataInput } from "./DataInput";
 import { ISocket } from "../../../model/Sockets";
+import { observer } from "mobx-react-lite";
 
 const InputWrapper = styled.div`
   position: relative;
@@ -23,6 +24,7 @@ const InputWrapper = styled.div`
     props.socket ? "row-reverse" : "row"};
   height: 20px;
   width: 100%;
+  opacity: ${(props: SocketProps) => (props.fade ? "0.5" : "1")};
 `;
 
 const LabelWrapper = styled.div`
@@ -49,6 +51,7 @@ const BlankConnector = styled.div`
 
 interface SocketProps {
   socket?: boolean;
+  fade: boolean;
 }
 
 interface InputProps {
@@ -75,84 +78,94 @@ const Value = styled.div`
   background-color: ${Colours.background};
 `;
 
-export function ParamLabel({
-  path,
-  editable,
-  expanded,
-  onToggleExpanded,
-  expandable,
-  socket,
-}: InputProps) {
-  const store = useStore();
-  const [isDataInput, setIsDataInput] = useState(false);
+export const ParamLabel = observer(
+  ({
+    path,
+    editable,
+    expanded,
+    onToggleExpanded,
+    expandable,
+    socket,
+  }: InputProps) => {
+    const store = useStore();
+    const [isDataInput, setIsDataInput] = useState(false);
 
-  const onSetValue = (value: string) => {
-    if (value !== "" && !isNaN(Number(value))) {
-      path.target.addValue(path.path, Number(value));
-    } else {
-      path.target.removeValue(path.path);
-    }
-  };
+    const fade: boolean =
+      (socket &&
+        store.activeDrag &&
+        path.param.type.name !== "through" &&
+        store.activeDrag?.param.type !== path.param.type) ||
+      false;
 
-  return (
-    <InputWrapper
-      socket={socket}
-      onMouseOver={() => socket && store.setActiveSocket(path)}
-      onMouseOut={() => socket && store.setActiveSocket(undefined)}
-    >
-      {editable && (
-        <Options
-          align={socket ? "right" : "left"}
-          onDelete={() => path.param.delete()}
-        />
-      )}
+    const onSetValue = (value: string) => {
+      if (value !== "" && !isNaN(Number(value))) {
+        path.target.addValue(path.path, Number(value));
+      } else {
+        path.target.removeValue(path.path);
+      }
+    };
 
-      <LabelWrapper socket={socket}>
-        {editable ? (
-          <InlineEdit
-            type="text"
-            value={path.param.name}
-            onSave={path.param.setName}
-            buttonsAlign={socket ? "after" : "before"}
+    return (
+      <InputWrapper
+        socket={socket}
+        fade={fade}
+        onMouseOver={() => !fade && store.setActiveSocket(path)}
+        onMouseOut={() => !fade && store.setActiveSocket(undefined)}
+      >
+        {editable && (
+          <Options
+            align={socket ? "right" : "left"}
+            onDelete={() => path.param.delete()}
+          />
+        )}
+
+        <LabelWrapper socket={socket} fade={fade}>
+          {editable ? (
+            <InlineEdit
+              type="text"
+              value={path.param.name}
+              onSave={path.param.setName}
+              buttonsAlign={socket ? "after" : "before"}
+            />
+          ) : (
+            path.param.name
+          )}
+          {expandable && (
+            <TypeIconBox onClick={() => onToggleExpanded && onToggleExpanded()}>
+              {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
+            </TypeIconBox>
+          )}
+        </LabelWrapper>
+        {path.value !== undefined && !isDataInput && (
+          <Value onClick={() => setIsDataInput(true)}>{path.value}</Value>
+        )}
+        {isDataInput && (
+          <DataInput
+            value={path.value !== undefined ? path.value + "" : undefined}
+            onEnter={(value) => {
+              onSetValue(value);
+              setIsDataInput(false);
+            }}
+          />
+        )}
+        {!expanded && (
+          <>
+            {path.params?.map((p) => (
+              <BlankConnector socket={socket} id={p.path} fade={fade} />
+            ))}
+          </>
+        )}
+        {socket ? (
+          <ToConnector
+            socket={path}
+            onClick={() => setIsDataInput(true)}
+            filled={path.value !== undefined}
+            colour={path.param.type.colour}
           />
         ) : (
-          path.param.name
+          <FromConnector path={path} />
         )}
-        {expandable && (
-          <TypeIconBox onClick={() => onToggleExpanded && onToggleExpanded()}>
-            {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
-          </TypeIconBox>
-        )}
-      </LabelWrapper>
-      {path.value !== undefined && !isDataInput && (
-        <Value onClick={() => setIsDataInput(true)}>{path.value}</Value>
-      )}
-      {isDataInput && (
-        <DataInput
-          value={path.value !== undefined ? path.value + "" : undefined}
-          onEnter={(value) => {
-            onSetValue(value);
-            setIsDataInput(false);
-          }}
-        />
-      )}
-      {!expanded && (
-        <>
-          {path.params?.map((p) => (
-            <BlankConnector socket={socket} id={p.path} />
-          ))}
-        </>
-      )}
-      {socket ? (
-        <ToConnector
-          socket={path}
-          onClick={() => setIsDataInput(true)}
-          filled={path.value !== undefined}
-          colour={path.param.type.colour}
-        />
-      ) : (
-        <FromConnector path={path} />
-      )}
-    </InputWrapper>
-  );
-}
+      </InputWrapper>
+    );
+  }
+);
