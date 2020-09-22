@@ -1,9 +1,9 @@
 import React from "react";
-import { SearchableDropDown, Option } from "./SearchableDropDown";
 import styled from "styled-components";
 
 const FloatyDropdown = styled.div`
   position: absolute;
+  top: 0px;
   z-index: 10;
 `;
 
@@ -19,17 +19,10 @@ const FloatyDropdownBlocker = styled.div`
 
 interface Props {
   onClose: () => void;
-  onCreateNew: (name: string) => void;
-  onSelect: (key: string) => void;
-  options: Option[];
+  children: React.ReactNode;
 }
 
-export function RelativeDropDown({
-  onClose,
-  onCreateNew,
-  onSelect,
-  options,
-}: Props) {
+export function RelativeDropDown({ onClose, children }: Props) {
   return (
     <>
       <FloatyDropdownBlocker
@@ -38,13 +31,7 @@ export function RelativeDropDown({
           onClose();
         }}
       />
-      <FloatyDropdown>
-        <SearchableDropDown
-          options={options}
-          onCreateNew={onCreateNew}
-          onSelect={onSelect}
-        />
-      </FloatyDropdown>
+      <FloatyDropdown>{children}</FloatyDropdown>
     </>
   );
 }

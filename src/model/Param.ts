@@ -1,5 +1,11 @@
 import { Type, IType } from "./Type";
-import { types, Instance, SnapshotIn, IAnyModelType } from "mobx-state-tree";
+import {
+  types,
+  Instance,
+  SnapshotIn,
+  IAnyModelType,
+  getParent,
+} from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 
 export const Param = types
@@ -18,6 +24,9 @@ export const Param = types
   .actions((self) => ({
     setName(name: string) {
       self.name = name;
+    },
+    delete() {
+      getParent<any>(self, 2).deleteParam(self as IParam);
     },
   }));
 

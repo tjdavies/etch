@@ -4,8 +4,9 @@ import {
   IAnyModelType,
   SnapshotIn,
   getRoot,
+  destroy,
 } from "mobx-state-tree";
-import { IParamIn, Param } from "./Param";
+import { IParam, IParamIn, Param } from "./Param";
 import { generateId } from "../utils/generateId";
 import { IStore } from "./Store";
 
@@ -30,6 +31,9 @@ export const Type = types
         };
         self.params?.push(newParam);
       }
+    },
+    deleteParam(param: IParam) {
+      destroy(param);
     },
   }));
 

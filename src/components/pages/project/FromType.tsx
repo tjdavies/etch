@@ -9,20 +9,23 @@ import { IPlug } from "../../../model/Plug";
 import { TypeIconBox } from "./TypeIcon";
 import { FormDown, FormNext } from "grommet-icons";
 import { AddParam } from "./AddParam";
-import { OptionsIcon } from "./OptionsIcon";
+import { Options } from "./Options";
 
 const InputWrapper = styled.div`
   position: relative;
   color: ${Colours.darkText};
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: flex-end;
   height: 20px;
   width: 100%;
 `;
 
 const LabelWrapper = styled.div`
+  width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: flex-end;
   gap: 6px;
 `;
 
@@ -33,7 +36,7 @@ interface Props {
 
 export function FromType({ path, editable }: Props) {
   if (path.params) {
-    return <RecordType path={path} editable={editable} />;
+    return <RecordType path={path} editable={editable} expandable={true} />;
   }
   return <Input path={path} editable={editable} expandable={false} />;
 }
@@ -80,7 +83,8 @@ function Input({
 }: InputProps) {
   return (
     <InputWrapper>
-      <OptionsIcon />
+      {editable && <Options onDelete={() => path.param.delete()} />}
+
       <LabelWrapper>
         {editable ? (
           <InlineEdit
@@ -115,7 +119,7 @@ function Input({
   );
 }
 
-function RecordType({ path, editable }: { path: IPlug; editable?: boolean }) {
+function RecordType({ path, editable }: InputProps) {
   const isEditableType = !path.param.type.core;
   return (
     <>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { TypeIconBox } from "./TypeIcon";
 import { FormAdd } from "grommet-icons";
-import { RelativeDropDown } from "../../common/RelativeDropDown";
+import { RelativeSearchDropDown } from "../../common/RelativeSearchDropDown";
 import styled from "styled-components";
 import { useStore } from "../../../model/Store";
 import { Colours } from "../../../Style";
@@ -14,10 +14,6 @@ const Wrapper = styled.div`
   align-items: center;
   height: 20px;
 `;
-
-interface Props {
-  onSelect: (typeId: string) => void;
-}
 
 export const AddBox = styled.div`
   display: flex;
@@ -32,6 +28,10 @@ export const AddBox = styled.div`
   cursor: pointer;
 `;
 
+interface Props {
+  onSelect: (typeId: string) => void;
+}
+
 export function AddParam({ onSelect }: Props) {
   const [showSelect, setShowSelect] = useState(false);
   const store = useStore();
@@ -39,7 +39,7 @@ export function AddParam({ onSelect }: Props) {
   return (
     <Wrapper>
       {showSelect && (
-        <RelativeDropDown
+        <RelativeSearchDropDown
           onClose={() => setShowSelect(false)}
           options={
             store.project.typeList.map((f) => ({

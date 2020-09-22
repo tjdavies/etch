@@ -1,5 +1,5 @@
 import { types, Instance, SnapshotIn, destroy, getRoot } from "mobx-state-tree";
-import { Param, IParamIn } from "./Param";
+import { Param, IParamIn, IParam } from "./Param";
 import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
@@ -8,6 +8,8 @@ import { IType } from "./Type";
 import { IStore } from "./Store";
 import { ISocket, createSockets } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";
+import { IPath } from "./Path";
+import { drop } from "ramda";
 
 export const Fn = types
   .model("Fn", {
@@ -70,6 +72,9 @@ export const Fn = types
         };
         self.input.push(newParam);
       }
+    },
+    deleteParam(param: IParam) {
+      destroy(param);
     },
     addOutputParam(typeId: string) {
       const type = getRoot<IStore>(self).project.types.get(typeId);
