@@ -54,6 +54,7 @@ export const DraggableWire = ({
           r="5"
           style={{ pointerEvents: dragging ? "none" : "all" }}
           fill={color}
+          stroke={color}
         />
       </Draggable>
     </>

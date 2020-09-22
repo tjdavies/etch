@@ -41,7 +41,6 @@ const LabelWrapper = styled.div`
 const BlankConnector = styled.div`
   position: absolute;
   top: 6px;
-
   right: ${(props: SocketProps) => (props.socket ? "" : "-10px")};
   left: ${(props: SocketProps) => (props.socket ? "-22px" : "")};
   width: 2px;
