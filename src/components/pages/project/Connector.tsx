@@ -7,6 +7,7 @@ import { IPath } from "../../../model/Path";
 import { observer } from "mobx-react-lite";
 import { Point } from "../../../types/types";
 import { useWindowSize } from "../../../utils/hooks/useWindowSize";
+import { IPlug } from "../../../model/Plug";
 
 interface Props {
   from: IPath;
@@ -19,25 +20,28 @@ export const Connector = observer(({ from, to }: Props) => {
   const [bPos, setBPos] = useState<Point | undefined>(undefined);
   const posA = from.target.fn && from.target?.position;
   const posB = to.target.fn && to.target?.position;
-  const inputs = to.target.input && to.target.input.length;
-  const outputs = to.target.output?.length;
+  const inputs = countAllSockets(to.target.sockets);
+  const outputs = countAllSockets(to.target.plugs);
   const size = useWindowSize();
   const expandFrom = from.target && from.target?.expandedParams.size;
   const expandTo = to.target && to.target?.expandedParams.size;
 
   useLayoutEffect(() => {
-    // Update the document title using the browser API
-    //document.title = `You clicked ${count} times`;
-
     setAPos(getLocation(from.path));
-  }, [posA?.x, posA?.y, size, inputs, outputs, from.path, expandFrom]);
-
-  useLayoutEffect(() => {
-    // Update the document title using the browser API
-    //document.title = `You clicked ${count} times`;
-
     setBPos(getLocation(to.path));
-  }, [posB?.x, posB?.y, size, inputs, outputs, to.path, expandTo]);
+  }, [
+    posA?.x,
+    posA?.y,
+    posB?.x,
+    posB?.y,
+    size,
+    inputs,
+    outputs,
+    to.path,
+    from.path,
+    expandFrom,
+    expandTo,
+  ]);
 
   if (aPos && bPos) {
     return (
@@ -54,4 +58,13 @@ export const Connector = observer(({ from, to }: Props) => {
 
 function getLocation(id: string): Point | undefined {
   return document.getElementById(id)?.getBoundingClientRect() as Point;
+}
+
+function countAllSockets(plugs: IPlug[]): number {
+  return plugs.reduce((accumulator, p) => {
+    if (p.params && p.expanded) {
+      accumulator += countAllSockets(p.params);
+    }
+    return (accumulator += 1);
+  }, 0);
 }

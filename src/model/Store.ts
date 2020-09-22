@@ -5,6 +5,8 @@ import {
   clone,
   getType,
   isStateTreeNode,
+  getRoot,
+  IAnyStateTreeNode,
 } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { createContext, useContext } from "react";
@@ -712,4 +714,8 @@ export function useStore() {
 export function log<T>(t: T): T {
   console.log(t);
   return t;
+}
+
+export function getStore(target: IAnyStateTreeNode): IStore {
+  return getRoot<IStore>(target);
 }
