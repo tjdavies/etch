@@ -31,6 +31,7 @@ const StyledEdiText = styled(EdiText)`
   div[editext="view-container"] {
     text-align: ${(p: EdiTextProps) => (p.buttonsAlign ? "right" : "left")};
     border-bottom: 1px;
+    border-bottom: 1px dashed ${Colours.lightGrey};
   }
   div[editext="edit-container"] {
     width: 100px;
@@ -47,6 +48,7 @@ export function InlineEdit(props: EdiTextProps) {
       submitOnUnfocus
       submitOnEnter
       cancelOnEscape
+      hideIcons
       {...props}
     />
   );

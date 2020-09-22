@@ -5,14 +5,32 @@ import { FormAdd } from "grommet-icons";
 import { RelativeDropDown } from "../../common/RelativeDropDown";
 import styled from "styled-components";
 import { useStore } from "../../../model/Store";
+import { Colours } from "../../../Style";
 
 const Wrapper = styled.div`
   position: relative;
+  display: flex;
+
+  align-items: center;
+  height: 20px;
 `;
 
 interface Props {
   onSelect: (typeId: string) => void;
 }
+
+export const AddBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid ${Colours.lightGrey};
+  width: 15px;
+  height: 15px;
+  border-radius: 1px;
+  color: ${Colours.darkText};
+  background-color: ${Colours.background};
+  cursor: pointer;
+`;
 
 export function AddParam({ onSelect }: Props) {
   const [showSelect, setShowSelect] = useState(false);
@@ -38,9 +56,9 @@ export function AddParam({ onSelect }: Props) {
           }}
         />
       )}
-      <TypeIconBox onClick={() => setShowSelect(true)}>
+      <AddBox onClick={() => setShowSelect(true)}>
         <FormAdd size="small" />
-      </TypeIconBox>
+      </AddBox>
     </Wrapper>
   );
 }

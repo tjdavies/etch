@@ -7,12 +7,13 @@ export const TypeIconBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid ${Colours.lightGrey};
-  width: 20px;
+
+  width: 6px;
   height: 20px;
   border-radius: 1px;
   color: ${Colours.darkText};
   background-color: ${Colours.background};
+  cursor: pointer;
 `;
 
 export function TypeIcon({ type }: { type: IType }) {

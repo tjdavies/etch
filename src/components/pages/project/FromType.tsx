@@ -12,55 +12,24 @@ import { AddParam } from "./AddParam";
 
 const InputLabel = styled.div`
   position: relative;
-
   color: ${Colours.darkText};
   display: flex;
   align-items: flex-start;
   gap: 5px;
+  height: 20px;
+  max-width: 100px;
 `;
-
-/*
-const Indented = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 5px;
-  margin-right: 5px;
-  width: 100%;
-`;
-*/
 
 interface Props {
   editable?: boolean;
-  expanded?: boolean;
   path: IPlug;
-  onToggleExpanded?: () => void;
 }
 
 export function FromType({ path, editable }: Props) {
   if (path.params) {
     return <RecordType path={path} editable={editable} />;
   }
-  return <Input path={path} editable={editable} />;
-}
-
-function Input({ path, editable }: Props) {
-  return (
-    <InputLabel>
-      {editable ? (
-        <InlineEdit
-          type="text"
-          value={path.param.name}
-          onSave={path.param.setName}
-          buttonsAlign="before"
-        />
-      ) : (
-        path.param.name
-      )}
-      <FromConnector path={path} />
-    </InputLabel>
-  );
+  return <Input path={path} editable={editable} expandable={false} />;
 }
 
 const ListConnectorWrapper = styled.div`
@@ -82,12 +51,19 @@ const ConnectorCircle = styled.div`
   background-color: ${Colours.background};
 `;
 
-function ExpandableInput({
+interface InputProps extends Props {
+  expanded?: boolean;
+  expandable: boolean;
+  onToggleExpanded?: () => void;
+}
+
+function Input({
   path,
   editable,
   expanded,
   onToggleExpanded,
-}: Props) {
+  expandable,
+}: InputProps) {
   return (
     <InputLabel>
       {editable ? (
@@ -100,9 +76,11 @@ function ExpandableInput({
       ) : (
         path.param.name
       )}
-      <TypeIconBox onClick={() => onToggleExpanded && onToggleExpanded()}>
-        {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
-      </TypeIconBox>
+      {expandable && (
+        <TypeIconBox onClick={() => onToggleExpanded && onToggleExpanded()}>
+          {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
+        </TypeIconBox>
+      )}
       {!expanded && (
         <ListConnectorWrapper>
           {path.params?.map((p) => (
@@ -119,17 +97,17 @@ function RecordType({ path, editable }: { path: IPlug; editable?: boolean }) {
   const isEditableType = !path.param.type.core;
   return (
     <>
-      <ExpandableInput
+      <Input
         path={path}
         expanded={path.expanded}
         editable={editable}
+        expandable={true}
         onToggleExpanded={() =>
           path.expanded
             ? path.target.shrinkParam(path.path)
             : path.target.expandParam(path.path)
         }
       />
-
       {path.expanded &&
         path.params?.map((p) => (
           <FromType path={p} editable={isEditableType} />
