@@ -35,7 +35,9 @@ export const ToType = observer(({ path, editable }: Props) => {
   };
 
   if (path.params) {
-    return <RecordType path={path} onSetValue={onSetValue} />;
+    return (
+      <RecordType path={path} onSetValue={onSetValue} editable={editable} />
+    );
   }
   return <Input path={path} editable={editable} onSetValue={onSetValue} />;
 });
@@ -150,12 +152,13 @@ const ExpandableInput = observer(
   }
 );
 
-function RecordType({ path, onSetValue }: LocalProp) {
+function RecordType({ path, onSetValue, editable }: LocalProp) {
   return (
     <>
       <ExpandableInput
         path={path}
         expanded={path.expanded}
+        editable={editable}
         onToggleExpanded={() =>
           path.expanded
             ? path.target.shrinkParam(path.path)

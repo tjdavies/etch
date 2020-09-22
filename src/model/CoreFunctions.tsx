@@ -31,10 +31,17 @@ export const coreFunctionProcesses: Record<string, any> = {
     lessThanOrEqlb,
   }: Record<string, any>): Record<string, any> => {
     return {
-      lessThanOrEqlr: lessThanOrEqla < lessThanOrEqlb,
+      lessThanOrEqlr: lessThanOrEqla <= lessThanOrEqlb,
     };
   },
-
+  greaterThanEql: ({
+    greaterThanOrEqla,
+    greaterThanOrEqlb,
+  }: Record<string, any>): Record<string, any> => {
+    return {
+      greaterThanOrEqlr: greaterThanOrEqla >= greaterThanOrEqlb,
+    };
+  },
   equal: ({ ea, eb }: Record<string, any>): Record<string, any> => {
     return {
       er: ea === eb,
@@ -331,7 +338,7 @@ const equalFn: IFnIn = {
 };
 
 const lessThanEqlFn: IFnIn = {
-  id: "lessThanOrEql",
+  id: "lessThanEql",
   name: "<=",
   core: true,
   input: [
@@ -356,7 +363,7 @@ const lessThanEqlFn: IFnIn = {
 };
 
 const greaterThanEqlFn: IFnIn = {
-  id: "greaterThanOrEql",
+  id: "greaterThanEql",
   name: ">=",
   core: true,
   input: [
@@ -373,7 +380,7 @@ const greaterThanEqlFn: IFnIn = {
   ],
   output: [
     {
-      id: "greaterThanOrEqr",
+      id: "greaterThanOrEqlr",
       name: "A >= B",
       type: "boolean",
     },

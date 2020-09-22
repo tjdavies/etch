@@ -122,6 +122,7 @@ function RecordType({ path, editable }: { path: IPlug; editable?: boolean }) {
       <ExpandableInput
         path={path}
         expanded={path.expanded}
+        editable={editable}
         onToggleExpanded={() =>
           path.expanded
             ? path.target.shrinkParam(path.path)
