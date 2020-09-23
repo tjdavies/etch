@@ -67,20 +67,16 @@ export const Fn = types
       const type = getStore(self).project.types.get(typeId);
       if (type) {
         const newParam: IParamIn = {
-          name: "new",
+          name: type.name,
           type: type.id,
         };
         self.input.push(newParam);
       }
     },
     createNewInputType(name: string) {
-      const newType = Type.create({
-        name,
-        core: false,
-      });
-      getStore(self).project.types.put(newType);
+      const newType = getStore(self).project.createNewType(name);
       const newParam: IParamIn = {
-        name: "new",
+        name: newType.name,
         type: newType.id,
       };
       self.input.push(newParam);
@@ -92,11 +88,19 @@ export const Fn = types
       const type = getRoot<IStore>(self).project.types.get(typeId);
       if (type) {
         const newParam: IParamIn = {
-          name: "new",
+          name: type.name,
           type: type.id,
         };
         self.output.push(newParam);
       }
+    },
+    createNewOutputType(name: string) {
+      const newType = getStore(self).project.createNewType(name);
+      const newParam: IParamIn = {
+        name: newType.name,
+        type: newType.id,
+      };
+      self.output.push(newParam);
     },
     addValue(path: string, value: number) {
       self.values.set(path, value);

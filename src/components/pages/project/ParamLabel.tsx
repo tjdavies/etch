@@ -43,12 +43,8 @@ const BlankConnector = styled.div`
 `;
 
 const Value = styled.div`
-  position: absolute;
-  display: block;
-  right: 100%;
-  top: -2px;
   padding: 2px;
-  margin-right: 26px;
+  margin-right: 4px;
   border: 1px solid ${Colours.primary};
   color: inherit;
   input {
@@ -156,10 +152,11 @@ export const ParamLabel = observer(
             </TypeIconBox>
           )}
         </LabelWrapper>
-        {path.value !== undefined && !isDataInput && (
-          <Value onClick={() => setIsDataInput(true)}>{path.value}</Value>
-        )}
+
         <ConnectorWrapper socket={socket} depth={depth}>
+          {path.value !== undefined && !isDataInput && (
+            <Value onClick={() => setIsDataInput(true)}>{path.value}</Value>
+          )}
           {isDataInput && (
             <DataInput
               value={path.value !== undefined ? path.value + "" : undefined}

@@ -41,7 +41,7 @@ export function FunctionOutput({ output, editable }: Props) {
       {editable && (
         <AddParam
           onSelect={store.activeFunction.addOutputParam}
-          onCreateNew={store.activeFunction.createNewInputType}
+          onCreateNew={store.activeFunction.createNewOutputType}
         />
       )}
     </OutputBox>
