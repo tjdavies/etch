@@ -4,8 +4,8 @@ import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
 import { Wire } from "./Wire";
-import { IType } from "./Type";
-import { IStore } from "./Store";
+import { IType, Type } from "./Type";
+import { getStore, IStore } from "./Store";
 import { ISocket, createSockets } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";
 import { IPath } from "./Path";
@@ -64,7 +64,7 @@ export const Fn = types
       destroy(token);
     },
     addInputParam(typeId: string) {
-      const type = getRoot<IStore>(self).project.types.get(typeId);
+      const type = getStore(self).project.types.get(typeId);
       if (type) {
         const newParam: IParamIn = {
           name: "new",
@@ -72,6 +72,18 @@ export const Fn = types
         };
         self.input.push(newParam);
       }
+    },
+    createNewInputType(name: string) {
+      const newType = Type.create({
+        name,
+        core: false,
+      });
+      getStore(self).project.types.put(newType);
+      const newParam: IParamIn = {
+        name: "new",
+        type: newType.id,
+      };
+      self.input.push(newParam);
     },
     deleteParam(param: IParam) {
       destroy(param);

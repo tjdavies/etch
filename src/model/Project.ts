@@ -22,6 +22,15 @@ export const Project = types
     setName(name: string) {
       self.name = name;
     },
+    createNewType(name: string) {
+      const newType = Type.create({
+        name,
+        core: false,
+        params: [],
+      });
+      self.types.put(newType);
+      return newType;
+    },
   }));
 
 export interface IProject extends Instance<typeof Project> {}

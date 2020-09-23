@@ -8,8 +8,7 @@ export const TypeIconBox = styled.div`
   justify-content: center;
   align-items: center;
   width: 6px;
-  height: 20px;
-  border-radius: 1px;
+  height: 100%;
   color: ${Colours.darkText};
   background-color: ${Colours.background};
   cursor: pointer;

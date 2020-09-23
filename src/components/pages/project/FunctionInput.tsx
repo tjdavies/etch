@@ -40,7 +40,12 @@ export const FunctionInput = ({ input, editable }: Props) => {
           editableTypes
         />
       ))}
-      {editable && <AddParam onSelect={store.activeFunction.addInputParam} />}
+      {editable && (
+        <AddParam
+          onSelect={store.activeFunction.addInputParam}
+          onCreateNew={store.activeFunction.createNewInputType}
+        />
+      )}
     </InputBox>
   );
 };

@@ -8,7 +8,7 @@ import {
 } from "mobx-state-tree";
 import { IParam, IParamIn, Param } from "./Param";
 import { generateId } from "../utils/generateId";
-import { IStore } from "./Store";
+import { getStore, IStore } from "./Store";
 import { TypeColours } from "./CoreTypes";
 import { Colours } from "../Style";
 
@@ -30,14 +30,22 @@ export const Type = types
       self.name = name;
     },
     addParam(typeId: string) {
-      const type = getRoot<IStore>(self).project.types.get(typeId);
+      const type = getStore(self).project.types.get(typeId);
       if (type) {
         const newParam: IParamIn = {
-          name: "new",
+          name: type.name,
           type: type.id,
         };
         self.params?.push(newParam);
       }
+    },
+    createNewType(name: string) {
+      const newType = getStore(self).project.createNewType(name);
+      const newParam: IParamIn = {
+        name: newType.name,
+        type: newType.id,
+      };
+      self.params?.push(newParam);
     },
     deleteParam(param: IParam) {
       destroy(param);

@@ -30,9 +30,10 @@ export const AddBox = styled.div`
 
 interface Props {
   onSelect: (typeId: string) => void;
+  onCreateNew: (name: string) => void;
 }
 
-export function AddParam({ onSelect }: Props) {
+export function AddParam({ onSelect, onCreateNew }: Props) {
   const [showSelect, setShowSelect] = useState(false);
   const store = useStore();
 
@@ -48,6 +49,7 @@ export function AddParam({ onSelect }: Props) {
             })) || []
           }
           onCreateNew={(name) => {
+            onCreateNew(name);
             setShowSelect(false);
           }}
           onSelect={(key) => {

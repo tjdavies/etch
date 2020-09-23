@@ -2,12 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const InputWrapper = styled.div`
-  position: absolute;
-  display: block;
-  right: 100%;
-  top: -6px;
   padding: 6px;
-  margin-right: 22px;
+  margin-right: 2px;
   input {
     text-align: right;
   }

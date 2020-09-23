@@ -11,18 +11,6 @@ const Connector = styled.div`
     props.filled ? props.colour : "none"};
 `;
 
-const ConnectorWrapper = styled.div`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  right: 100%;
-  top: -1px;
-  padding: 6px;
-  margin-right: 6px;
-  padding-left: 12px;
-`;
-
 interface Props {
   colour: string;
   filled: boolean;
@@ -32,8 +20,8 @@ interface Props {
 
 export const ToConnector = ({ socket, onClick, filled, colour }: Props) => {
   return (
-    <ConnectorWrapper onClick={onClick}>
+    <div onClick={onClick}>
       <Connector id={socket.path} filled={filled} colour={colour} />
-    </ConnectorWrapper>
+    </div>
   );
 };

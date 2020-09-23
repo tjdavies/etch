@@ -4,7 +4,6 @@ import { Colours } from "../../../Style";
 import { FromConnector } from "./FromConnector";
 
 import { InlineEdit } from "../../common/InlineEdit";
-import { IPlug } from "../../../model/Plug";
 
 import { TypeIconBox } from "./TypeIcon";
 import { FormDown, FormNext } from "grommet-icons";
@@ -20,11 +19,11 @@ const InputWrapper = styled.div`
   color: ${Colours.darkText};
   display: flex;
   align-items: center;
-  flex-direction: ${(props: SocketProps) =>
+  flex-direction: ${(props: WrapperProps) =>
     props.socket ? "row-reverse" : "row"};
   height: 20px;
   width: 100%;
-  opacity: ${(props: SocketProps) => (props.fade ? "0.3" : "1")};
+  opacity: ${(props: WrapperProps) => (props.fade ? "0.3" : "1")};
 `;
 
 const LabelWrapper = styled.div`
@@ -39,27 +38,9 @@ const LabelWrapper = styled.div`
 
 const BlankConnector = styled.div`
   position: absolute;
-  top: 6px;
-  right: ${(props: SocketProps) => (props.socket ? "" : "-10px")};
-  left: ${(props: SocketProps) => (props.socket ? "-22px" : "")};
   width: 2px;
-  height: 2px;
-  margin-left: 0px;
+  height: 50%;
 `;
-
-interface SocketProps {
-  socket?: boolean;
-  fade: boolean;
-}
-
-interface InputProps {
-  socket?: boolean;
-  editable?: boolean;
-  path: ISocket;
-  expanded?: boolean;
-  expandable: boolean;
-  onToggleExpanded?: () => void;
-}
 
 const Value = styled.div`
   position: absolute;
@@ -76,6 +57,45 @@ const Value = styled.div`
   background-color: ${Colours.background};
 `;
 
+export const ConnectorWrapper = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  right: ${(props: ConnectorWrapperProps) => props.socket && "100%"};
+  left: ${(props: ConnectorWrapperProps) => !props.socket && "100%"};
+  padding-right: ${(props: ConnectorWrapperProps) =>
+    props.socket && getIndent(props.depth)};
+  padding-left: ${(props: ConnectorWrapperProps) =>
+    !props.socket && getIndent(props.depth)};
+`;
+
+function getIndent(depth: number) {
+  return depth * 6 + 14 + "px";
+}
+
+interface SocketProps {
+  socket?: boolean;
+}
+
+interface WrapperProps extends SocketProps {
+  fade: boolean;
+}
+
+interface ConnectorWrapperProps extends SocketProps {
+  depth: number;
+}
+
+interface InputProps {
+  socket?: boolean;
+  editable?: boolean;
+  path: ISocket;
+  expanded?: boolean;
+  expandable: boolean;
+  depth: number;
+  onToggleExpanded?: () => void;
+}
+
 export const ParamLabel = observer(
   ({
     path,
@@ -84,6 +104,7 @@ export const ParamLabel = observer(
     onToggleExpanded,
     expandable,
     socket,
+    depth,
   }: InputProps) => {
     const store = useStore();
     const [isDataInput, setIsDataInput] = useState(false);
@@ -118,7 +139,7 @@ export const ParamLabel = observer(
           />
         )}
 
-        <LabelWrapper socket={socket} fade={fade}>
+        <LabelWrapper socket={socket}>
           {editable ? (
             <InlineEdit
               type="text"
@@ -138,33 +159,45 @@ export const ParamLabel = observer(
         {path.value !== undefined && !isDataInput && (
           <Value onClick={() => setIsDataInput(true)}>{path.value}</Value>
         )}
-        {isDataInput && (
-          <DataInput
-            value={path.value !== undefined ? path.value + "" : undefined}
-            onEnter={(value) => {
-              onSetValue(value);
-              setIsDataInput(false);
-            }}
-          />
-        )}
-        {!expanded && (
-          <>
-            {path.params?.map((p) => (
-              <BlankConnector socket={socket} id={p.path} fade={fade} />
-            ))}
-          </>
-        )}
-        {socket ? (
-          <ToConnector
-            socket={path}
-            onClick={() => setIsDataInput(true)}
-            filled={path.value !== undefined}
-            colour={path.param.type.colour}
-          />
-        ) : (
-          <FromConnector path={path} />
-        )}
+        <ConnectorWrapper socket={socket} depth={depth}>
+          {isDataInput && (
+            <DataInput
+              value={path.value !== undefined ? path.value + "" : undefined}
+              onEnter={(value) => {
+                onSetValue(value);
+                setIsDataInput(false);
+              }}
+            />
+          )}
+          {!expanded && (
+            <>
+              {getAppParams(path).map((p) => (
+                <BlankConnector id={p.path} />
+              ))}
+            </>
+          )}
+          {socket ? (
+            <ToConnector
+              socket={path}
+              onClick={() => setIsDataInput(true)}
+              filled={path.value !== undefined}
+              colour={path.param.type.colour}
+            />
+          ) : (
+            <FromConnector path={path} depth={depth} />
+          )}
+        </ConnectorWrapper>
       </InputWrapper>
     );
   }
 );
+
+function getAppParams(socket: ISocket): ISocket[] {
+  if (socket.params) {
+    return socket.params.flatMap((p: ISocket) => {
+      return getAppParams(p);
+    });
+  } else {
+    return [socket];
+  }
+}

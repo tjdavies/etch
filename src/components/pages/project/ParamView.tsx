@@ -4,17 +4,18 @@ import { AddParam } from "./AddParam";
 import { ParamLabel } from "./ParamLabel";
 
 interface Props {
+  depth?: number;
   socket?: boolean;
   editable?: boolean;
   editableTypes?: boolean;
   path: IPlug;
 }
 
-export function ParamView(props: Props) {
+export function ParamView({ depth = 0, ...props }: Props) {
   if (props.path.params) {
-    return <RecordType {...props} expandable={true} />;
+    return <RecordType {...props} depth={depth} expandable={true} />;
   }
-  return <ParamLabel {...props} expandable={false} />;
+  return <ParamLabel {...props} depth={depth} expandable={false} />;
 }
 
 interface InputProps extends Props {
@@ -23,12 +24,19 @@ interface InputProps extends Props {
   onToggleExpanded?: () => void;
 }
 
-function RecordType({ path, editable, socket, editableTypes }: InputProps) {
+function RecordType({
+  path,
+  editable,
+  socket,
+  editableTypes,
+  depth = 0,
+}: InputProps) {
   const isEditableType = !path.param.type.core;
   const isEditable = editableTypes && isEditableType;
   return (
     <>
       <ParamLabel
+        depth={depth}
         path={path}
         expanded={path.expanded}
         editable={editable}
@@ -42,10 +50,19 @@ function RecordType({ path, editable, socket, editableTypes }: InputProps) {
       />
       {path.expanded &&
         path.params?.map((p) => (
-          <ParamView path={p} editable={isEditable} socket={socket} />
+          <ParamView
+            path={p}
+            editable={isEditable}
+            socket={socket}
+            editableTypes={editableTypes}
+            depth={depth + 1}
+          />
         ))}
       {isEditable && path.expanded && (
-        <AddParam onSelect={path.param.type.addParam} />
+        <AddParam
+          onSelect={path.param.type.addParam}
+          onCreateNew={path.param.type.createNewType}
+        />
       )}
     </>
   );

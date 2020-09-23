@@ -12,18 +12,6 @@ export const ConnectorCircle = styled.div`
   border-radius: 50%;
 `;
 
-export const ConnectorWrapper = styled.div`
-  position: absolute;
-  right: -30px;
-  padding: 5px;
-  z-index: -1;
-  cursor: pointer;
-`;
-
-interface Props {
-  path: IPath;
-}
-
 const WireSVG = styled.svg`
   position: absolute;
   overflow: visible;
@@ -31,23 +19,26 @@ const WireSVG = styled.svg`
   top: 5px;
 `;
 
-export function FromConnector({ path }: Props) {
+interface Props {
+  path: IPath;
+  depth: number;
+}
+
+export function FromConnector({ path, depth }: Props) {
   const store = useStore();
 
   return (
     <>
-      <ConnectorWrapper>
-        <ConnectorCircle id={path.path} />
-        <WireSVG>
-          <DraggableWire
-            from={{ x: 0, y: 0 }}
-            to={{ x: 0, y: 0 }}
-            onStartDrag={() => store.startDrag(path)}
-            onStopDrag={() => store.stopDrag()}
-            color={path.param.type.colour}
-          />
-        </WireSVG>
-      </ConnectorWrapper>
+      <ConnectorCircle id={path.path} />
+      <WireSVG>
+        <DraggableWire
+          from={{ x: 0, y: 0 }}
+          to={{ x: 0, y: 0 }}
+          onStartDrag={() => store.startDrag(path)}
+          onStopDrag={() => store.stopDrag()}
+          color={path.param.type.colour}
+        />
+      </WireSVG>
     </>
   );
 }
