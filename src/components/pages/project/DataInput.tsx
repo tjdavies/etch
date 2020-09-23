@@ -12,9 +12,7 @@ const InputWrapper = styled.div`
     -webkit-appearance: none;
     margin: 0;
   }
-  input[type="checkbox"] {
-    background-color: ${Colours.primary};
-  }
+
   width: fit-content;
 `;
 
@@ -111,10 +109,9 @@ function BooleanInput({ value = false, onEnter, onRemoveValue }: Props) {
   );
 }
 
-function ColourInput({ value = false, onEnter, onRemoveValue }: Props) {
+function ColourInput({ value = "#F00", onEnter, onRemoveValue }: Props) {
   const [editValue, setValue] = useState(value);
   const onSetValue = () => {
-    console.log(editValue);
     if (editValue) {
       onEnter(editValue);
     } else {
@@ -125,8 +122,7 @@ function ColourInput({ value = false, onEnter, onRemoveValue }: Props) {
   return (
     <input
       type="color"
-      autoFocus
-      checked={editValue}
+      value={editValue}
       onChange={(e) => {
         setValue(e.target.value);
       }}
