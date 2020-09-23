@@ -12,12 +12,13 @@ const InputBox = styled.div`
   z-index: 2;
   flex-direction: column;
   align-items: flex-end;
-  gap: 5px;
+  gap: 4px;
   border: 1px solid ${Colours.lightGrey};
   min-width: 120px;
   border-bottom-right-radius: 4px;
   border-top-right-radius: 4px;
   padding: 6px;
+  padding-right: 1px;
   background-color: ${Colours.white};
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 `;

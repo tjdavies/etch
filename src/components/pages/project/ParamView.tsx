@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { IPlug } from "../../../model/Plug";
 import { AddParam } from "./AddParam";
 import { ParamLabel } from "./ParamLabel";
@@ -10,6 +11,21 @@ interface Props {
   editableTypes?: boolean;
   path: IPlug;
 }
+
+interface SocketProps {
+  socket?: boolean;
+}
+
+const NestWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: ${(props: SocketProps) =>
+    !props.socket ? "flex-end" : "flex-start"};
+  gap: 4px;
+  padding-right: ${(props: SocketProps) => !props.socket && "6px"};
+  padding-left: ${(props: SocketProps) => props.socket && "6px"};
+`;
 
 export function ParamView({ depth = 0, ...props }: Props) {
   if (props.path.params) {
@@ -48,21 +64,24 @@ function RecordType({
         }
         socket={socket}
       />
-      {path.expanded &&
-        path.params?.map((p) => (
-          <ParamView
-            path={p}
-            editable={isEditable}
-            socket={socket}
-            editableTypes={editableTypes}
-            depth={depth + 1}
-          />
-        ))}
-      {isEditable && path.expanded && (
-        <AddParam
-          onSelect={path.param.type.addParam}
-          onCreateNew={path.param.type.createNewType}
-        />
+      {path.expanded && (
+        <NestWrapper socket={socket}>
+          {path.params?.map((p) => (
+            <ParamView
+              path={p}
+              editable={isEditable}
+              socket={socket}
+              editableTypes={editableTypes}
+              depth={depth + 1}
+            />
+          ))}
+          {isEditable && (
+            <AddParam
+              onSelect={path.param.type.addParam}
+              onCreateNew={path.param.type.createNewType}
+            />
+          )}
+        </NestWrapper>
       )}
     </>
   );

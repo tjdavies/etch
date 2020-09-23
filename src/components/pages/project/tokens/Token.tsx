@@ -44,6 +44,8 @@ const TokenBody = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding: 6px;
+  padding-left: 1px;
+  padding-right: 1px;
   gap: 30px;
   border: 1px solid ${Colours.lightGrey};
   border-top: none;

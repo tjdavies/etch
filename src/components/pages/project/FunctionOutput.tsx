@@ -7,7 +7,7 @@ import { useStore } from "../../../model/Store";
 import { ParamView } from "./ParamView";
 
 const OutputBox = styled.div`
-  gap: 5px;
+  gap: 4px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -16,6 +16,7 @@ const OutputBox = styled.div`
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
   padding: 6px;
+  padding-left: 1px;
   background-color: ${Colours.white};
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 `;

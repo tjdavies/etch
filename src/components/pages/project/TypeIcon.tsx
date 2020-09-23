@@ -7,7 +7,7 @@ export const TypeIconBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 6px;
+  width: 12px;
   height: 100%;
   color: ${Colours.darkText};
   background-color: ${Colours.background};

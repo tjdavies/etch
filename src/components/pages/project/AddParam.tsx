@@ -25,6 +25,7 @@ export const AddBox = styled.div`
   border-radius: 1px;
   color: ${Colours.darkText};
   background-color: ${Colours.background};
+  margin-right: 12px;
   cursor: pointer;
 `;
 

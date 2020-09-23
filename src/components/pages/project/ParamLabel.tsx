@@ -33,7 +33,6 @@ const LabelWrapper = styled.div`
   flex-direction: ${(props: SocketProps) =>
     props.socket ? "row-reverse" : "row"};
   justify-content: flex-end;
-  gap: 6px;
 `;
 
 const BlankConnector = styled.div`
@@ -56,7 +55,7 @@ export const ConnectorWrapper = styled.div`
 `;
 
 function getIndent(depth: number) {
-  return depth * 6 + 14 + "px";
+  return depth * 6 + 10 + "px";
 }
 
 interface SocketProps {
@@ -132,6 +131,7 @@ export const ParamLabel = observer(
               {expanded ? <FormDown size="small" /> : <FormNext size="small" />}
             </TypeIconBox>
           )}
+          {!expandable && <TypeIconBox />}
         </LabelWrapper>
 
         <ConnectorWrapper socket={socket} depth={depth}>
