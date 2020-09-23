@@ -23,7 +23,7 @@ export function paramToPath(
       param.type.params &&
       createPlugs(target, param.type.params, path, expandedParams),
     expanded: expandedParams.get(path),
-  };
+  } as any;
 }
 
 export function createPlugs(

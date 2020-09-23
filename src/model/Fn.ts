@@ -54,6 +54,14 @@ export const Fn = types
       };
       self.tokens.push(newToken);
     },
+    removeAllWiresWithPath(path: IPath) {
+      const connected = self.wires.filter(
+        (wire) => wire.from.path === path.path || wire.to.path === path.path
+      );
+      connected.forEach((element) => {
+        destroy(element);
+      });
+    },
     removeToken(token: IToken) {
       const connected = self.wires.filter(
         (wire) => wire.from.target === token || wire.to.target === token

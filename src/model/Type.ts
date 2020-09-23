@@ -3,12 +3,11 @@ import {
   Instance,
   IAnyModelType,
   SnapshotIn,
-  getRoot,
   destroy,
 } from "mobx-state-tree";
 import { IParam, IParamIn, Param } from "./Param";
 import { generateId } from "../utils/generateId";
-import { getStore, IStore } from "./Store";
+import { getStore } from "./Store";
 import { TypeColours } from "./CoreTypes";
 import { Colours } from "../Style";
 

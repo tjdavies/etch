@@ -112,7 +112,7 @@ export const ParamLabel = observer(
         {editable && (
           <Options
             align={socket ? "right" : "left"}
-            onDelete={() => path.param.delete()}
+            onDelete={() => store.project.deletePath(path)}
           />
         )}
 

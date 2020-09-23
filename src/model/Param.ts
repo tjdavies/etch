@@ -7,7 +7,7 @@ import {
   getParent,
 } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
-import { getStore, IStore } from "./Store";
+import { getStore } from "./Store";
 
 export const Param = types
   .model("Param", {
@@ -27,7 +27,6 @@ export const Param = types
       self.name = name;
     },
     delete() {
-      getStore(self).setActiveSocket(undefined);
       getParent<any>(self, 2).deleteParam(self as IParam);
     },
   }));

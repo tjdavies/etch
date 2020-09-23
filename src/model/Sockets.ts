@@ -38,7 +38,7 @@ export function paramToSocket(
         expandedParams
       ),
     expanded: expandedParams.get(path),
-  };
+  } as any;
 }
 
 export function createSockets(

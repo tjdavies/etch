@@ -419,11 +419,11 @@ export const coreFunctions = {
   divide: divideFn,
   greaterThan: greaterThanFn,
   lessThan: lessThanFn,
+  lessThanEql: lessThanEqlFn,
+  greaterThanEql: greaterThanEqlFn,
   select: selectFn,
   equal: equalFn,
   and: andFn,
   or: orFn,
   push: pushFn,
-  lessThanEql: lessThanEqlFn,
-  greaterThanEql: greaterThanEqlFn,
 };

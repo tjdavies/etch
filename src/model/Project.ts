@@ -1,6 +1,8 @@
 import { types, Instance } from "mobx-state-tree";
 import { Type, IType } from "./Type";
 import { Fn, IFn } from "./Fn";
+import { IPath } from "./Path";
+import { getStore } from "./Store";
 
 export const Project = types
   .model({
@@ -30,6 +32,12 @@ export const Project = types
       });
       self.types.put(newType);
       return newType;
+    },
+    deletePath(path: IPath) {
+      const store = getStore(self);
+      store.setActiveSocket(undefined);
+      self.functions.forEach((f) => f.removeAllWiresWithPath(path));
+      path.param.delete();
     },
   }));
 

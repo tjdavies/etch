@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 
@@ -56,6 +56,7 @@ export function DataInput(props: Props) {
 }
 
 function NumberInput({ value, onEnter, onRemoveValue }: Props) {
+  const inputEl = useRef<any>(null);
   const [editValue, setValue] = useState<string>(value);
   const onSetValue = () => {
     if (editValue !== "" && !isNaN(Number(editValue))) {
@@ -67,7 +68,8 @@ function NumberInput({ value, onEnter, onRemoveValue }: Props) {
 
   return (
     <Input
-      width={editValue?.length ? editValue.length + "ch" : "20px"}
+      ref={inputEl}
+      width={editValue?.length ? editValue.length + "ch" : "1ch"}
       type="number"
       autoFocus
       value={editValue}
@@ -77,7 +79,8 @@ function NumberInput({ value, onEnter, onRemoveValue }: Props) {
       onBlur={() => onSetValue()}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
-          onSetValue();
+          inputEl?.current?.blur();
+          //onSetValue();
         }
       }}
     />
