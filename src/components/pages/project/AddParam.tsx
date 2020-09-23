@@ -25,6 +25,7 @@ export const AddBox = styled.div`
   color: ${Colours.darkText};
   background-color: ${Colours.background};
   margin-right: 12px;
+  margin-left: 12px;
   cursor: pointer;
 `;
 
@@ -45,7 +46,7 @@ export function AddParam({ param, onSelect, onCreateNew }: Props) {
           onClose={() => setShowSelect(false)}
           options={
             store.project.typeList
-              .filter((f) => param && param.type.id !== f.id)
+              .filter((f) => param === undefined || param.type.id !== f.id)
               .map((f) => ({
                 key: f.id,
                 label: f.name,
