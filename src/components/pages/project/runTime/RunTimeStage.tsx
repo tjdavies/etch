@@ -14,6 +14,7 @@ export interface IRect {
   y: number;
   width: number;
   height: number;
+  colour: string;
 }
 
 export interface IScene {
@@ -46,7 +47,7 @@ export const RunTimeStage = ({ scene }: Props) => {
                 y={rect.y}
                 width={rect.width}
                 height={rect.height}
-                fill="red"
+                fill={rect.colour}
               />
             ))}
         </Layer>

@@ -20,7 +20,7 @@ export const Fn = types
     output: types.array(Param),
     tokens: types.array(Token),
     wires: types.array(Wire),
-    values: types.map(types.number),
+    values: types.map(types.frozen()),
     expandedParams: types.map(types.boolean),
   })
   .views((self) => ({

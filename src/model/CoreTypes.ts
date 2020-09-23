@@ -25,6 +25,12 @@ export const coreTypes: Record<string, ITypeIn> = {
     name: "boolean",
     defaultValue: false,
   },
+  colour: {
+    core: true,
+    id: "colour",
+    name: "colour",
+    defaultValue: "#F00",
+  },
   through: {
     core: true,
     id: "through",
@@ -60,6 +66,11 @@ export const coreTypes: Record<string, ITypeIn> = {
         id: "width",
         name: "width",
         type: "number",
+      },
+      {
+        id: "colour",
+        name: "colour",
+        type: "colour",
       },
     ],
   },

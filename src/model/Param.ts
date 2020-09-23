@@ -5,7 +5,6 @@ import {
   SnapshotIn,
   IAnyModelType,
   getParent,
-  getRoot,
 } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
 import { getStore, IStore } from "./Store";

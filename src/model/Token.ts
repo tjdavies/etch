@@ -10,7 +10,7 @@ export const Token = types
     id: types.optional(types.identifier, generateId),
     position: Point,
     fn: types.late((): any => types.reference(Fn)),
-    values: types.map(types.number),
+    values: types.map(types.frozen()),
     expandedParams: types.map(types.boolean),
   })
   .views((self) => ({

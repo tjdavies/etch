@@ -42,17 +42,6 @@ const BlankConnector = styled.div`
   height: 50%;
 `;
 
-const Value = styled.div`
-  padding: 2px;
-  margin-right: 4px;
-  border: 1px solid ${Colours.primary};
-  color: inherit;
-  input {
-    text-align: right;
-  }
-  background-color: ${Colours.background};
-`;
-
 export const ConnectorWrapper = styled.div`
   position: absolute;
   display: flex;
@@ -113,14 +102,6 @@ export const ParamLabel = observer(
         store.activeDrag?.param.type !== path.param.type) ||
       false;
 
-    const onSetValue = (value: string) => {
-      if (value !== "" && !isNaN(Number(value))) {
-        path.target.addValue(path.path, Number(value));
-      } else {
-        path.target.removeValue(path.path);
-      }
-    };
-
     return (
       <InputWrapper
         socket={socket}
@@ -154,14 +135,16 @@ export const ParamLabel = observer(
         </LabelWrapper>
 
         <ConnectorWrapper socket={socket} depth={depth}>
-          {path.value !== undefined && !isDataInput && (
-            <Value onClick={() => setIsDataInput(true)}>{path.value}</Value>
-          )}
-          {isDataInput && (
+          {(isDataInput || path.value !== undefined) && (
             <DataInput
+              type={path.param.type.id}
               value={path.value !== undefined ? path.value + "" : undefined}
               onEnter={(value) => {
-                onSetValue(value);
+                path.target.addValue(path.path, value);
+                setIsDataInput(false);
+              }}
+              onRemoveValue={() => {
+                path.target.removeValue(path.path);
                 setIsDataInput(false);
               }}
             />
