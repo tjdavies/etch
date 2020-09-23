@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-
-import { TypeIconBox } from "./TypeIcon";
 import { FormAdd } from "grommet-icons";
 import { RelativeSearchDropDown } from "../../common/RelativeSearchDropDown";
 import styled from "styled-components";
 import { useStore } from "../../../model/Store";
 import { Colours } from "../../../Style";
+import { IParam } from "../../../model/Param";
 
 const Wrapper = styled.div`
   position: relative;
@@ -30,11 +29,12 @@ export const AddBox = styled.div`
 `;
 
 interface Props {
+  param?: IParam;
   onSelect: (typeId: string) => void;
   onCreateNew: (name: string) => void;
 }
 
-export function AddParam({ onSelect, onCreateNew }: Props) {
+export function AddParam({ param, onSelect, onCreateNew }: Props) {
   const [showSelect, setShowSelect] = useState(false);
   const store = useStore();
 
@@ -44,10 +44,12 @@ export function AddParam({ onSelect, onCreateNew }: Props) {
         <RelativeSearchDropDown
           onClose={() => setShowSelect(false)}
           options={
-            store.project.typeList.map((f) => ({
-              key: f.id,
-              label: f.name,
-            })) || []
+            store.project.typeList
+              .filter((f) => param && param.type.id !== f.id)
+              .map((f) => ({
+                key: f.id,
+                label: f.name,
+              })) || []
           }
           onCreateNew={(name) => {
             onCreateNew(name);

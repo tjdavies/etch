@@ -4,12 +4,10 @@ import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
 import { Wire } from "./Wire";
-import { IType, Type } from "./Type";
 import { getStore, IStore } from "./Store";
 import { ISocket, createSockets } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";
 import { IPath } from "./Path";
-import { drop } from "ramda";
 
 export const Fn = types
   .model("Fn", {

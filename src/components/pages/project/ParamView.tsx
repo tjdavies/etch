@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { IPlug } from "../../../model/Plug";
+import { Colours } from "../../../Style";
 import { AddParam } from "./AddParam";
 import { ParamLabel } from "./ParamLabel";
 
@@ -23,8 +24,9 @@ const NestWrapper = styled.div`
   align-items: ${(props: SocketProps) =>
     !props.socket ? "flex-end" : "flex-start"};
   gap: 4px;
-  padding-right: ${(props: SocketProps) => !props.socket && "6px"};
-  padding-left: ${(props: SocketProps) => props.socket && "6px"};
+  margin-right: ${(props: SocketProps) => !props.socket && "5px"};
+  margin-left: ${(props: SocketProps) => props.socket && "5px"};
+  border-right: 1px solid #c4c4c460;
 `;
 
 export function ParamView({ depth = 0, ...props }: Props) {
@@ -77,6 +79,7 @@ function RecordType({
           ))}
           {isEditable && (
             <AddParam
+              param={path.param}
               onSelect={path.param.type.addParam}
               onCreateNew={path.param.type.createNewType}
             />
