@@ -4,7 +4,7 @@ import { IFn, Fn } from "./Fn";
 import { generateId } from "../utils/generateId";
 import { createSockets, ISocket } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";
-import { calculateFunction, getStore } from "./Store";
+import { calculateApp, calculateFunction, getStore } from "./Store";
 
 export const Token = types
   .model("Token", {
@@ -27,7 +27,7 @@ export const Token = types
     },
     get plugs(): IPlug[] {
       const mainFn = getStore(self).project.mainFn;
-      const output = calculateFunction(mainFn, {
+      const output = calculateApp(mainFn, {
         input: {
           rightArrow: false,
           leftArrow: false,
@@ -37,6 +37,8 @@ export const Token = types
         state: {},
       });
 
+      console.log("output");
+      console.log(output);
       return createPlugs(
         self as any,
         self.fn.output,

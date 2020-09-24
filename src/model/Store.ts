@@ -226,9 +226,7 @@ export function calculateApp(
 
   const output: any = getValuesForSockets(fn, fn.sockets, combinedState);
 
-  const results = output[fn.id];
-
-  return results;
+  return output;
 }
 
 export function calculateFunction(
@@ -250,6 +248,8 @@ export function calculateFunction(
 
   const results = output[fn.id];
 
+  console.log("calculateFunction");
+  console.log(results);
   return results;
 }
 
@@ -303,15 +303,11 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
       );
 
       const outPutValue = runToken(token, computedValues);
-      console.log(outPutValue);
-      const outValue = outPutValue[wire.from.param.id];
-      console.log("wire.from.path");
-      console.log(wire.from.path);
-      console.log(outValue);
-      const cc = setValue(wire.from.path, outValue, calculatedState);
-      const c = setValue(wire.to.path, outValue, cc);
 
-      return c;
+      const outValue = outPutValue[wire.from.param.id];
+      const c = setValue(wire.from.path, outValue, computedValues);
+      const cc = setValue(wire.to.path, outValue, c);
+      return cc;
     } else {
       return setValue(
         wire.from.path,
@@ -326,10 +322,11 @@ function runToken(token: IToken, plugValues: Object) {
   //  console.log(token.fn.name);
   // console.log(token);
   const input = mapSocketsToValues(token, plugValues);
+  //  console.log("runToken");
   // console.log(input);
 
   const r = calculateFunction(token.fn, input);
-  // console.log(r);
+  console.log(token.fn.name);
   return r;
 }
 

@@ -18,10 +18,6 @@ export function paramToPath(
   calculatedDataValues: Record<string, any>
 ): IPlug {
   const path = parentPath + "." + param.id;
-  console.log("getValue");
-  console.log(calculatedDataValues);
-  console.log(path);
-  console.log(getValue(path, calculatedDataValues));
   return {
     target,
     param,
