@@ -24,7 +24,7 @@ const Error = styled.div`
 `;
 
 export const ProjectPage = () => {
-  const { id, fn } = useParams();
+  const { id, fn, context } = useParams();
 
   const initialState = loadProject(id);
 
@@ -32,6 +32,7 @@ export const ProjectPage = () => {
     const store: IStore = Store.create({
       project: initialState,
       activeFunction: fn || initialState.mainFn,
+      functionContext: context,
       runTimeViewMode: "docked",
     });
 

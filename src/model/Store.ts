@@ -37,6 +37,7 @@ export const Store = types
     activeDrag: types.maybe(Path),
     activeSocket: types.maybe(Path),
     runTimeViewMode: RunTimeViewMode,
+    functionContext: types.maybe(types.reference(Token)),
   })
   .actions((self) => ({
     activeDragPlug(drag: IPath) {
@@ -81,6 +82,9 @@ export const Store = types
     },
     setActiveSocket(param: IPath | undefined) {
       self.activeSocket = param;
+    },
+    setFunctionContext(param: IToken | undefined) {
+      self.functionContext = param;
     },
     createNewFunction(position: IPoint, name: string) {
       const newFn: IFnIn = {

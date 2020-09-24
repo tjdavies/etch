@@ -73,6 +73,7 @@ export const Token = observer(({ token }: Props) => {
         generatePath(Routes.function, {
           id: store.project.id,
           fn: token.fn.id,
+          context: token.id,
         })
       );
     }

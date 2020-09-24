@@ -34,15 +34,15 @@ export const Fn = types
         state: {},
       });
 
-      console.log("output");
-      console.log(output);
+      const contextId = getStore(self).functionContext?.id;
+      const context = contextId ? { [self.id]: output[contextId] } : output;
 
       return createPlugs(
         self as any,
         self.input,
         self.id,
         self.expandedParams,
-        output
+        context
       );
     },
     get sockets(): ISocket[] {

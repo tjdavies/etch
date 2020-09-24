@@ -1,4 +1,4 @@
 export const Routes = {
   project: "/project/:id",
-  function: "/project/:id/:fn",
+  function: "/project/:id/:fn/:context",
 };
