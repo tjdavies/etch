@@ -8,7 +8,6 @@ import { TokenDropDown } from "./TokenDropDown";
 import { Point } from "../../../types/types";
 import { Token } from "./tokens/Token";
 import { observer } from "mobx-react-lite";
-import { useStore } from "../../../model/Store";
 
 const FunctionViewWrapper = styled.div`
   display: flex;

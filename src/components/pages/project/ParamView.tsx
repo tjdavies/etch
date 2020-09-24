@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { IPlug } from "../../../model/Plug";
-import { Colours } from "../../../Style";
 import { AddParam } from "./AddParam";
 import { ParamLabel } from "./ParamLabel";
 

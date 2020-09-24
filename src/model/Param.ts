@@ -7,7 +7,6 @@ import {
   getParent,
 } from "mobx-state-tree";
 import { generateId } from "../utils/generateId";
-import { getStore } from "./Store";
 
 export const Param = types
   .model("Param", {
@@ -15,13 +14,6 @@ export const Param = types
     name: types.string,
     type: types.reference(types.late((): IAnyModelType => Type)),
   })
-  .views((self) => ({
-    // get canConnect(): boolean {
-    //  return (
-    //  getRoot<typeof Store>(self).activeDrag?.param.type.id === self.type.id
-    //);
-    // },
-  }))
   .actions((self) => ({
     setName(name: string) {
       self.name = name;

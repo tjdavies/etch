@@ -31,21 +31,21 @@ interface Props {
 }
 
 export function DataInput(props: Props) {
-  if (props.type == "number") {
+  if (props.type === "number") {
     return (
       <InputWrapper>
         <NumberInput {...props} />
       </InputWrapper>
     );
   }
-  if (props.type == "boolean") {
+  if (props.type === "boolean") {
     return (
       <InputWrapper>
         <BooleanInput {...props} />
       </InputWrapper>
     );
   }
-  if (props.type == "colour") {
+  if (props.type === "colour") {
     return (
       <InputWrapper>
         <ColourInput {...props} />

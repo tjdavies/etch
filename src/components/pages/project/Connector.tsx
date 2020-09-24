@@ -25,15 +25,18 @@ export const Connector = observer(({ from, to }: Props) => {
   const size = useWindowSize();
   const expandFrom = from.target && from.target?.expandedParams.size;
   const expandTo = to.target && to.target?.expandedParams.size;
-
+  const Ax = posA?.x;
+  const Ay = posA?.y;
+  const Bx = posB?.x;
+  const By = posB?.y;
   useLayoutEffect(() => {
     setAPos(getLocation(from.path));
     setBPos(getLocation(to.path));
   }, [
-    posA?.x,
-    posA?.y,
-    posB?.x,
-    posB?.y,
+    Ax,
+    Ay,
+    Bx,
+    By,
     size,
     inputs,
     outputs,
