@@ -60,7 +60,7 @@ function NumberInput({ value, onEnter, onRemoveValue }: Props) {
   const [editValue, setValue] = useState<string>(value);
   const onSetValue = () => {
     if (editValue !== "" && !isNaN(Number(editValue))) {
-      onEnter(editValue);
+      onEnter(Number(editValue));
     } else {
       onRemoveValue();
     }
