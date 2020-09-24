@@ -309,11 +309,13 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
       const cc = setValue(wire.to.path, outValue, c);
       return cc;
     } else {
-      return setValue(
+      const c = setValue(
         wire.from.path,
         wire.from.param.type.defaultValue,
         calculatedState
       );
+      const cc = setValue(wire.to.path, wire.from.param.type.defaultValue, c);
+      return cc;
     }
   }
 }

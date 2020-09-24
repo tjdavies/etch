@@ -37,8 +37,6 @@ export const Token = types
         state: {},
       });
 
-      console.log("output");
-      console.log(output);
       return createPlugs(
         self as any,
         self.fn.output,
