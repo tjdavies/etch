@@ -36,11 +36,7 @@ export const Store = types
     activeFunction: types.reference(Fn),
     activeDrag: types.maybe(Path),
     activeSocket: types.maybe(Path),
-    runTimeViewMode: types.enumeration("runTimeViewMode", [
-      "docked",
-      "window",
-      "max",
-    ]),
+    runTimeViewMode: RunTimeViewMode,
   })
   .actions((self) => ({
     activeDragPlug(drag: IPath) {
@@ -203,10 +199,42 @@ export function createNewProject(name: string) {
   };
 }
 
+export function calculateResults(
+  fn: IFn,
+  inputValue: Record<string, any>
+): Record<string, any> {
+  if (fn.core) {
+    return (coreFunctionProcesses[fn.id] as any)(inputValue);
+  }
+
+  const output: any = calculateFunction(fn, inputValue);
+
+  const results = output[fn.id];
+
+  return results;
+}
+
+export function calculateApp(
+  fn: IFn,
+  inputValue: Record<string, any>
+): Record<string, any> {
+  const calculatedState = { [fn.id]: inputValue };
+  const constValues = fn.values.toJSON();
+  const unFlatConst = unFlatten(constValues);
+
+  const combinedState = mergeDeepLeft(calculatedState, unFlatConst);
+
+  const output: any = getValuesForSockets(fn, fn.sockets, combinedState);
+
+  const results = output[fn.id];
+
+  return results;
+}
+
 export function calculateFunction(
   fn: IFn,
   inputValue: Record<string, any>
-): Record<string, any> | null {
+): Record<string, any> {
   if (fn.core) {
     return (coreFunctionProcesses[fn.id] as any)(inputValue);
   }
@@ -234,7 +262,7 @@ function unFlatten(constValues: IKeyValueMap<any>): any {
   );
 }
 
-function getValue(p: string, object: any): any {
+export function getValue(p: string, object: any): any {
   return path(p.split("."), object);
 }
 
@@ -275,15 +303,15 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
       );
 
       const outPutValue = runToken(token, computedValues);
+      console.log(outPutValue);
+      const outValue = outPutValue[wire.from.param.id];
+      console.log("wire.from.path");
+      console.log(wire.from.path);
+      console.log(outValue);
+      const cc = setValue(wire.from.path, outValue, calculatedState);
+      const c = setValue(wire.to.path, outValue, cc);
 
-      if (outPutValue) {
-        const outValue = outPutValue[wire.from.param.id];
-        const cc = setValue(wire.from.path, outValue, computedValues);
-        const c = setValue(wire.to.path, outValue, cc);
-        return c;
-      }
-
-      return computedValues;
+      return c;
     } else {
       return setValue(
         wire.from.path,
@@ -295,13 +323,13 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
 }
 
 function runToken(token: IToken, plugValues: Object) {
-  console.log(token.fn.name);
-  console.log(token);
+  //  console.log(token.fn.name);
+  // console.log(token);
   const input = mapSocketsToValues(token, plugValues);
-  console.log(input);
+  // console.log(input);
 
   const r = calculateFunction(token.fn, input);
-  console.log(r);
+  // console.log(r);
   return r;
 }
 

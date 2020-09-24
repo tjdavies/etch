@@ -4,6 +4,7 @@ import { Colours } from "../../../Style";
 import { DraggableWire } from "./DraggableWire";
 import { useStore } from "../../../model/Store";
 import { IPath } from "../../../model/Path";
+import { ObjectInspector } from "react-inspector";
 
 export const ConnectorCircle = styled.div`
   border: 1px solid ${Colours.lightGrey};
@@ -21,10 +22,17 @@ const WireSVG = styled.svg`
 
 interface Props {
   path: IPath;
-  depth: number;
+  data?: any;
 }
 
-export function FromConnector({ path, depth }: Props) {
+const InspectBox = styled.div`
+  position: absolute;
+  top: -8px;
+  left: 22px;
+  border: 1px solid ${Colours.lightGrey};
+`;
+
+export function FromConnector({ path, data }: Props) {
   const store = useStore();
 
   return (
@@ -39,6 +47,9 @@ export function FromConnector({ path, depth }: Props) {
           color={path.param.type.colour}
         />
       </WireSVG>
+      <InspectBox>
+        <ObjectInspector data={data} />
+      </InspectBox>
     </>
   );
 }

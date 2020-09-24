@@ -3,7 +3,8 @@ import { Point, IPoint } from "./Point";
 import { IFn, Fn } from "./Fn";
 import { generateId } from "../utils/generateId";
 import { createSockets, ISocket } from "./Sockets";
-import { createPlugs } from "./Plug";
+import { createPlugs, IPlug } from "./Plug";
+import { calculateFunction, getStore } from "./Store";
 
 export const Token = types
   .model("Token", {
@@ -24,12 +25,24 @@ export const Token = types
         self.expandedParams
       );
     },
-    get plugs() {
+    get plugs(): IPlug[] {
+      const mainFn = getStore(self).project.mainFn;
+      const output = calculateFunction(mainFn, {
+        input: {
+          rightArrow: false,
+          leftArrow: false,
+          upArrow: false,
+          downArrow: false,
+        },
+        state: {},
+      });
+
       return createPlugs(
         self as any,
         self.fn.output,
         self.id,
-        self.expandedParams
+        self.expandedParams,
+        output
       );
     },
   }))

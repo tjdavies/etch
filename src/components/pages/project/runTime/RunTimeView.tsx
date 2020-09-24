@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { Colours } from "../../../../Style";
 import {
   useStore,
-  calculateFunction,
   mapOutputToValues,
+  calculateFunction,
 } from "../../../../model/Store";
 import { Expand, Contract } from "grommet-icons";
 import { RunTimeStage, IScene } from "./RunTimeStage";
@@ -86,7 +86,6 @@ export const RunTimeView = ({ onDock }: Props) => {
   const keysDown = useKeyDown();
 
   const output = calculateFunction(store.project.mainFn, {
-    time: time,
     input: {
       rightArrow: keysDown["ArrowRight"],
       leftArrow: keysDown["ArrowLeft"],

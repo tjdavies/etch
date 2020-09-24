@@ -10,6 +10,7 @@ export interface ISocket extends IPath {
   connection?: IWire;
   params?: ISocket[];
   expanded: boolean;
+  data?: any;
 }
 
 export function paramToSocket(

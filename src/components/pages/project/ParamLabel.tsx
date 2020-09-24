@@ -164,7 +164,7 @@ export const ParamLabel = observer(
               colour={path.param.type.colour}
             />
           ) : (
-            <FromConnector path={path} depth={depth} />
+            <FromConnector path={path} data={path.data} />
           )}
         </ConnectorWrapper>
       </InputWrapper>
