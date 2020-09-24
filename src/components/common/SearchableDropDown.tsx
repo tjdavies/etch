@@ -28,6 +28,10 @@ const SearchableDropDownWrapper = styled.div`
   padding: 5px;
   border-radius: 4px;
   background-color: ${Colours.white};
+  ul {
+    overflow-y: scroll;
+    max-height: 200px;
+  }
 `;
 
 export function SearchableDropDown({

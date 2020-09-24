@@ -10,8 +10,15 @@ interface FloatyDropdownProps {
 
 const FloatyDropdown = styled.div`
   position: absolute;
-  left: ${(props: FloatyDropdownProps) => props.position.x + "px"};
-  top: ${(props: FloatyDropdownProps) => props.position.y + "px"};
+  width: fit-content;
+  left: min(
+    calc(100vw - 180px),
+    ${(props: FloatyDropdownProps) => props.position.x + "px"}
+  );
+  top: min(
+    calc(100vh - 250px),
+    ${(props: FloatyDropdownProps) => props.position.y + "px"}
+  );
 `;
 
 const FloatyDropdownBlocker = styled.div`
