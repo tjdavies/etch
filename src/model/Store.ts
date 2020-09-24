@@ -22,12 +22,25 @@ import { ISocket } from "./Sockets";
 import { IKeyValueMap } from "mobx";
 import { assocPath, mergeDeepLeft, path } from "ramda";
 
+const RunTimeViewMode = types.enumeration("runTimeViewMode", [
+  "docked",
+  "window",
+  "max",
+]);
+
+type IRunTimeViewMode = Instance<typeof RunTimeViewMode>;
+
 export const Store = types
   .model("store", {
     project: Project,
     activeFunction: types.reference(Fn),
     activeDrag: types.maybe(Path),
     activeSocket: types.maybe(Path),
+    runTimeViewMode: types.enumeration("runTimeViewMode", [
+      "docked",
+      "window",
+      "max",
+    ]),
   })
   .actions((self) => ({
     activeDragPlug(drag: IPath) {
@@ -87,6 +100,9 @@ export const Store = types
       if (f) {
         self.activeFunction?.addToken(position, f);
       }
+    },
+    setRunTimeViewMode(mode: IRunTimeViewMode) {
+      self.runTimeViewMode = mode;
     },
   }));
 

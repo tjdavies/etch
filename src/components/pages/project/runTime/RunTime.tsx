@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Colours } from "../../../../Style";
 import { Expand } from "grommet-icons";
 import { RunTimeView } from "./RunTimeView";
+import { useStore } from "../../../../model/Store";
+import { observer } from "mobx-react-lite";
 
 const RunButton = styled.div`
   position: absolute;
@@ -20,16 +22,16 @@ const RunButton = styled.div`
   cursor: pointer;
 `;
 
-export const RunTime = () => {
-  const [docked, setIsDocked] = useState(true);
+export const RunTime = observer(() => {
+  const store = useStore();
 
-  if (!docked) {
-    return <RunTimeView onDock={() => setIsDocked(true)} />;
+  if (store.runTimeViewMode !== "docked") {
+    return <RunTimeView onDock={() => store.setRunTimeViewMode("docked")} />;
   } else {
     return (
-      <RunButton onClick={() => setIsDocked(false)}>
+      <RunButton onClick={() => store.setRunTimeViewMode("window")}>
         <Expand color={Colours.lightText} size="small" />
       </RunButton>
     );
   }
-};
+});

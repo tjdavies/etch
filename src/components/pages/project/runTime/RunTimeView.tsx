@@ -69,7 +69,7 @@ let state = {};
 
 export const RunTimeView = ({ onDock }: Props) => {
   const store = useStore();
-  const [maximise, setMaximised] = useState(false);
+
   const [isPlaying, setIsPlaying] = useState(false);
 
   const [time, setTime] = useState(0);
@@ -115,16 +115,16 @@ export const RunTimeView = ({ onDock }: Props) => {
       setTime(0);
     },
     onMaximise: () => {
-      setMaximised(true);
+      store.setRunTimeViewMode("max");
     },
     onMinimise: () => {
-      setMaximised(false);
+      store.setRunTimeViewMode("window");
     },
     onDock,
     scene: result?.scene,
   };
 
-  if (maximise) {
+  if (store.runTimeViewMode === "max") {
     return <MaximisedView {...props} />;
   }
   return <FloatingView {...props} />;

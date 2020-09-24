@@ -32,6 +32,7 @@ export const ProjectPage = () => {
     const store: IStore = Store.create({
       project: initialState,
       activeFunction: fn || initialState.mainFn,
+      runTimeViewMode: "docked",
     });
 
     makeInspectable(store);
