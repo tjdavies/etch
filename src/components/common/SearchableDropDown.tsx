@@ -28,6 +28,7 @@ const SearchableDropDownWrapper = styled.div`
   padding: 5px;
   border-radius: 4px;
   background-color: ${Colours.white};
+  box-shadow: 2px 2px 8px #aaa;
   ul {
     overflow-y: scroll;
     max-height: 200px;

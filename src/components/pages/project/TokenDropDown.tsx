@@ -11,6 +11,7 @@ interface FloatyDropdownProps {
 const FloatyDropdown = styled.div`
   position: absolute;
   width: fit-content;
+  z-index: 20;
   left: min(
     calc(100vw - 180px),
     ${(props: FloatyDropdownProps) => props.position.x + "px"}
@@ -23,8 +24,7 @@ const FloatyDropdown = styled.div`
 
 const FloatyDropdownBlocker = styled.div`
   position: fixed;
-  background-color: #0000000a;
-  z-index: 10;
+  z-index: 20;
   top: 0;
   left: 0;
   bottom: 0;

@@ -15,7 +15,6 @@ const FloatyDropdown = styled.div`
 
 const FloatyDropdownBlocker = styled.div`
   position: fixed;
-  background-color: #0000000a;
   top: 0;
   left: 0;
   bottom: 0;

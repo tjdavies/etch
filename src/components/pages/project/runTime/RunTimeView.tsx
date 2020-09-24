@@ -36,7 +36,7 @@ const RunTimeBoxMax = styled.div`
   color: ${Colours.lightText};
   border: 1px solid ${Colours.primary};
   background-color: ${Colours.background};
-  z-index: 100;
+  z-index: 10;
 `;
 
 const RunTimeHeader = styled.div`
