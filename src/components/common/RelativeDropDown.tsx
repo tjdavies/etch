@@ -7,7 +7,8 @@ interface AlignProps {
 
 const FloatyDropdown = styled.div`
   position: absolute;
-  top: ${(props: AlignProps) => (props.align === "left" ? "0px" : "")};
+  top: 0px;
+  left: ${(props: AlignProps) => (props.align === "left" ? "0px" : "")};
   right: ${(props: AlignProps) => (props.align === "right" ? "0px" : "")};
   z-index: 10;
 `;

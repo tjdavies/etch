@@ -43,6 +43,7 @@ export function FunctionOutput({ output, editable }: Props) {
         <AddParam
           onSelect={store.activeFunction.addOutputParam}
           onCreateNew={store.activeFunction.createNewOutputType}
+          align={"right"}
         />
       )}
     </OutputBox>

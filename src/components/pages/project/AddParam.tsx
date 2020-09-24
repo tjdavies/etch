@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FormAdd } from "grommet-icons";
-import { RelativeSearchDropDown } from "../../common/RelativeSearchDropDown";
+import { TypeSearchDropDown } from "../../common/TypeSearchDropDown";
 import styled from "styled-components";
 import { useStore } from "../../../model/Store";
 import { Colours } from "../../../Style";
@@ -30,19 +30,20 @@ export const AddBox = styled.div`
 `;
 
 interface Props {
+  align?: "left" | "right";
   param?: IParam;
   onSelect: (typeId: string) => void;
   onCreateNew: (name: string) => void;
 }
 
-export function AddParam({ param, onSelect, onCreateNew }: Props) {
+export function AddParam({ param, onSelect, onCreateNew, align }: Props) {
   const [showSelect, setShowSelect] = useState(false);
   const store = useStore();
 
   return (
     <Wrapper>
       {showSelect && (
-        <RelativeSearchDropDown
+        <TypeSearchDropDown
           onClose={() => setShowSelect(false)}
           options={
             store.project.typeList
@@ -60,6 +61,7 @@ export function AddParam({ param, onSelect, onCreateNew }: Props) {
             onSelect(key);
             setShowSelect(false);
           }}
+          align={align}
         />
       )}
       <AddBox onClick={() => setShowSelect(true)}>

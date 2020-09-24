@@ -7,16 +7,18 @@ interface Props {
   onCreateNew: (name: string) => void;
   onSelect: (key: string) => void;
   options: Option[];
+  align?: "left" | "right";
 }
 
-export function RelativeSearchDropDown({
+export function TypeSearchDropDown({
+  align,
   onClose,
   onCreateNew,
   onSelect,
   options,
 }: Props) {
   return (
-    <RelativeDropDown onClose={onClose}>
+    <RelativeDropDown onClose={onClose} align={align}>
       <SearchableDropDown
         options={options}
         onCreateNew={onCreateNew}

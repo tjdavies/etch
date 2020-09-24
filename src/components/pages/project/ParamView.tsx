@@ -26,7 +26,9 @@ const NestWrapper = styled.div`
   gap: 4px;
   margin-right: ${(props: SocketProps) => !props.socket && "5px"};
   margin-left: ${(props: SocketProps) => props.socket && "5px"};
-  border-right: 1px solid #c4c4c460;
+  border-right: ${(props: SocketProps) =>
+    !props.socket && "1px solid #c4c4c460"};
+  border-left: ${(props: SocketProps) => props.socket && "1px solid #c4c4c460"};
 `;
 
 export function ParamView({ depth = 0, ...props }: Props) {
@@ -82,6 +84,7 @@ function RecordType({
               param={path.param}
               onSelect={path.param.type.addParam}
               onCreateNew={path.param.type.createNewType}
+              align={socket ? "right" : "left"}
             />
           )}
         </NestWrapper>
