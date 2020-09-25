@@ -225,21 +225,15 @@ export function calculateFunction(
   if (fn.core) {
     return (coreFunctionProcesses[fn.id] as any)(inputValue);
   }
-
   const calculatedState = { [fn.id]: inputValue };
-
   const constValues = fn.values.toJSON();
   const unFlatConst = unFlatten(constValues);
-
   const combinedState = mergeDeepLeft(calculatedState, unFlatConst);
-
   const output: any = getValuesForSockets(fn, fn.sockets, combinedState);
-
   const fnVal = output[fn.id];
-
   delete output[fn.id];
-  const o = { ...fnVal, ...output };
-
+  const sockets = mapSocketsToValues(fn.sockets, { ...fnVal, ...output });
+  const o = { ...fnVal, ...output, ...sockets };
   return o;
 }
 
@@ -293,10 +287,6 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
       );
 
       const outPutValue = runToken(token, computedValues);
-      console.log(wire.from.path);
-      //  const outValue = outPutValue[wire.from.param.id];
-      //  const c = setValue(wire.from.path, outValue, computedValues);
-      //  const cc = setValue(wire.to.path, outValue, c);
       return outPutValue;
     } else {
       return setValue(
@@ -309,28 +299,19 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
 }
 
 function runToken(token: IToken, plugValues: Object) {
-  //  console.log(token.fn.name);
-  // console.log(token);
-  const input = mapSocketsToValues(token, plugValues);
-
+  const input = mapSocketsToValues(token.sockets, plugValues);
   const r = calculateFunction(token.fn, input);
-
   const addToken = setValue(token.id, r, plugValues);
-  /*
-  const f = (addToken as any)[token.id][token.fn.id];
-  console.log("Token out : " + token.fn.name);
-  console.log(addToken);
-  if (f) {
-    console.log("has f");
-    return setValue(token.id, f, addToken);
-  }
-  */
   return addToken;
 }
 
-function mapSocketsToValues(token: IToken, plugValues: Record<string, any>) {
-  return token.sockets.reduce((accumulator, socket) => {
+function mapSocketsToValues(
+  sockets: ISocket[],
+  plugValues: Record<string, any>
+): Record<string, any> {
+  return sockets.reduce((accumulator, socket) => {
     const wire = socket.connection;
+
     if (wire) {
       return {
         [socket.param.id]: path(wire.from.path.split("."), plugValues),
@@ -344,6 +325,12 @@ function mapSocketsToValues(token: IToken, plugValues: Record<string, any>) {
         ...accumulator,
       };
     } else {
+      if (socket.params) {
+        return {
+          [socket.param.id]: mapSocketsToValues(socket.params, plugValues),
+          ...accumulator,
+        };
+      }
       return {
         [socket.param.id]: socket.param.type.defaultValue,
         ...accumulator,
