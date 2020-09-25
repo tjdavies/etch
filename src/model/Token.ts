@@ -37,12 +37,8 @@ export const Token = types
         state: {},
       });
 
-      console.log(output);
-
       const contextId = getStore(self).functionContext?.id;
-      const context = contextId ? { [self.id]: output[contextId] } : output;
-
-      console.log(context);
+      const context = contextId ? output[contextId] : output;
 
       return createPlugs(
         self as any,

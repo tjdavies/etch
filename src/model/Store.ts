@@ -203,21 +203,6 @@ export function createNewProject(name: string) {
   };
 }
 
-export function calculateResults(
-  fn: IFn,
-  inputValue: Record<string, any>
-): Record<string, any> {
-  if (fn.core) {
-    return (coreFunctionProcesses[fn.id] as any)(inputValue);
-  }
-
-  const output: any = calculateFunction(fn, inputValue);
-
-  const results = output[fn.id];
-
-  return results;
-}
-
 export function calculateApp(
   fn: IFn,
   inputValue: Record<string, any>
@@ -250,11 +235,12 @@ export function calculateFunction(
 
   const output: any = getValuesForSockets(fn, fn.sockets, combinedState);
 
-  const results = output[fn.id];
+  const fnVal = output[fn.id];
 
-  console.log("calculateFunction");
-  console.log(results);
-  return results;
+  delete output[fn.id];
+  const o = { ...fnVal, ...output };
+
+  return o;
 }
 
 function unFlatten(constValues: IKeyValueMap<any>): any {
@@ -295,7 +281,7 @@ function getValuesForSockets(
 function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
   const val = getValue(wire.from.path, calculatedState);
   if (val !== undefined) {
-    return setValue(wire.to.path, val, calculatedState);
+    return calculatedState;
   } else {
     if (getType(wire.from.target) === Token) {
       const token = wire.from.target as IToken;
@@ -307,19 +293,17 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
       );
 
       const outPutValue = runToken(token, computedValues);
-
-      const outValue = outPutValue[wire.from.param.id];
-      const c = setValue(wire.from.path, outValue, computedValues);
-      const cc = setValue(wire.to.path, outValue, c);
-      return cc;
+      console.log(wire.from.path);
+      //  const outValue = outPutValue[wire.from.param.id];
+      //  const c = setValue(wire.from.path, outValue, computedValues);
+      //  const cc = setValue(wire.to.path, outValue, c);
+      return outPutValue;
     } else {
-      const c = setValue(
+      return setValue(
         wire.from.path,
         wire.from.param.type.defaultValue,
         calculatedState
       );
-      const cc = setValue(wire.to.path, wire.from.param.type.defaultValue, c);
-      return cc;
     }
   }
 }
@@ -328,12 +312,20 @@ function runToken(token: IToken, plugValues: Object) {
   //  console.log(token.fn.name);
   // console.log(token);
   const input = mapSocketsToValues(token, plugValues);
-  //  console.log("runToken");
-  // console.log(input);
 
   const r = calculateFunction(token.fn, input);
-  console.log(token.fn.name);
-  return r;
+
+  const addToken = setValue(token.id, r, plugValues);
+  /*
+  const f = (addToken as any)[token.id][token.fn.id];
+  console.log("Token out : " + token.fn.name);
+  console.log(addToken);
+  if (f) {
+    console.log("has f");
+    return setValue(token.id, f, addToken);
+  }
+  */
+  return addToken;
 }
 
 function mapSocketsToValues(token: IToken, plugValues: Record<string, any>) {
