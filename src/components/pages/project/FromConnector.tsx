@@ -5,6 +5,8 @@ import { DraggableWire } from "./DraggableWire";
 import { useStore } from "../../../model/Store";
 import { IPath } from "../../../model/Path";
 import { ObjectInspector } from "react-inspector";
+import { DataOutput } from "./DataOutput";
+import { ISocket } from "../../../model/Sockets";
 
 export const ConnectorCircle = styled.div`
   border: 1px solid ${Colours.lightGrey};
@@ -13,43 +15,46 @@ export const ConnectorCircle = styled.div`
   border-radius: 50%;
 `;
 
+const Wrap = styled.div`
+  position: absolute;
+`;
+
+const Wrap2 = styled.div`
+  position: relative;
+`;
+
 const WireSVG = styled.svg`
   position: absolute;
   overflow: visible;
   pointer-events: none;
-  top: 5px;
+  top: 0px;
 `;
 
 interface Props {
-  path: IPath;
-  data?: any;
+  path: ISocket;
 }
 
-const InspectBox = styled.div`
-  position: absolute;
-  top: -8px;
-  left: 22px;
-  border: 1px solid ${Colours.lightGrey};
-`;
-
-export function FromConnector({ path, data }: Props) {
+export function FromConnector({ path }: Props) {
   const store = useStore();
 
   return (
-    <>
-      <ConnectorCircle id={path.path} />
-      <WireSVG>
-        <DraggableWire
-          from={{ x: 0, y: 0 }}
-          to={{ x: 0, y: 0 }}
-          onStartDrag={() => store.startDrag(path)}
-          onStopDrag={() => store.stopDrag()}
-          color={path.param.type.colour}
-        />
-      </WireSVG>
-      <InspectBox>
-        <ObjectInspector data={data} />
-      </InspectBox>
-    </>
+    <Wrap>
+      <Wrap2>
+        <ConnectorCircle id={path.path} />
+
+        <WireSVG>
+          <DraggableWire
+            from={{ x: 0, y: 0 }}
+            to={{ x: 0, y: 0 }}
+            onStartDrag={() => store.startDrag(path)}
+            onStopDrag={() => store.stopDrag()}
+            color={path.param.type.colour}
+          />
+        </WireSVG>
+        {path.data !== undefined && (
+          <DataOutput value={path.data} type={path.param.type} />
+        )}
+      </Wrap2>
+    </Wrap>
   );
 }
