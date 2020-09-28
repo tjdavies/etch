@@ -76,16 +76,7 @@ export const RunTimeView = observer(({ onDock }: Props) => {
 
   useInterval(
     () => {
-      // Your custom logic here
-      // setTime(time + 0.04);
-      // const newVal = calculateFunction(store.project.mainFn, store.appState);
-
-      const output = calculateFunction(store.project.mainFn, store.appState);
-      const result =
-        output && mapOutputToValues(store.project.mainFn.sockets, output);
-
-      //  const result = output && mapOutputToValues(store.project.mainFn.sockets, output);
-      store.setAppState(result?.state);
+      step();
     },
     // Delay in milliseconds or null to stop it
     isPlaying ? 40 : null
@@ -97,6 +88,13 @@ export const RunTimeView = observer(({ onDock }: Props) => {
   }
   */
 
+  const step = () => {
+    const output = calculateFunction(store.project.mainFn, store.appState);
+    const result =
+      output && mapOutputToValues(store.project.mainFn.sockets, output);
+    store.setAppState(result?.state);
+  };
+
   const output = calculateFunction(store.project.mainFn, store.appState);
   const result =
     output && mapOutputToValues(store.project.mainFn.sockets, output);
@@ -105,6 +103,9 @@ export const RunTimeView = observer(({ onDock }: Props) => {
     isPlaying,
     onPlay: () => {
       setIsPlaying(true);
+    },
+    onStep: () => {
+      step();
     },
     onPause: () => {
       setIsPlaying(false);
@@ -132,6 +133,7 @@ export const RunTimeView = observer(({ onDock }: Props) => {
 interface ViewProps {
   isPlaying: boolean;
   onPlay: () => void;
+  onStep: () => void;
   onPause: () => void;
   onStop: () => void;
   onMaximise: () => void;
@@ -150,6 +152,7 @@ function FloatingView({
   onPlay,
   onPause,
   onStop,
+  onStep,
   onMaximise,
   onDock,
   scene,
@@ -179,6 +182,7 @@ function FloatingView({
             onPlay={onPlay}
             onPause={onPause}
             onStop={onStop}
+            onStep={onStep}
           />
         </RunTimeHeader>
         <FloatyScene>
@@ -209,6 +213,7 @@ function MaximisedView({
   onPlay,
   onPause,
   onStop,
+  onStep,
   onMinimise,
   scene,
 }: ViewProps) {
@@ -229,6 +234,7 @@ function MaximisedView({
           onPlay={onPlay}
           onPause={onPause}
           onStop={onStop}
+          onStep={onStep}
         />
       </RunTimeHeader>
       <BackGround>

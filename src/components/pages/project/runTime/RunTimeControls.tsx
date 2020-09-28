@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../../Style";
 
-import { PauseFill, PlayFill, StopFill } from "grommet-icons";
+import { PauseFill, PlayFill, StopFill, Resume } from "grommet-icons";
 
 const RunTimeControlBox = styled.div`
   align-items: center;
@@ -17,6 +17,7 @@ const ControlButton = styled.div`
 interface Props {
   isPlaying: boolean;
   onPlay: () => void;
+  onStep: () => void;
   onStop: () => void;
   onPause: () => void;
 }
@@ -24,6 +25,7 @@ interface Props {
 export const RunTimeControls = ({
   isPlaying,
   onPlay,
+  onStep,
   onStop,
   onPause,
 }: Props) => {
@@ -31,6 +33,9 @@ export const RunTimeControls = ({
     <RunTimeControlBox>
       <ControlButton onClick={onStop}>
         <StopFill color={Colours.lightText} size="small" />
+      </ControlButton>
+      <ControlButton onClick={onStep}>
+        <Resume color={Colours.lightText} size="small" />
       </ControlButton>
       {isPlaying ? (
         <ControlButton onClick={onPause}>
