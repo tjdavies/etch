@@ -13,7 +13,7 @@ const InspectBox = styled.div`
   position: absolute;
 
   bottom: 8px;
-  left: 14px;
+  left: 12px;
   border: 1px solid ${Colours.lightGrey};
   background-color: ${Colours.background};
   pointer-events: none;
@@ -23,6 +23,13 @@ const InspectBox = styled.div`
 `;
 
 export function DataOutput(props: Props) {
+  if (props.type.id === "string") {
+    return (
+      <InspectBox>
+        <NumberInput {...props} />
+      </InspectBox>
+    );
+  }
   if (props.type.id === "number") {
     return (
       <InspectBox>
