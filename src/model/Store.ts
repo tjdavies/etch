@@ -231,7 +231,6 @@ export function calculateFunction(
   const combinedState = mergeDeepLeft(calculatedState, unFlatConst);
   const output: any = getValuesForSockets(fn, fn.sockets, combinedState);
   const fnVal = output[fn.id];
-  delete output[fn.id];
   const sockets = mapSocketsToValues(fn.sockets, { ...fnVal, ...output });
   const o = { ...fnVal, ...output, ...sockets };
   return o;
@@ -314,7 +313,7 @@ function mapSocketsToValues(
 
     if (wire) {
       return {
-        [socket.param.id]: path(wire.from.path.split("."), plugValues),
+        [socket.param.id]: getValue(wire.from.path, plugValues),
         ...accumulator,
       };
     }
