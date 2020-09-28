@@ -83,8 +83,8 @@ export const Store = types
 
       self.activeDrag = undefined;
     },
-    setActiveFunction(fn: IFn) {
-      self.activeFunction = fn;
+    setActiveFunction(fn: IFn | undefined) {
+      self.activeFunction = fn || self.project.mainFn;
     },
     setActiveSocket(param: IPath | undefined) {
       self.activeSocket = param;

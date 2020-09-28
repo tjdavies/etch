@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { PageHeader } from "../../common/Header";
@@ -26,24 +26,10 @@ const Error = styled.div`
 export const ProjectPage = () => {
   const { id, fn, context } = useParams();
 
-  const initialState = loadProject(id);
-
-  if (initialState) {
-    const store: IStore = Store.create({
-      project: initialState,
-      activeFunction: fn || initialState.mainFn,
-      functionContext: context,
-      runTimeViewMode: "docked",
-    });
-
-    makeInspectable(store);
-
-    onSnapshot(store, (snapShot) => saveProject(snapShot.project));
-
-    (window as any).out = () => {
-      console.log(getSnapshot(store));
-    };
-
+  const store = useProjectStore(id, fn, context);
+  store?.setActiveFunction(fn);
+  store?.setFunctionContext(context);
+  if (store !== undefined) {
     return (
       <PageWrapper>
         <StoreProvider value={store}>
@@ -60,3 +46,31 @@ export const ProjectPage = () => {
     </PageWrapper>
   );
 };
+
+function useProjectStore(id: string, fn: string, context: string) {
+  const [storeState, setStore] = useState<IStore>();
+
+  useEffect(() => {
+    const initialState = loadProject(id);
+    if (initialState) {
+      const store = Store.create({
+        project: initialState,
+        activeFunction: fn || initialState.mainFn,
+        functionContext: context,
+        runTimeViewMode: "docked",
+      });
+
+      makeInspectable(store);
+
+      onSnapshot(store, (snapShot) => saveProject(snapShot.project));
+
+      (window as any).out = () => {
+        console.log(getSnapshot(store));
+      };
+
+      setStore(store);
+    }
+  }, [id]);
+
+  return storeState;
+}
