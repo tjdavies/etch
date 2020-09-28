@@ -7,6 +7,7 @@ import { Routes } from "./Routes";
 import { ProjectPage } from "./components/pages/project/ProjectPage";
 import "mobx-react-lite/batchingForReactDom";
 import { SplashPage } from "./components/pages/splash/SplashPage";
+import { AboutPage } from "./components/pages/about/AboutPage";
 
 const AppWrapper = styled.div`
   min-width: 100vw;
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route path={Routes.projectList}>
             <ProjectListPage />
+          </Route>
+          <Route path={Routes.about}>
+            <AboutPage />
           </Route>
           <Route path="/">
             <SplashPage />

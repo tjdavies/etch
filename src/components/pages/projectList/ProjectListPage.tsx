@@ -17,6 +17,7 @@ const ProjectListWrapper = styled.div`
   padding-top: 160px;
   display: flex;
   flex-wrap: wrap;
+
   gap: ${Padding.default};
 `;
 
@@ -60,7 +61,10 @@ export const ProjectListPage = () => {
       </PageHeader>
 
       <ProjectListWrapper>
-        {projectList.map((project) => (
+        <ProjectButtonNew key={"new"} onClick={onCreateNewHandler}>
+          <StyledPlusIcon />
+        </ProjectButtonNew>
+        {projectList.reverse().map((project) => (
           <Link
             key={project.id}
             to={generatePath(Routes.project, { id: project.id })}
@@ -68,9 +72,6 @@ export const ProjectListPage = () => {
             <ProjectButton>{project.name}</ProjectButton>
           </Link>
         ))}
-        <ProjectButtonNew key={"new"} onClick={onCreateNewHandler}>
-          <StyledPlusIcon />
-        </ProjectButtonNew>
       </ProjectListWrapper>
     </PageWrapper>
   );

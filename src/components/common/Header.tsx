@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Routes } from "../../Routes";
 
 const HeaderWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   align-items: center;
   font-size: 40px;
@@ -33,7 +33,7 @@ interface props {
 export function PageHeader(props: props) {
   return (
     <HeaderWrapper>
-      <Link to={Routes.projectList}>
+      <Link to={Routes.root}>
         <AppName>EtcH</AppName>
       </Link>
       {props.children}
