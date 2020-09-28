@@ -1,18 +1,34 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-var keys: any = {};
-export function useKeyDown() {
+export function useKeyDown(callback: (keys: any) => void) {
+  const savedCallback = useRef<(keys: any) => void | null>();
+  const keys = useRef<string[]>([]);
   // State for keeping track of whether key is pressed
   //const [keyPressed, setKeyPressed] = useState(false);
   // If pressed key is our target key then set to true
   const downHandler = ({ key }: any) => {
-    keys[key] = true;
+    keys.current = keys.current.filter((k: string) => k !== key);
+    keys.current.push(key);
+    sendUpdate();
   };
 
   // If released key is our target key then set to false
   const upHandler = ({ key }: any) => {
-    delete keys[key];
+    const remove = keys.current.filter((k: string) => k !== key);
+    keys.current = remove;
+    sendUpdate();
   };
+
+  const sendUpdate = () => {
+    if (typeof savedCallback?.current !== "undefined") {
+      savedCallback?.current([...keys.current]);
+    }
+  };
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  });
   // Add event listeners
   useEffect(() => {
     window.addEventListener("keydown", downHandler);
@@ -24,5 +40,5 @@ export function useKeyDown() {
     };
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
-  return keys;
+  return {};
 }

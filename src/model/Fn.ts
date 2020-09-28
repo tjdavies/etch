@@ -4,7 +4,7 @@ import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
 import { Wire } from "./Wire";
-import { calculateApp, calculateFunction, getStore, IStore } from "./Store";
+import { calculateApp, getStore, IStore } from "./Store";
 import { ISocket, createSockets } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";
 import { IPath } from "./Path";
@@ -23,18 +23,10 @@ export const Fn = types
   })
   .views((self) => ({
     get plugs(): IPlug[] {
-      const mainFn = getStore(self).project.mainFn;
-      const output = calculateApp(mainFn, {
-        input: {
-          rightArrow: false,
-          leftArrow: false,
-          upArrow: false,
-          downArrow: false,
-        },
-        state: {},
-      });
-
-      const contextId = getStore(self).functionContext?.id;
+      const store = getStore(self);
+      const mainFn = store.project.mainFn;
+      const output = calculateApp(mainFn, store.appState);
+      const contextId = store.functionContext?.id;
       const context = contextId ? { [self.id]: output[contextId] } : output;
 
       return createPlugs(

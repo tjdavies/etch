@@ -92,24 +92,9 @@ export const coreTypes: Record<string, ITypeIn> = {
     name: "input",
     params: [
       {
-        id: "upArrow",
-        name: "upArrow",
-        type: "boolean",
-      },
-      {
-        id: "downArrow",
-        name: "downArrow",
-        type: "boolean",
-      },
-      {
-        id: "rightArrow",
-        name: "rightArrow",
-        type: "boolean",
-      },
-      {
-        id: "leftArrow",
-        name: "leftArrow",
-        type: "boolean",
+        id: "keysDown",
+        name: "keysDown",
+        type: "list",
       },
     ],
   },

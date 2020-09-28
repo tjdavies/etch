@@ -80,6 +80,14 @@ export const coreFunctionProcesses: Record<string, any> = {
       pushReturn: [...pushArray, pushValue],
     };
   },
+  contains: ({
+    containsList,
+    containsValue,
+  }: Record<string, any>): Record<string, any> => {
+    return {
+      containsReturn: containsList.includes(containsValue),
+    };
+  },
 };
 
 const addFn: IFnIn = {
@@ -412,6 +420,31 @@ const pushFn: IFnIn = {
   ],
 };
 
+const containsFn: IFnIn = {
+  id: "contains",
+  name: "contains",
+  core: true,
+  input: [
+    {
+      id: "containsList",
+      name: "list",
+      type: "list",
+    },
+    {
+      id: "containsValue",
+      name: "value",
+      type: "through",
+    },
+  ],
+  output: [
+    {
+      id: "containsReturn",
+      name: "contains",
+      type: "boolean",
+    },
+  ],
+};
+
 export const coreFunctions = {
   add: addFn,
   subtract: subtractFn,
@@ -426,4 +459,5 @@ export const coreFunctions = {
   and: andFn,
   or: orFn,
   push: pushFn,
+  contains: containsFn,
 };

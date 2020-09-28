@@ -12,6 +12,8 @@ import { RunTimeControls } from "./RunTimeControls";
 import { useInterval } from "../../../../utils/hooks/useInterval";
 import Draggable from "react-draggable";
 import { useKeyDown } from "../../../../utils/hooks/useKeyDown";
+import { observe } from "mobx";
+import { observer } from "mobx-react-lite";
 
 const RunTimeBox = styled.div`
   position: absolute;
@@ -65,9 +67,7 @@ interface Props {
   onDock: () => void;
 }
 
-let state = {};
-
-export const RunTimeView = ({ onDock }: Props) => {
+export const RunTimeView = observer(({ onDock }: Props) => {
   const store = useStore();
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -83,22 +83,15 @@ export const RunTimeView = ({ onDock }: Props) => {
     isPlaying ? 40 : null
   );
 
-  const keysDown = useKeyDown();
-
-  const output = calculateFunction(store.project.mainFn, {
-    input: {
-      rightArrow: keysDown["ArrowRight"],
-      leftArrow: keysDown["ArrowLeft"],
-      upArrow: keysDown["ArrowUp"],
-      downArrow: keysDown["ArrowDown"],
-    },
-    state: state,
-  });
+  const output = calculateFunction(store.project.mainFn, store.appState);
 
   const result =
     output && mapOutputToValues(store.project.mainFn.sockets, output);
-
-  state = result?.state;
+  /*
+  if (result?.state) {
+    store.setAppState(result?.state);
+  }
+  */
 
   const props: ViewProps = {
     isPlaying,
@@ -109,7 +102,7 @@ export const RunTimeView = ({ onDock }: Props) => {
       setIsPlaying(false);
     },
     onStop: () => {
-      state = {};
+      store.setAppState({});
       setIsPlaying(false);
       setTime(0);
     },
@@ -127,7 +120,7 @@ export const RunTimeView = ({ onDock }: Props) => {
     return <MaximisedView {...props} />;
   }
   return <FloatingView {...props} />;
-};
+});
 
 interface ViewProps {
   isPlaying: boolean;

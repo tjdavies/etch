@@ -52,7 +52,45 @@ export function DataInput(props: Props) {
       </InputWrapper>
     );
   }
+  if (props.type === "string") {
+    return (
+      <InputWrapper>
+        <StringInput {...props} />
+      </InputWrapper>
+    );
+  }
   return null;
+}
+
+function StringInput({ value, onEnter, onRemoveValue }: Props) {
+  const inputEl = useRef<any>(null);
+  const [editValue, setValue] = useState<string>(value);
+  const onSetValue = () => {
+    if (editValue !== "") {
+      onEnter(editValue);
+    } else {
+      onRemoveValue();
+    }
+  };
+
+  return (
+    <Input
+      ref={inputEl}
+      width={editValue?.length ? editValue.length + "ch" : "1ch"}
+      autoFocus
+      value={editValue}
+      onChange={(e) => {
+        setValue(e.target.value);
+      }}
+      onBlur={() => onSetValue()}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          inputEl?.current?.blur();
+          //onSetValue();
+        }
+      }}
+    />
+  );
 }
 
 function NumberInput({ value, onEnter, onRemoveValue }: Props) {

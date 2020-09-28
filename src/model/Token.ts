@@ -26,16 +26,9 @@ export const Token = types
       );
     },
     get plugs(): IPlug[] {
-      const mainFn = getStore(self).project.mainFn;
-      const output = calculateApp(mainFn, {
-        input: {
-          rightArrow: false,
-          leftArrow: false,
-          upArrow: false,
-          downArrow: false,
-        },
-        state: {},
-      });
+      const store = getStore(self);
+      const mainFn = store.project.mainFn;
+      const output = calculateApp(mainFn, store.appState);
 
       const contextId = getStore(self).functionContext?.id;
       const context = contextId ? output[contextId] : output;

@@ -38,6 +38,12 @@ export const Store = types
     activeSocket: types.maybe(Path),
     runTimeViewMode: RunTimeViewMode,
     functionContext: types.maybe(types.reference(Token)),
+    appState: types.optional(types.frozen(), {
+      input: {
+        keysDown: [],
+      },
+      state: {},
+    }),
   })
   .actions((self) => ({
     activeDragPlug(drag: IPath) {
@@ -103,6 +109,15 @@ export const Store = types
     },
     setRunTimeViewMode(mode: IRunTimeViewMode) {
       self.runTimeViewMode = mode;
+    },
+    setAppState(newState: any) {
+      self.appState = { ...self.appState, state: newState };
+    },
+    setInput(input: any) {
+      self.appState = {
+        ...self.appState,
+        input,
+      };
     },
   }));
 
