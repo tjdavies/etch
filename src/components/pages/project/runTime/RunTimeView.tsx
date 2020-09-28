@@ -72,26 +72,34 @@ export const RunTimeView = observer(({ onDock }: Props) => {
 
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const [time, setTime] = useState(0);
+  // const [time, setTime] = useState(0);
 
   useInterval(
     () => {
       // Your custom logic here
-      setTime(time + 0.04);
+      // setTime(time + 0.04);
+      // const newVal = calculateFunction(store.project.mainFn, store.appState);
+
+      const output = calculateFunction(store.project.mainFn, store.appState);
+      const result =
+        output && mapOutputToValues(store.project.mainFn.sockets, output);
+
+      //  const result = output && mapOutputToValues(store.project.mainFn.sockets, output);
+      store.setAppState(result?.state);
     },
     // Delay in milliseconds or null to stop it
     isPlaying ? 40 : null
   );
 
-  const output = calculateFunction(store.project.mainFn, store.appState);
-
-  const result =
-    output && mapOutputToValues(store.project.mainFn.sockets, output);
   /*
   if (result?.state) {
     store.setAppState(result?.state);
   }
   */
+
+  const output = calculateFunction(store.project.mainFn, store.appState);
+  const result =
+    output && mapOutputToValues(store.project.mainFn.sockets, output);
 
   const props: ViewProps = {
     isPlaying,
@@ -104,7 +112,6 @@ export const RunTimeView = observer(({ onDock }: Props) => {
     onStop: () => {
       store.setAppState({});
       setIsPlaying(false);
-      setTime(0);
     },
     onMaximise: () => {
       store.setRunTimeViewMode("max");
