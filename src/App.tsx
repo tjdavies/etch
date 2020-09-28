@@ -6,6 +6,7 @@ import { Colours } from "./Style";
 import { Routes } from "./Routes";
 import { ProjectPage } from "./components/pages/project/ProjectPage";
 import "mobx-react-lite/batchingForReactDom";
+import { SplashPage } from "./components/pages/splash/SplashPage";
 
 const AppWrapper = styled.div`
   min-width: 100vw;
@@ -25,8 +26,11 @@ function App() {
           <Route path={Routes.function} exact>
             <ProjectPage />
           </Route>
-          <Route path="/">
+          <Route path={Routes.projectList}>
             <ProjectListPage />
+          </Route>
+          <Route path="/">
+            <SplashPage />
           </Route>
         </Switch>
       </BrowserRouter>

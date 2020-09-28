@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../Style";
 import { Link } from "react-router-dom";
+import { Routes } from "../../Routes";
 
 const HeaderWrapper = styled.div`
   position: absolute;
@@ -32,7 +33,7 @@ interface props {
 export function PageHeader(props: props) {
   return (
     <HeaderWrapper>
-      <Link to={"/"}>
+      <Link to={Routes.projectList}>
         <AppName>EtcH</AppName>
       </Link>
       {props.children}
