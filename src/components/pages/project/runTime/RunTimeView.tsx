@@ -105,6 +105,7 @@ export const RunTimeView = observer(({ onDock }: Props) => {
       setIsPlaying(true);
     },
     onStep: () => {
+      setIsPlaying(false);
       step();
     },
     onPause: () => {
