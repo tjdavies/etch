@@ -9,7 +9,7 @@ const PageWrapper = styled.div`
 `;
 
 const PageContent = styled.div`
-  padding: 146px;
+  padding: 160px;
   padding-top: 100px;
   height: 100%;
   font-size: 20px;
@@ -71,7 +71,7 @@ export const AboutPage = () => {
         <p>
           I want to take the pain out of programming. A rich UI and features
           such as type safety and realtime debugging are designed to make
-          creating software a fun experience
+          creating software a fun experience. If possible no errors ever.
         </p>
         <h2>Features</h2>
         <h3>Built (at least partially)</h3>

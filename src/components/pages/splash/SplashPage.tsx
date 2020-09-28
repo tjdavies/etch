@@ -11,7 +11,7 @@ const PageWrapper = styled.div`
 `;
 
 const PageContent = styled.div`
-  padding: 146px;
+  padding: 160px;
   padding-top: 100px;
   height: 100%;
   font-size: 20px;
@@ -66,9 +66,9 @@ export const SplashPage = () => {
           <button>Start Creating</button>
         </Link>
         <p>
-          I want to find out a bit{" "}
+          want to find out a bit{" "}
           <Link to={Routes.about}>
-            <a>more</a>
+            <a>more?</a>
           </Link>
         </p>
       </PageContent>

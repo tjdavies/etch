@@ -88,11 +88,20 @@ export const coreFunctionProcesses: Record<string, any> = {
       containsReturn: containsList.includes(containsValue),
     };
   },
+  clamp: ({
+    clampValue,
+    clampMin,
+    clampMax,
+  }: Record<string, any>): Record<string, any> => {
+    return {
+      clampedValue: Math.max(clampMax, Math.min(clampMin, clampValue)),
+    };
+  },
 };
 
 const addFn: IFnIn = {
   id: "add",
-  name: "add",
+  name: "+",
   core: true,
   input: [
     {
@@ -117,7 +126,7 @@ const addFn: IFnIn = {
 
 const subtractFn: IFnIn = {
   id: "subtract",
-  name: "subtract",
+  name: "-",
   core: true,
   input: [
     {
@@ -142,7 +151,7 @@ const subtractFn: IFnIn = {
 
 const multiplyFn: IFnIn = {
   id: "multiply",
-  name: "multiply",
+  name: "×",
   core: true,
   input: [
     {
@@ -167,7 +176,7 @@ const multiplyFn: IFnIn = {
 
 const divideFn: IFnIn = {
   id: "divide",
-  name: "divide",
+  name: "/",
   core: true,
   input: [
     {
@@ -445,6 +454,36 @@ const containsFn: IFnIn = {
   ],
 };
 
+const clampFn: IFnIn = {
+  id: "clamp",
+  name: "clamp",
+  core: true,
+  input: [
+    {
+      id: "clampValue",
+      name: "value",
+      type: "number",
+    },
+    {
+      id: "clampMin",
+      name: "min",
+      type: "number",
+    },
+    {
+      id: "clampMax",
+      name: "max",
+      type: "number",
+    },
+  ],
+  output: [
+    {
+      id: "clampedValue",
+      name: "value",
+      type: "number",
+    },
+  ],
+};
+
 export const coreFunctions = {
   add: addFn,
   subtract: subtractFn,
@@ -460,4 +499,5 @@ export const coreFunctions = {
   or: orFn,
   push: pushFn,
   contains: containsFn,
+  clamp: clampFn,
 };
