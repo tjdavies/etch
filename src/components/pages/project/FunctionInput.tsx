@@ -35,6 +35,7 @@ export const FunctionInput = ({ input, editable }: Props) => {
     <InputBox>
       {input.map((path) => (
         <ParamView
+          key={path.path}
           path={path}
           editable={editable}
           socket={false}

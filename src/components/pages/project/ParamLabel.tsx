@@ -153,7 +153,7 @@ export const ParamLabel = observer(
           {!expanded && (
             <>
               {getAppParams(path).map((p) => (
-                <BlankConnector id={p.path} />
+                <BlankConnector key={p.path} id={p.path} />
               ))}
             </>
           )}

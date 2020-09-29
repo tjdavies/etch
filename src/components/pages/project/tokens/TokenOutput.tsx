@@ -19,7 +19,7 @@ export function TokenOutput({ output }: Props) {
   return (
     <OutputWrapper>
       {output.map((path) => (
-        <ParamView path={path} />
+        <ParamView key={path.path} path={path} />
       ))}
     </OutputWrapper>
   );
