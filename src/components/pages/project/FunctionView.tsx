@@ -40,7 +40,6 @@ export const FunctionView = observer(({ fn }: Props) => {
   const store = useStore();
 
   useKeyDown((keys) => {
-    console.log(keys);
     store.setInput({ keysDown: keys });
   });
 

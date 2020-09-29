@@ -100,6 +100,8 @@ export const AboutPage = () => {
           <li>Scene functionality (images / sounds / layers) </li>
           <li>Effects (network, time, scene events) </li>
           <li>Output html?</li>
+          <li>mobile / tablet support</li>
+          <li>performance optimisations</li>
         </ul>
       </PageContent>
     </PageWrapper>

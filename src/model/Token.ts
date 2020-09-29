@@ -1,6 +1,6 @@
 import { types, Instance, SnapshotIn, getParent } from "mobx-state-tree";
 import { Point, IPoint } from "./Point";
-import { IFn, Fn } from "./Fn";
+import { IFn, Fn, findContext } from "./Fn";
 import { generateId } from "../utils/generateId";
 import { createSockets, ISocket } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";
@@ -29,16 +29,17 @@ export const Token = types
       const store = getStore(self);
       const mainFn = store.project.mainFn;
       const output = calculateApp(mainFn, store.appState);
+      const contextId = store.functionContext?.id;
 
-      const contextId = getStore(self).functionContext?.id;
-      const context = contextId ? output[contextId] : output;
+      const context =
+        contextId !== undefined ? findContext(contextId, output) : undefined;
 
       return createPlugs(
         self as any,
         self.fn.output,
         self.id,
         self.expandedParams,
-        context
+        context || {}
       );
     },
   }))

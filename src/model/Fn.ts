@@ -9,6 +9,27 @@ import { ISocket, createSockets } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";
 import { IPath } from "./Path";
 
+export function findContext(
+  contextId: string,
+  object: Record<string, any>
+): Record<string, any> | undefined {
+  if (object[contextId]) {
+    return object[contextId];
+  }
+
+  const values = Object.values(object);
+  var i: number;
+  for (i = 0; i < values.length; i++) {
+    const value = values[i];
+    if (typeof value === "object") {
+      const c = findContext(contextId, value);
+      if (c) {
+        return c;
+      }
+    }
+  }
+}
+
 export const Fn = types
   .model("Fn", {
     id: types.identifier,
@@ -27,14 +48,17 @@ export const Fn = types
       const mainFn = store.project.mainFn;
       const output = calculateApp(mainFn, store.appState);
       const contextId = store.functionContext?.id;
-      const context = contextId ? { [self.id]: output[contextId] } : output;
+      const context =
+        contextId !== undefined ? findContext(contextId, output) : undefined;
+
+      // const context = contextId ? { [self.id]: output[contextId] } : output;
 
       return createPlugs(
         self as any,
         self.input,
         self.id,
         self.expandedParams,
-        context
+        context || {}
       );
     },
     get sockets(): ISocket[] {
