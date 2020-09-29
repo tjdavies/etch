@@ -12,9 +12,8 @@ export const Path = types
   })
   .views((self) => ({
     get type(): IType {
-      console.log(self);
-      return self.param.type.id === "through" && self.target.selectedType
-        ? self.target.selectedType
+      return self.param.type.id === "through" && self.target.type
+        ? self.target.type
         : self.param.type;
     },
   }));
