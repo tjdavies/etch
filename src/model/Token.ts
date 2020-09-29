@@ -42,7 +42,8 @@ export const Token = types
         self.fn.output,
         self.id,
         self.expandedParams,
-        context || {}
+        context || {},
+        this.type
       );
     },
     get type(): IType {

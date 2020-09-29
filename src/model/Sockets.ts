@@ -12,7 +12,7 @@ export interface ISocket extends IPath {
   params?: ISocket[];
   expanded: boolean;
   data?: any;
-  type?: IType;
+  type: IType;
 }
 
 export function paramToSocket(
@@ -31,7 +31,8 @@ export function paramToSocket(
     path: path,
     value: values.get(path),
     connection: findWireTo(wires, path),
-    type: param.type.id === "through" ? selectedType : param.type,
+    type:
+      param.type.id === "through" && selectedType ? selectedType : param.type,
     params:
       param.type.params &&
       createSockets(
@@ -44,7 +45,7 @@ export function paramToSocket(
         selectedType
       ),
     expanded: expandedParams.get(path),
-  } as any;
+  };
 }
 
 export function createSockets(

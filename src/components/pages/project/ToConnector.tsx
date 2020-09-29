@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { IPath } from "../../../model/Path";
 
 const Connector = styled.div`
-  border: 1px solid ${(props: { colour: string }) => props.colour};
+  border: 1.5px solid ${(props: { colour: string }) => props.colour};
   width: 10px;
   height: 10px;
   border-radius: 50%;

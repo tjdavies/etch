@@ -3,11 +3,13 @@ import { IFn } from "./Fn";
 import { IToken } from "./Token";
 import { IParam } from "./Param";
 import { getValue } from "./Store";
+import { IType } from "./Type";
 
 export interface IPlug extends IPath {
   params?: IPlug[];
   expanded: boolean;
   data?: any;
+  type: IType;
 }
 
 export function paramToPath(
@@ -15,10 +17,10 @@ export function paramToPath(
   param: IParam,
   parentPath: string,
   expandedParams: any,
-  calculatedDataValues: Record<string, any>
+  calculatedDataValues: Record<string, any>,
+  selectedType?: IType
 ): IPlug {
   const path = parentPath + "." + param.id;
-
   return {
     target,
     param,
@@ -34,7 +36,9 @@ export function paramToPath(
       ),
     expanded: expandedParams.get(path),
     data: getValue(path, calculatedDataValues),
-  } as any;
+    type:
+      param.type.id === "through" && selectedType ? selectedType : param.type,
+  };
 }
 
 export function createPlugs(
@@ -42,7 +46,8 @@ export function createPlugs(
   params: IParam[],
   parentPath: string,
   expandedParams: any,
-  calculatedDataValues: Record<string, any>
+  calculatedDataValues: Record<string, any>,
+  selectedType?: IType
 ): IPlug[] {
   return params.map((param) => {
     return paramToPath(
@@ -50,7 +55,8 @@ export function createPlugs(
       param,
       parentPath,
       expandedParams,
-      calculatedDataValues
+      calculatedDataValues,
+      selectedType
     );
   });
 }

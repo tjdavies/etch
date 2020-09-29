@@ -46,11 +46,11 @@ export function FromConnector({ path }: Props) {
             to={{ x: 0, y: 0 }}
             onStartDrag={() => store.startDrag(path)}
             onStopDrag={() => store.stopDrag()}
-            color={path.param.type.colour}
+            color={path.type.colour}
           />
         </WireSVG>
         {path.data !== undefined && (
-          <DataOutput value={path.data} type={path.param.type} />
+          <DataOutput value={path.data} type={path.type} />
         )}
       </Wrap2>
     </Wrap>

@@ -134,7 +134,7 @@ export const ParamLabel = observer(
         <ConnectorWrapper socket={socket} depth={depth}>
           {(isDataInput || path.value !== undefined) && (
             <DataInput
-              type={path.param.type.id}
+              type={path.type.id}
               value={path.value !== undefined ? path.value + "" : undefined}
               onEnter={(value) => {
                 path.target.addValue(path.path, value);
@@ -158,7 +158,7 @@ export const ParamLabel = observer(
               socket={path}
               onClick={() => setIsDataInput(true)}
               filled={path.value !== undefined}
-              colour={path.param.type.colour}
+              colour={path.type.colour}
             />
           ) : (
             <FromConnector path={path} />
