@@ -11,8 +11,6 @@ import { RunTimeStage, IScene } from "./RunTimeStage";
 import { RunTimeControls } from "./RunTimeControls";
 import { useInterval } from "../../../../utils/hooks/useInterval";
 import Draggable from "react-draggable";
-import { useKeyDown } from "../../../../utils/hooks/useKeyDown";
-import { observe } from "mobx";
 import { observer } from "mobx-react-lite";
 
 const RunTimeBox = styled.div`

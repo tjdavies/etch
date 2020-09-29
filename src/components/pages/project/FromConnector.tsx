@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { DraggableWire } from "./DraggableWire";
 import { useStore } from "../../../model/Store";
-import { IPath } from "../../../model/Path";
-import { ObjectInspector } from "react-inspector";
 import { DataOutput } from "./DataOutput";
 import { ISocket } from "../../../model/Sockets";
 
