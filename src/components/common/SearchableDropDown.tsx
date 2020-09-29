@@ -25,13 +25,24 @@ function updateOptions(options: Option[], text: string) {
 
 const SearchableDropDownWrapper = styled.div`
   border: 1px solid ${Colours.lightGrey};
-  padding: 5px;
   border-radius: 4px;
   background-color: ${Colours.white};
   box-shadow: 2px 2px 8px #aaa;
+  input {
+    margin: 3px;
+    padding: 1px;
+  }
   ul {
     overflow-y: scroll;
     max-height: 200px;
+    li {
+      padding: 2px;
+      padding-left: 6px;
+      cursor: pointer;
+      &:hover {
+        background-color: #df5e8820;
+      }
+    }
   }
 `;
 
