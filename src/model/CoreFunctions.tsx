@@ -531,7 +531,7 @@ const isKeyDownFn: IFnIn = {
 
 const drawFn: IFnIn = {
   id: "draw",
-  name: "draw",
+  name: "draw rectangle",
   core: true,
   input: [
     {
