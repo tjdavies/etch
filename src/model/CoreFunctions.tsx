@@ -97,6 +97,14 @@ export const coreFunctionProcesses: Record<string, any> = {
       clampedValue: Math.max(clampMax, Math.min(clampMin, clampValue)),
     };
   },
+  isKeyDown: ({
+    isKeyDownInput,
+    isKeyDownValue,
+  }: Record<string, any>): Record<string, any> => {
+    return {
+      isKeyDownOut: isKeyDownInput.keysDown.includes(isKeyDownValue),
+    };
+  },
 };
 
 const addFn: IFnIn = {
@@ -485,6 +493,31 @@ const clampFn: IFnIn = {
   ],
 };
 
+const isKeyDownFn: IFnIn = {
+  id: "isKeyDown",
+  name: "isKeyDown",
+  core: true,
+  input: [
+    {
+      id: "isKeyDownInput",
+      name: "input",
+      type: "input",
+    },
+    {
+      id: "isKeyDownValue",
+      name: "keyName",
+      type: "string",
+    },
+  ],
+  output: [
+    {
+      id: "isKeyDownOut",
+      name: "value",
+      type: "boolean",
+    },
+  ],
+};
+
 export const coreFunctions = {
   add: addFn,
   subtract: subtractFn,
@@ -501,4 +534,5 @@ export const coreFunctions = {
   push: pushFn,
   contains: containsFn,
   clamp: clampFn,
+  isKeyDown: isKeyDownFn,
 };

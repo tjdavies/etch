@@ -93,9 +93,7 @@ export const ParamLabel = observer(
     const [isDataInput, setIsDataInput] = useState(false);
 
     const fade: boolean =
-      (socket &&
-        store.activeDrag &&
-        store.activeDrag?.param.type !== path.type) ||
+      (socket && store.activeDrag && store.activeDrag?.type !== path.type) ||
       false;
 
     return (
