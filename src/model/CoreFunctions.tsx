@@ -203,6 +203,7 @@ const selectFn: IFnIn = {
   id: "select",
   name: "select",
   core: true,
+  defaultSelectedType: "number",
   input: [
     {
       id: "select1",

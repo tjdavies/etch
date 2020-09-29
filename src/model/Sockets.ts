@@ -4,6 +4,7 @@ import { IWire } from "./Wire";
 import { findWireTo } from "./Store";
 import { IFn } from "./Fn";
 import { IPath } from "./Path";
+import { IType } from "./Type";
 
 export interface ISocket extends IPath {
   value?: number;
@@ -11,6 +12,7 @@ export interface ISocket extends IPath {
   params?: ISocket[];
   expanded: boolean;
   data?: any;
+  type?: IType;
 }
 
 export function paramToSocket(
@@ -19,7 +21,8 @@ export function paramToSocket(
   wires: IWire[],
   values: any,
   parentPath: string,
-  expandedParams: any
+  expandedParams: any,
+  selectedType?: IType
 ): ISocket {
   const path = parentPath + "." + param.id;
   return {
@@ -28,6 +31,7 @@ export function paramToSocket(
     path: path,
     value: values.get(path),
     connection: findWireTo(wires, path),
+    type: param.type.id === "through" ? selectedType : param.type,
     params:
       param.type.params &&
       createSockets(
@@ -36,7 +40,8 @@ export function paramToSocket(
         wires,
         values,
         path,
-        expandedParams
+        expandedParams,
+        selectedType
       ),
     expanded: expandedParams.get(path),
   } as any;
@@ -48,7 +53,8 @@ export function createSockets(
   wires: IWire[],
   values: any,
   parentPath: string,
-  expandedParams: any
+  expandedParams: any,
+  selectedType?: IType
 ): ISocket[] {
   return params.map((param) => {
     return paramToSocket(
@@ -57,7 +63,8 @@ export function createSockets(
       wires,
       values,
       parentPath,
-      expandedParams
+      expandedParams,
+      selectedType
     );
   });
 }

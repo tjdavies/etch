@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { FormAdd } from "grommet-icons";
+import { MoreVertical } from "grommet-icons";
 import { TypeSearchDropDown } from "../../common/TypeSearchDropDown";
 import styled from "styled-components";
-import { useStore } from "../../../model/Store";
+
 import { Colours } from "../../../Style";
-import { IParam } from "../../../model/Param";
+import { IType } from "../../../model/Type";
 
 const Wrapper = styled.div`
   position: relative;
@@ -14,52 +14,39 @@ const Wrapper = styled.div`
   height: 20px;
 `;
 
-export const AddBox = styled.div`
+const Button = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  border: 1px solid ${Colours.lightGrey};
-  width: 15px;
-  height: 15px;
-  border-radius: 1px;
-  color: ${Colours.darkText};
-  background-color: ${Colours.background};
-  margin-right: 12px;
-  margin-left: 12px;
   cursor: pointer;
 `;
 
 interface Props {
-  align?: "left" | "right";
-  param?: IParam;
+  type: IType;
   onSelect: (typeId: string) => void;
-  onCreateNew: (name: string) => void;
+  ///onCreateNew: (name: string) => void;
 }
 
-export function AddParam({ param, onSelect, onCreateNew, align }: Props) {
+export function ChooseType({ type, onSelect }: Props) {
   const [showSelect, setShowSelect] = useState(false);
-  const store = useStore();
 
   return (
     <Wrapper>
       {showSelect && (
         <TypeSearchDropDown
           onClose={() => setShowSelect(false)}
-          currentType={param?.type.id}
+          currentType={"main"}
           onCreateNew={(name) => {
-            onCreateNew(name);
+            // onCreateNew(name);
             setShowSelect(false);
           }}
           onSelect={(key) => {
             onSelect(key);
             setShowSelect(false);
           }}
-          align={align}
+          align={"left"}
         />
       )}
-      <AddBox onClick={() => setShowSelect(true)}>
-        <FormAdd size="small" />
-      </AddBox>
+      <Button onClick={() => setShowSelect(true)}>: {type.name}</Button>
     </Wrapper>
   );
 }

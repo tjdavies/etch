@@ -5,11 +5,12 @@ import { Colours } from "../../../../Style";
 import Draggable from "react-draggable";
 import { TokenInput } from "./TokenInput";
 import { TokenOutput } from "./TokenOutput";
-import { Share, Close } from "grommet-icons";
+import { Share, Close, MoreVertical } from "grommet-icons";
 import { useStore } from "../../../../model/Store";
 import { useHistory, generatePath } from "react-router-dom";
 import { Routes } from "../../../../Routes";
 import { observer } from "mobx-react-lite";
+import { ChooseType } from "../ChooseType";
 
 const TokenWrapper = styled.div`
   position: fixed;
@@ -54,6 +55,8 @@ const TokenBody = styled.div`
 `;
 
 const CloseButton = styled.div`
+  display: flex;
+  align-items: center;
   cursor: pointer;
 `;
 
@@ -61,6 +64,11 @@ const FnName = styled.span`
   font-weight: bold;
   margin-right: 4px;
   cursor: pointer;
+`;
+
+const HeaderDetails = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const Token = observer(({ token }: Props) => {
@@ -89,14 +97,18 @@ export const Token = observer(({ token }: Props) => {
     >
       <TokenWrapper onDoubleClick={onOpenToken}>
         <TokenHeader className="header" isCore={token.fn.core}>
-          <div>
+          <HeaderDetails>
             <FnName>{token.fn.name}</FnName>
             {!token.fn.core && <Share color="white" size="small" />}
-          </div>
+            {token.type && (
+              <ChooseType type={token.type} onSelect={token.setSelectedType} />
+            )}
+          </HeaderDetails>
           <CloseButton onClick={token.remove}>
             <Close color="white" size="small" />
           </CloseButton>
         </TokenHeader>
+
         <TokenBody>
           <TokenInput input={token.sockets} />
           <TokenOutput output={token.plugs} />

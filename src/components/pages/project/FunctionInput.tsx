@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
-import { AddParam } from "./AddParam";
 import { IPlug } from "../../../model/Plug";
 import { useStore } from "../../../model/Store";
 import { ParamView } from "./ParamView";
+import { AddParam } from "./AddParam";
 
 const InputBox = styled.div`
   position: relative;

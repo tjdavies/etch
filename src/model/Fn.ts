@@ -8,6 +8,7 @@ import { calculateApp, getStore, IStore } from "./Store";
 import { ISocket, createSockets } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";
 import { IPath } from "./Path";
+import { Type, IType } from "./Type";
 
 export function findContext(
   contextId: string,
@@ -41,6 +42,7 @@ export const Fn = types
     wires: types.array(Wire),
     values: types.map(types.frozen()),
     expandedParams: types.map(types.boolean),
+    defaultSelectedType: types.maybe(types.reference(Type)),
   })
   .views((self) => ({
     get plugs(): IPlug[] {
@@ -68,7 +70,8 @@ export const Fn = types
         self.wires,
         self.values,
         self.id,
-        self.expandedParams
+        self.expandedParams,
+        undefined
       );
     },
     get isMain(): boolean {

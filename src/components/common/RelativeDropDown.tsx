@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useOutsideClick } from "../../utils/hooks/useOutsideClick";
 
 interface AlignProps {
   align: "left" | "right";
@@ -13,15 +14,6 @@ const FloatyDropdown = styled.div`
   z-index: 10;
 `;
 
-const FloatyDropdownBlocker = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  content: " ";
-`;
-
 interface Props {
   align?: "left" | "right";
   onClose: () => void;
@@ -29,15 +21,12 @@ interface Props {
 }
 
 export function RelativeDropDown({ onClose, children, align = "left" }: Props) {
+  const ref = useOutsideClick(onClose);
   return (
     <>
-      <FloatyDropdownBlocker
-        onClick={(e) => {
-          e.stopPropagation();
-          onClose();
-        }}
-      />
-      <FloatyDropdown align={align}>{children}</FloatyDropdown>
+      <FloatyDropdown ref={ref} align={align}>
+        {children}
+      </FloatyDropdown>
     </>
   );
 }

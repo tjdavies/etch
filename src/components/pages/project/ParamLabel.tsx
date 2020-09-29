@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 import { FromConnector } from "./FromConnector";
-
 import { InlineEdit } from "../../common/InlineEdit";
-
 import { TypeIconBox } from "./TypeIcon";
 import { FormDown, FormNext } from "grommet-icons";
 import { Options } from "./Options";
@@ -97,9 +95,7 @@ export const ParamLabel = observer(
     const fade: boolean =
       (socket &&
         store.activeDrag &&
-        path.param.type.name !== "through" &&
-        store.activeDrag?.param.type.name !== "through" &&
-        store.activeDrag?.param.type !== path.param.type) ||
+        store.activeDrag?.param.type !== path.type) ||
       false;
 
     return (

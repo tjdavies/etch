@@ -5,6 +5,7 @@ import { generateId } from "../utils/generateId";
 import { createSockets, ISocket } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";
 import { calculateApp, getStore } from "./Store";
+import { Type, IType } from "./Type";
 
 export const Token = types
   .model("Token", {
@@ -13,6 +14,7 @@ export const Token = types
     fn: types.late((): any => types.reference(Fn)),
     values: types.map(types.frozen()),
     expandedParams: types.map(types.boolean),
+    selectedType: types.maybe(types.reference(Type)),
   })
   .views((self) => ({
     get sockets(): ISocket[] {
@@ -22,7 +24,8 @@ export const Token = types
         getParent<IFn>(self, 2).wires,
         self.values,
         self.id,
-        self.expandedParams
+        self.expandedParams,
+        this.type
       );
     },
     get plugs(): IPlug[] {
@@ -41,6 +44,9 @@ export const Token = types
         self.expandedParams,
         context || {}
       );
+    },
+    get type(): IType {
+      return self.selectedType || self.fn.defaultSelectedType;
     },
   }))
   .actions((self) => ({
@@ -61,6 +67,10 @@ export const Token = types
     },
     shrinkParam(path: string) {
       self.expandedParams.delete(path);
+    },
+    setSelectedType(typeId: string) {
+      const type = getStore(self).project.types.get(typeId);
+      self.selectedType = type;
     },
   }));
 
