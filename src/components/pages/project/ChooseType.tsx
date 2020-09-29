@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MoreVertical } from "grommet-icons";
+import { CaretDown, Down, FormDown } from "grommet-icons";
 import { TypeSearchDropDown } from "../../common/TypeSearchDropDown";
 import styled from "styled-components";
 
@@ -46,7 +46,9 @@ export function ChooseType({ type, onSelect }: Props) {
           align={"left"}
         />
       )}
-      <Button onClick={() => setShowSelect(true)}>: {type.name}</Button>
+      <Button onClick={() => setShowSelect(true)}>
+        : {type.name} <FormDown color="white" size="small" />
+      </Button>
     </Wrapper>
   );
 }

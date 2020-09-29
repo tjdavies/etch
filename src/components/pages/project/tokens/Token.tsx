@@ -62,8 +62,12 @@ const CloseButton = styled.div`
 
 const FnName = styled.span`
   font-weight: bold;
-  margin-right: 4px;
+  margin-right: 0px;
   cursor: pointer;
+`;
+
+const ShareWrap = styled.div`
+  margin-right: 4px;
 `;
 
 const HeaderDetails = styled.div`
@@ -98,8 +102,13 @@ export const Token = observer(({ token }: Props) => {
       <TokenWrapper onDoubleClick={onOpenToken}>
         <TokenHeader className="header" isCore={token.fn.core}>
           <HeaderDetails>
+            {!token.fn.core && (
+              <ShareWrap>
+                <Share color="white" size="small" />
+              </ShareWrap>
+            )}
             <FnName>{token.fn.name}</FnName>
-            {!token.fn.core && <Share color="white" size="small" />}
+
             {token.type && (
               <ChooseType type={token.type} onSelect={token.setSelectedType} />
             )}
