@@ -105,6 +105,17 @@ export const coreFunctionProcesses: Record<string, any> = {
       isKeyDownOut: isKeyDownInput.keysDown.includes(isKeyDownValue),
     };
   },
+  draw: ({
+    drawScene,
+    drawShape,
+  }: Record<string, any>): Record<string, any> => {
+    return {
+      drawSceneOut: {
+        ...drawScene,
+        children: [...drawScene.children, drawShape],
+      },
+    };
+  },
 };
 
 const addFn: IFnIn = {
@@ -518,6 +529,31 @@ const isKeyDownFn: IFnIn = {
   ],
 };
 
+const drawFn: IFnIn = {
+  id: "draw",
+  name: "draw",
+  core: true,
+  input: [
+    {
+      id: "drawScene",
+      name: "scene",
+      type: "scene",
+    },
+    {
+      id: "drawShape",
+      name: "shape",
+      type: "rect",
+    },
+  ],
+  output: [
+    {
+      id: "drawSceneOut",
+      name: "scene",
+      type: "scene",
+    },
+  ],
+};
+
 export const coreFunctions = {
   add: addFn,
   subtract: subtractFn,
@@ -527,12 +563,11 @@ export const coreFunctions = {
   lessThan: lessThanFn,
   lessThanEql: lessThanEqlFn,
   greaterThanEql: greaterThanEqlFn,
-  select: selectFn,
   equal: equalFn,
   and: andFn,
   or: orFn,
-  push: pushFn,
-  contains: containsFn,
+  select: selectFn,
   clamp: clampFn,
   isKeyDown: isKeyDownFn,
+  draw: drawFn,
 };

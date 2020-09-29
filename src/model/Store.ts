@@ -313,6 +313,8 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
 }
 
 function runToken(token: IToken, plugValues: Object) {
+  console.log("runToken");
+  console.log(token.fn.name);
   const input = mapSocketsToValues(token.sockets, plugValues);
   const r = calculateFunction(token.fn, input);
   const addToken = setValue(token.id, r, plugValues);

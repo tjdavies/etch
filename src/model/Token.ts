@@ -35,7 +35,7 @@ export const Token = types
       const contextId = store.functionContext?.id;
 
       const context =
-        contextId !== undefined ? findContext(contextId, output) : undefined;
+        contextId !== undefined ? findContext(contextId, output) : output;
 
       return createPlugs(
         self as any,
