@@ -20,6 +20,7 @@ const InspectBox = styled.div`
   font-size: 14px;
   padding: 2px;
   line-height: 14px;
+  color: ${Colours.lightGrey};
 `;
 
 export function DataOutput(props: Props) {

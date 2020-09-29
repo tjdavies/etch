@@ -33,6 +33,7 @@ const LabelWrapper = styled.div`
   flex-direction: ${(props: SocketProps) =>
     props.socket ? "row-reverse" : "row"};
   justify-content: flex-end;
+  user-select: none;
 `;
 
 const BlankConnector = styled.div`

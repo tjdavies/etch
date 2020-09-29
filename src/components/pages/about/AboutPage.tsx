@@ -87,9 +87,10 @@ export const AboutPage = () => {
         <h3>On the wish list </h3>
         <ul>
           <li>Duplicate/ Delete projects</li>
+          <li>Map / Reduce and general first class function support</li>
           <li>Better UI / UX</li>
           <li>Save and share project on the "cloud"</li>
-          <li>Re-Mix projects</li>
+          <li>Re-mix projects</li>
           <li>Tutorials and Example projects</li>
           <li>Search / Share functions (modules?)</li>
           <li>Undo / Redo</li>
