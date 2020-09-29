@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import { TypeColours } from "../../../model/CoreTypes";
 import { Colours } from "../../../Style";
 
 const InputWrapper = styled.div`
@@ -20,6 +21,13 @@ const Input = styled.input`
   text-align: right;
   box-sizing: content-box;
   border: 1px solid ${Colours.primary};
+  width: ${(props: { width: string }) => props.width};
+`;
+
+const TextInput = styled.input`
+  text-align: right;
+  box-sizing: content-box;
+  border: 1px solid ${TypeColours.string};
   width: ${(props: { width: string }) => props.width};
 `;
 
@@ -74,7 +82,7 @@ function StringInput({ value, onEnter, onRemoveValue }: Props) {
   };
 
   return (
-    <Input
+    <TextInput
       ref={inputEl}
       width={editValue?.length ? editValue.length + "ch" : "1ch"}
       autoFocus
