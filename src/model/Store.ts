@@ -20,7 +20,7 @@ import { coreTypes } from "./CoreTypes";
 import { ITypeIn } from "./Type";
 import { ISocket } from "./Sockets";
 import { IKeyValueMap } from "mobx";
-import { assocPath, concat, mergeDeepLeft, path } from "ramda";
+import { assocPath, mergeDeepLeft, path } from "ramda";
 
 const RunTimeViewMode = types.enumeration("runTimeViewMode", [
   "docked",

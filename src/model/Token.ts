@@ -4,7 +4,7 @@ import { IFn, Fn, findContext } from "./Fn";
 import { generateId } from "../utils/generateId";
 import { createSockets, ISocket } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";
-import { calculateApp, getStore } from "./Store";
+import { getStore } from "./Store";
 import { Type, IType } from "./Type";
 
 export const Token = types

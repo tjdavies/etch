@@ -5,7 +5,7 @@ import { Colours } from "../../../../Style";
 import Draggable from "react-draggable";
 import { TokenInput } from "./TokenInput";
 import { TokenOutput } from "./TokenOutput";
-import { Share, Close, MoreVertical } from "grommet-icons";
+import { Share, Close } from "grommet-icons";
 import { useStore } from "../../../../model/Store";
 import { useHistory, generatePath } from "react-router-dom";
 import { Routes } from "../../../../Routes";

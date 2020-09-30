@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { CaretDown, Down, FormDown } from "grommet-icons";
+import { FormDown } from "grommet-icons";
 import { TypeSearchDropDown } from "../../common/TypeSearchDropDown";
 import styled from "styled-components";
 
-import { Colours } from "../../../Style";
 import { IType } from "../../../model/Type";
 
 const Wrapper = styled.div`

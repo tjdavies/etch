@@ -1,7 +1,7 @@
 import React from "react";
 import { useStore } from "../../model/Store";
 import { RelativeDropDown } from "./RelativeDropDown";
-import { SearchableDropDown, Option } from "./SearchableDropDown";
+import { SearchableDropDown } from "./SearchableDropDown";
 
 interface Props {
   onClose: () => void;

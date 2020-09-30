@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { FormAdd } from "grommet-icons";
 import { TypeSearchDropDown } from "../../common/TypeSearchDropDown";
 import styled from "styled-components";
-import { useStore } from "../../../model/Store";
 import { Colours } from "../../../Style";
 import { IParam } from "../../../model/Param";
 
@@ -38,7 +37,6 @@ interface Props {
 
 export function AddParam({ param, onSelect, onCreateNew, align }: Props) {
   const [showSelect, setShowSelect] = useState(false);
-  const store = useStore();
 
   return (
     <Wrapper>

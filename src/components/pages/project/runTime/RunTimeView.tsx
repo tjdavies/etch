@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../../Style";
-import { useStore, executeProject } from "../../../../model/Store";
+import { useStore } from "../../../../model/Store";
 import { Expand, Contract } from "grommet-icons";
 import { RunTimeStage, IScene } from "./RunTimeStage";
 import { RunTimeControls } from "./RunTimeControls";
