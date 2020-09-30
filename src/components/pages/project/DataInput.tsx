@@ -112,10 +112,11 @@ function NumberInput({ value, onEnter, onRemoveValue }: Props) {
     }
   };
 
+  const str = editValue + "";
   return (
     <Input
       ref={inputEl}
-      width={editValue?.length ? editValue.length + "ch" : "1ch"}
+      width={str?.length ? str.length + "ch" : "1ch"}
       type="number"
       autoFocus
       value={editValue}
@@ -140,6 +141,7 @@ function BooleanInput({ value = false, onEnter, onRemoveValue }: Props) {
     onEnter(editValue);
   };
 
+  console.log(editValue);
   return (
     <input
       type="checkbox"

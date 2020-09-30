@@ -133,7 +133,7 @@ export const ParamLabel = observer(
           {(isDataInput || path.value !== undefined) && (
             <DataInput
               type={path.type.id}
-              value={path.value !== undefined ? path.value + "" : undefined}
+              value={path.value !== undefined ? path.value : undefined}
               onEnter={(value) => {
                 path.target.addValue(path.path, value);
                 setIsDataInput(false);
