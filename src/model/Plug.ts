@@ -21,23 +21,24 @@ export function paramToPath(
   selectedType?: IType
 ): IPlug {
   const path = parentPath + "." + param.id;
+  const type =
+    param.type.id === "through" && selectedType ? selectedType : param.type;
   return {
     target,
     param,
     path,
     params:
-      param.type.params &&
+      type.params &&
       createPlugs(
         target,
-        param.type.params,
+        type.params,
         path,
         expandedParams,
         calculatedDataValues
       ),
     expanded: expandedParams.get(path),
     data: getValue(path, calculatedDataValues),
-    type:
-      param.type.id === "through" && selectedType ? selectedType : param.type,
+    type,
   };
 }
 
