@@ -16,6 +16,7 @@
     "react-dom": "^16.13.1",
     "react-draggable": "^4.4.3",
     "react-editext": "^3.17.0",
+    "react-error-boundary": "^3.0.2",
     "react-inspector": "^5.1.0",
     "react-konva": "^16.13.0-6",
     "react-router-dom": "^5.2.0",

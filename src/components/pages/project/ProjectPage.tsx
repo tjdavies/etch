@@ -9,6 +9,7 @@ import { loadProject, saveProject } from "../../../utils/Save";
 import { onSnapshot, getSnapshot } from "mobx-state-tree";
 import makeInspectable from "mobx-devtools-mst";
 import { ProjectView } from "./ProjectView";
+import { ErrorBoundary } from "react-error-boundary";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -31,11 +32,13 @@ export const ProjectPage = () => {
   store?.setFunctionContext(context);
   if (store !== undefined) {
     return (
-      <PageWrapper>
-        <StoreProvider value={store}>
-          <ProjectView store={store} />
-        </StoreProvider>
-      </PageWrapper>
+      <ErrorBoundary FallbackComponent={ProjectError}>
+        <PageWrapper>
+          <StoreProvider value={store}>
+            <ProjectView store={store} />
+          </StoreProvider>
+        </PageWrapper>
+      </ErrorBoundary>
     );
   }
 
@@ -46,6 +49,15 @@ export const ProjectPage = () => {
     </PageWrapper>
   );
 };
+
+function ProjectError() {
+  return (
+    <PageWrapper>
+      <PageHeader />
+      <Error>Opps snap</Error>
+    </PageWrapper>
+  );
+}
 
 function useProjectStore(id: string, fn: string, context: string) {
   const [storeState, setStore] = useState<IStore>();
