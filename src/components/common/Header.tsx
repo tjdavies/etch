@@ -33,7 +33,7 @@ interface props {
 export function PageHeader(props: props) {
   return (
     <HeaderWrapper>
-      <Link to={Routes.root}>
+      <Link to={Routes.projectList}>
         <AppName>EtcH</AppName>
       </Link>
       {props.children}

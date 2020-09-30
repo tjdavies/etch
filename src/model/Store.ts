@@ -277,7 +277,11 @@ function getValuesForSockets(
     const wire = socket.connection;
 
     if (wire) {
-      return findPlugValue(fn, wire, accumulator);
+      const wireValue = findPlugValue(fn, wire, accumulator);
+      if (socket.params) {
+        return getValuesForSockets(fn, socket.params, wireValue);
+      }
+      return wireValue;
     } else if (socket.params) {
       return getValuesForSockets(fn, socket.params, accumulator);
     } else {
@@ -288,6 +292,7 @@ function getValuesForSockets(
 
 function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
   const val = getValue(wire.from.path, calculatedState);
+
   if (val !== undefined) {
     return calculatedState;
   } else {
