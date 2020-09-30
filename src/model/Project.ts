@@ -2,7 +2,7 @@ import { types, Instance } from "mobx-state-tree";
 import { Type, IType } from "./Type";
 import { Fn, IFn } from "./Fn";
 import { IPath } from "./Path";
-import { getStore } from "./Store";
+import { calculateApp, getStore } from "./Store";
 
 export const Project = types
   .model({

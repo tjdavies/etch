@@ -77,8 +77,8 @@ export const AboutPage = () => {
         </p>
         <h3>Modern functional paradigm</h3>
         <p>
-          EtcH takes a pure functional approach to programming separating data
-          from computation. An EtcH program is built out of the same simple
+          EtcH takes a modern pure functional approach to programming separating
+          data from computation. An EtcH program is built out of the same simple
           building blocks (functions) which reduces the concepts needed to be
           understood. This is heavily influenced by Elm and React.
         </p>
@@ -87,6 +87,13 @@ export const AboutPage = () => {
           I want to take the pain out of programming. A rich UI and features
           such as type safety and realtime debugging are designed to make
           creating software a fun experience. If possible no errors ever.
+        </p>
+        <h3>Visual all the way down</h3>
+        <p>
+          Many visual coding tools allow you to type "real" code into the boxes
+          when you need additional functionality. EtcH is designed from first
+          principles to be able to compose complex functionality from simple
+          base parts so you never have to.
         </p>
         <h2>Features</h2>
         <h3>Built (at least partially)</h3>

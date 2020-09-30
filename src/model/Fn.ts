@@ -47,8 +47,8 @@ export const Fn = types
   .views((self) => ({
     get plugs(): IPlug[] {
       const store = getStore(self);
-      const mainFn = store.project.mainFn;
-      const output = calculateApp(mainFn, store.appState);
+
+      const output = store.runtimeValue;
       const contextId = store.functionContext?.id;
       const context =
         contextId !== undefined ? findContext(contextId, output) : output;

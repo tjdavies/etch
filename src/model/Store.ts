@@ -45,6 +45,15 @@ export const Store = types
       state: {},
     }),
   })
+  .views((self) => ({
+    get runtimeValue() {
+      return calculateFunction(self.project.mainFn, self.appState);
+    },
+
+    get runtimeOutput() {
+      return mapOutputToValues(self.project.mainFn.sockets, this.runtimeValue);
+    },
+  }))
   .actions((self) => ({
     activeDragPlug(drag: IPath) {
       self.activeDrag = clone(drag);

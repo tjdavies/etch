@@ -76,18 +76,9 @@ export const RunTimeView = observer(({ onDock }: Props) => {
     isPlaying ? 40 : null
   );
 
-  /*
-  if (result?.state) {
-    store.setAppState(result?.state);
-  }
-  */
-
   const step = () => {
-    const result = executeProject(store.project.mainFn, store.appState);
-    store.setAppState(result?.state);
+    store.setAppState(store.runtimeOutput.state);
   };
-
-  const result = executeProject(store.project.mainFn, store.appState);
 
   const props: ViewProps = {
     isPlaying,
@@ -112,7 +103,7 @@ export const RunTimeView = observer(({ onDock }: Props) => {
       store.setRunTimeViewMode("window");
     },
     onDock,
-    scene: result?.scene,
+    scene: store.runtimeOutput.scene,
   };
 
   if (store.runTimeViewMode === "max") {
