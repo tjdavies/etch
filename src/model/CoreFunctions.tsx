@@ -94,7 +94,7 @@ export const coreFunctionProcesses: Record<string, any> = {
     clampMax,
   }: Record<string, any>): Record<string, any> => {
     return {
-      clampedValue: Math.max(clampMax, Math.min(clampMin, clampValue)),
+      clampedValue: Math.min(clampMax, Math.max(clampMin, clampValue)),
     };
   },
   isKeyDown: ({
@@ -116,6 +116,31 @@ export const coreFunctionProcesses: Record<string, any> = {
       },
     };
   },
+  not: ({ notA }: Record<string, any>): Record<string, any> => {
+    return {
+      notR: !notA,
+    };
+  },
+};
+
+const notFn: IFnIn = {
+  id: "not",
+  name: "NOT",
+  core: true,
+  input: [
+    {
+      id: "notA",
+      name: "A",
+      type: "boolean",
+    },
+  ],
+  output: [
+    {
+      id: "notR",
+      name: "not A",
+      type: "boolean",
+    },
+  ],
 };
 
 const addFn: IFnIn = {
@@ -564,6 +589,7 @@ export const coreFunctions = {
   lessThanEql: lessThanEqlFn,
   greaterThanEql: greaterThanEqlFn,
   equal: equalFn,
+  not: notFn,
   and: andFn,
   or: orFn,
   select: selectFn,
