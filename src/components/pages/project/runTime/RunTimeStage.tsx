@@ -41,8 +41,9 @@ export const RunTimeStage = ({ scene }: Props) => {
       >
         <Layer>
           {scene &&
-            scene.children.map((rect) => (
+            scene.children.map((rect, index) => (
               <Rect
+                key={index}
                 x={rect.x}
                 y={rect.y}
                 width={rect.width}

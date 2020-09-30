@@ -71,6 +71,7 @@ function RecordType({
         <NestWrapper socket={socket}>
           {path.params?.map((p) => (
             <ParamView
+              key={p.path}
               path={p}
               editable={isEditable}
               socket={socket}
