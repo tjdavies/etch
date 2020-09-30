@@ -66,10 +66,7 @@ export const SplashPage = () => {
           <button>Start Creating</button>
         </Link>
         <p>
-          want to find out a bit{" "}
-          <Link to={Routes.about}>
-            <a>more?</a>
-          </Link>
+          want to find out a bit <Link to={Routes.about}>more?</Link>
         </p>
       </PageContent>
     </PageWrapper>

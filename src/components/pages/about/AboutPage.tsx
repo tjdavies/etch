@@ -38,6 +38,10 @@ const PageContent = styled.div`
     border-radius: 6px;
     cursor: pointer;
   }
+  a {
+    color: ${Colours.secondary};
+    text-decoration: underline;
+  }
 `;
 
 export const AboutPage = () => {
@@ -51,6 +55,17 @@ export const AboutPage = () => {
           how to inspire the next generation. Im also dyslexic myself and I also
           have a dyslexic kid so i'm keen to make programming more accessible.
           Also let us remember that some people never gave up punch cards.
+        </p>
+        <p></p>
+        <p>
+          Get in touch
+          <br />
+          Email: <a href="mailto:tjsdavies@gmail.com">tjsdavies@gmail.com</a>
+          <br />
+          Twitter:{" "}
+          <a href="https://twitter.com/tomsdavies">
+            https://twitter.com/tomsdavies
+          </a>
         </p>
         <h2>Design Principles</h2>
         <h3>Low floor & wide walls</h3>
