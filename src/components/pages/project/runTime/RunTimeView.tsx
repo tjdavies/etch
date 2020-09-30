@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Colours } from "../../../../Style";
-import {
-  useStore,
-  mapOutputToValues,
-  calculateFunction,
-} from "../../../../model/Store";
+import { useStore, executeProject } from "../../../../model/Store";
 import { Expand, Contract } from "grommet-icons";
 import { RunTimeStage, IScene } from "./RunTimeStage";
 import { RunTimeControls } from "./RunTimeControls";
@@ -87,15 +83,11 @@ export const RunTimeView = observer(({ onDock }: Props) => {
   */
 
   const step = () => {
-    const output = calculateFunction(store.project.mainFn, store.appState);
-    const result =
-      output && mapOutputToValues(store.project.mainFn.sockets, output);
+    const result = executeProject(store.project.mainFn, store.appState);
     store.setAppState(result?.state);
   };
 
-  const output = calculateFunction(store.project.mainFn, store.appState);
-  const result =
-    output && mapOutputToValues(store.project.mainFn.sockets, output);
+  const result = executeProject(store.project.mainFn, store.appState);
 
   const props: ViewProps = {
     isPlaying,

@@ -51,7 +51,7 @@ export const Fn = types
       const output = calculateApp(mainFn, store.appState);
       const contextId = store.functionContext?.id;
       const context =
-        contextId !== undefined ? findContext(contextId, output) : undefined;
+        contextId !== undefined ? findContext(contextId, output) : output;
 
       // const context = contextId ? { [self.id]: output[contextId] } : output;
 

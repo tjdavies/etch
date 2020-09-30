@@ -20,7 +20,7 @@ import { coreTypes } from "./CoreTypes";
 import { ITypeIn } from "./Type";
 import { ISocket } from "./Sockets";
 import { IKeyValueMap } from "mobx";
-import { assocPath, mergeDeepLeft, path } from "ramda";
+import { assocPath, concat, mergeDeepLeft, path } from "ramda";
 
 const RunTimeViewMode = types.enumeration("runTimeViewMode", [
   "docked",
@@ -218,6 +218,16 @@ export function createNewProject(name: string) {
   };
 }
 
+export function executeProject(
+  fn: IFn,
+  inputValue: Record<string, any>
+): Record<string, any> {
+  const output = calculateFunction(fn, inputValue);
+  const r = mapOutputToValues(fn.sockets, output);
+
+  return r;
+}
+
 export function calculateApp(
   fn: IFn,
   inputValue: Record<string, any>
@@ -225,9 +235,7 @@ export function calculateApp(
   const calculatedState = { [fn.id]: inputValue };
   const constValues = fn.values.toJSON();
   const unFlatConst = unFlatten(constValues);
-
   const combinedState = mergeDeepLeft(calculatedState, unFlatConst);
-
   const output: any = getValuesForSockets(fn, fn.sockets, combinedState);
 
   return output;
@@ -244,10 +252,13 @@ export function calculateFunction(
   const constValues = fn.values.toJSON();
   const unFlatConst = unFlatten(constValues);
   const combinedState = mergeDeepLeft(calculatedState, unFlatConst);
+
   const output: any = getValuesForSockets(fn, fn.sockets, combinedState);
+
   const fnVal = output[fn.id];
   const sockets = mapSocketsToValues(fn.sockets, { ...fnVal, ...output });
   const o = { ...fnVal, ...output, ...sockets };
+
   return o;
 }
 
@@ -278,9 +289,13 @@ function getValuesForSockets(
 
     if (wire) {
       const wireValue = findPlugValue(fn, wire, accumulator);
+
       if (socket.params) {
-        return getValuesForSockets(fn, socket.params, wireValue);
+        const socks = getValuesForSockets(fn, socket.params, wireValue);
+
+        return socks;
       }
+
       return wireValue;
     } else if (socket.params) {
       return getValuesForSockets(fn, socket.params, accumulator);
@@ -304,7 +319,6 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
         token.sockets,
         calculatedState
       );
-
       const outPutValue = runToken(token, computedValues);
       return outPutValue;
     } else {
@@ -319,6 +333,7 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
 
 function runToken(token: IToken, plugValues: Object) {
   const input = mapSocketsToValues(token.sockets, plugValues);
+
   const r = calculateFunction(token.fn, input);
   const addToken = setValue(token.id, r, plugValues);
   return addToken;
@@ -332,6 +347,22 @@ function mapSocketsToValues(
     const wire = socket.connection;
 
     if (wire) {
+      if (socket.params) {
+        // get the value of a connection but over right it with any wires connected deeper down the tree
+        const paramValues = mapOnlyWireSocketsToValues(
+          socket.params,
+          plugValues
+        );
+
+        return {
+          [socket.param.id]: {
+            ...getValue(wire.from.path, plugValues),
+            ...paramValues,
+          },
+          ...accumulator,
+        };
+      }
+
       return {
         [socket.param.id]: getValue(wire.from.path, plugValues),
         ...accumulator,
@@ -358,18 +389,50 @@ function mapSocketsToValues(
   }, {});
 }
 
+function mapOnlyWireSocketsToValues(
+  sockets: ISocket[],
+  plugValues: Record<string, any>
+): Record<string, any> {
+  return sockets.reduce((accumulator, socket) => {
+    const wire = socket.connection;
+
+    if (wire) {
+      if (socket.params) {
+        const paramValues = mapOnlyWireSocketsToValues(
+          socket.params,
+          plugValues
+        );
+        return {
+          [socket.param.id]: {
+            ...getValue(wire.from.path, plugValues),
+            ...paramValues,
+          },
+          ...accumulator,
+        };
+      }
+
+      return {
+        [socket.param.id]: getValue(wire.from.path, plugValues),
+        ...accumulator,
+      };
+    }
+
+    return accumulator;
+  }, {});
+}
+
 export function findWireTo(wires: IWire[], path: string): IWire | undefined {
   return wires.find((wire) => wire.to.path === path);
 }
 
 export function mapOutputToValues(
-  plugs: IPath[],
-  value: Record<string, any>
+  sockets: ISocket[],
+  values: Record<string, any>
 ): Record<string, any> {
-  return plugs.reduce((accumulator, plug) => {
+  return sockets.reduce((accumulator, socket) => {
     return {
       ...accumulator,
-      [plug.param.name]: value[plug.param.id],
+      [socket.param.name]: values[socket.param.id],
     };
   }, {});
 }
