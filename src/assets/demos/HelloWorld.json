@@ -1,0 +1,816 @@
+{
+  "id": "hw",
+  "name": "hello world",
+  "functions": {
+    "add": {
+      "id": "add",
+      "name": "+",
+      "core": true,
+      "input": [
+        {
+          "id": "a",
+          "name": "A",
+          "type": "number"
+        },
+        {
+          "id": "b",
+          "name": "B",
+          "type": "number"
+        }
+      ],
+      "output": [
+        {
+          "id": "r",
+          "name": "A + B",
+          "type": "number"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "subtract": {
+      "id": "subtract",
+      "name": "-",
+      "core": true,
+      "input": [
+        {
+          "id": "suba",
+          "name": "A",
+          "type": "number"
+        },
+        {
+          "id": "subb",
+          "name": "B",
+          "type": "number"
+        }
+      ],
+      "output": [
+        {
+          "id": "subr",
+          "name": "A - B",
+          "type": "number"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "multiply": {
+      "id": "multiply",
+      "name": "×",
+      "core": true,
+      "input": [
+        {
+          "id": "am",
+          "name": "A",
+          "type": "number"
+        },
+        {
+          "id": "bm",
+          "name": "B",
+          "type": "number"
+        }
+      ],
+      "output": [
+        {
+          "id": "rm",
+          "name": "A * B",
+          "type": "number"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "divide": {
+      "id": "divide",
+      "name": "/",
+      "core": true,
+      "input": [
+        {
+          "id": "ad",
+          "name": "A",
+          "type": "number"
+        },
+        {
+          "id": "bd",
+          "name": "B",
+          "type": "number"
+        }
+      ],
+      "output": [
+        {
+          "id": "rd",
+          "name": "A / B",
+          "type": "number"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "greaterThan": {
+      "id": "greaterThan",
+      "name": ">",
+      "core": true,
+      "input": [
+        {
+          "id": "ga",
+          "name": "A",
+          "type": "number"
+        },
+        {
+          "id": "gb",
+          "name": "B",
+          "type": "number"
+        }
+      ],
+      "output": [
+        {
+          "id": "gr",
+          "name": "A > B",
+          "type": "boolean"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "lessThan": {
+      "id": "lessThan",
+      "name": "<",
+      "core": true,
+      "input": [
+        {
+          "id": "la",
+          "name": "A",
+          "type": "number"
+        },
+        {
+          "id": "lb",
+          "name": "B",
+          "type": "number"
+        }
+      ],
+      "output": [
+        {
+          "id": "lr",
+          "name": "A < B",
+          "type": "boolean"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "lessThanEql": {
+      "id": "lessThanEql",
+      "name": "<=",
+      "core": true,
+      "input": [
+        {
+          "id": "lessThanOrEqla",
+          "name": "A",
+          "type": "number"
+        },
+        {
+          "id": "lessThanOrEqlb",
+          "name": "B",
+          "type": "number"
+        }
+      ],
+      "output": [
+        {
+          "id": "lessThanOrEqlr",
+          "name": "A <= B",
+          "type": "boolean"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "greaterThanEql": {
+      "id": "greaterThanEql",
+      "name": ">=",
+      "core": true,
+      "input": [
+        {
+          "id": "greaterThanOrEqla",
+          "name": "A",
+          "type": "number"
+        },
+        {
+          "id": "greaterThanOrEqlb",
+          "name": "B",
+          "type": "number"
+        }
+      ],
+      "output": [
+        {
+          "id": "greaterThanOrEqlr",
+          "name": "A >= B",
+          "type": "boolean"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "equal": {
+      "id": "equal",
+      "name": "=",
+      "core": true,
+      "input": [
+        {
+          "id": "ea",
+          "name": "A",
+          "type": "through"
+        },
+        {
+          "id": "eb",
+          "name": "B",
+          "type": "through"
+        }
+      ],
+      "output": [
+        {
+          "id": "er",
+          "name": "A = B",
+          "type": "boolean"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "not": {
+      "id": "not",
+      "name": "NOT",
+      "core": true,
+      "input": [
+        {
+          "id": "notA",
+          "name": "A",
+          "type": "boolean"
+        }
+      ],
+      "output": [
+        {
+          "id": "notR",
+          "name": "not A",
+          "type": "boolean"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "and": {
+      "id": "and",
+      "name": "AND",
+      "core": true,
+      "input": [
+        {
+          "id": "aa",
+          "name": "A",
+          "type": "boolean"
+        },
+        {
+          "id": "ab",
+          "name": "B",
+          "type": "boolean"
+        }
+      ],
+      "output": [
+        {
+          "id": "ar",
+          "name": "A AND B",
+          "type": "boolean"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "or": {
+      "id": "or",
+      "name": "OR",
+      "core": true,
+      "input": [
+        {
+          "id": "oa",
+          "name": "A",
+          "type": "boolean"
+        },
+        {
+          "id": "ob",
+          "name": "B",
+          "type": "boolean"
+        }
+      ],
+      "output": [
+        {
+          "id": "or",
+          "name": "A OR B",
+          "type": "boolean"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "select": {
+      "id": "select",
+      "name": "select",
+      "core": true,
+      "input": [
+        {
+          "id": "select1",
+          "name": "switch",
+          "type": "boolean"
+        },
+        {
+          "id": "select2",
+          "name": "true",
+          "type": "through"
+        },
+        {
+          "id": "select3",
+          "name": "false",
+          "type": "through"
+        }
+      ],
+      "output": [
+        {
+          "id": "selectOut",
+          "name": "data",
+          "type": "through"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {},
+      "defaultSelectedType": "number"
+    },
+    "clamp": {
+      "id": "clamp",
+      "name": "clamp",
+      "core": true,
+      "input": [
+        {
+          "id": "clampValue",
+          "name": "value",
+          "type": "number"
+        },
+        {
+          "id": "clampMin",
+          "name": "min",
+          "type": "number"
+        },
+        {
+          "id": "clampMax",
+          "name": "max",
+          "type": "number"
+        }
+      ],
+      "output": [
+        {
+          "id": "clampedValue",
+          "name": "value",
+          "type": "number"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "isKeyDown": {
+      "id": "isKeyDown",
+      "name": "isKeyDown",
+      "core": true,
+      "input": [
+        {
+          "id": "isKeyDownInput",
+          "name": "input",
+          "type": "input"
+        },
+        {
+          "id": "isKeyDownValue",
+          "name": "keyName",
+          "type": "string"
+        }
+      ],
+      "output": [
+        {
+          "id": "isKeyDownOut",
+          "name": "value",
+          "type": "boolean"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "draw": {
+      "id": "draw",
+      "name": "draw rectangle",
+      "core": true,
+      "input": [
+        {
+          "id": "drawScene",
+          "name": "scene",
+          "type": "scene"
+        },
+        {
+          "id": "drawShape",
+          "name": "shape",
+          "type": "rect"
+        }
+      ],
+      "output": [
+        {
+          "id": "drawSceneOut",
+          "name": "scene",
+          "type": "scene"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "drawText": {
+      "id": "drawText",
+      "name": "draw text",
+      "core": true,
+      "input": [
+        {
+          "id": "drawTextScene",
+          "name": "scene",
+          "type": "scene"
+        },
+        {
+          "id": "drawText",
+          "name": "text",
+          "type": "text"
+        }
+      ],
+      "output": [
+        {
+          "id": "drawTextOut",
+          "name": "scene",
+          "type": "scene"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "drawImage": {
+      "id": "drawImage",
+      "name": "draw image",
+      "core": true,
+      "input": [
+        {
+          "id": "drawImageScene",
+          "name": "scene",
+          "type": "scene"
+        },
+        {
+          "id": "drawImageImage",
+          "name": "image",
+          "type": "image"
+        }
+      ],
+      "output": [
+        {
+          "id": "drawImageOut",
+          "name": "scene",
+          "type": "scene"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    },
+    "zlmqwoneprkcrt34a3toc": {
+      "id": "zlmqwoneprkcrt34a3toc",
+      "name": "main",
+      "core": false,
+      "input": [
+        {
+          "id": "state",
+          "name": "state",
+          "type": "state"
+        },
+        {
+          "id": "input",
+          "name": "input",
+          "type": "input"
+        }
+      ],
+      "output": [
+        {
+          "id": "tjkw69t6nhmt1qy6r47no",
+          "name": "state",
+          "type": "state"
+        },
+        {
+          "id": "ua7yqro2rfdk7gz9x1axo",
+          "name": "scene",
+          "type": "scene"
+        }
+      ],
+      "tokens": [
+        {
+          "id": "okg1bcti2mob4f5rvcz4h8",
+          "position": {
+            "x": 634,
+            "y": 47
+          },
+          "fn": "drawText",
+          "values": {
+            "okg1bcti2mob4f5rvcz4h8.drawText.text": "hello world",
+            "okg1bcti2mob4f5rvcz4h8.drawText.fontSize": 120,
+            "okg1bcti2mob4f5rvcz4h8.drawText.x": 120,
+            "okg1bcti2mob4f5rvcz4h8.drawText.y": 200
+          },
+          "expandedParams": {
+            "okg1bcti2mob4f5rvcz4h8.drawText": true
+          }
+        }
+      ],
+      "wires": [
+        {
+          "id": "zlmqwoneprkcrt34a3toc.ua7yqro2rfdk7gz9x1axo",
+          "from": {
+            "target": "okg1bcti2mob4f5rvcz4h8",
+            "param": "drawTextOut",
+            "path": "okg1bcti2mob4f5rvcz4h8.drawTextOut"
+          },
+          "to": {
+            "target": "zlmqwoneprkcrt34a3toc",
+            "param": "ua7yqro2rfdk7gz9x1axo",
+            "path": "zlmqwoneprkcrt34a3toc.ua7yqro2rfdk7gz9x1axo"
+          }
+        }
+      ],
+      "values": {},
+      "expandedParams": {}
+    },
+    "juj4lyvbfrqqpidozu71m": {
+      "id": "juj4lyvbfrqqpidozu71m",
+      "name": "update",
+      "core": false,
+      "input": [
+        {
+          "id": "dzxeucqcofplf8r3z5df8",
+          "name": "state",
+          "type": "state"
+        },
+        {
+          "id": "r5k4xxambvie9dfq3r18",
+          "name": "input",
+          "type": "input"
+        }
+      ],
+      "output": [
+        {
+          "id": "6p0dkr4icqdoqfzzn1ci7f",
+          "name": "state",
+          "type": "state"
+        }
+      ],
+      "tokens": [],
+      "wires": [
+        {
+          "id": "juj4lyvbfrqqpidozu71m.6p0dkr4icqdoqfzzn1ci7f",
+          "from": {
+            "target": "juj4lyvbfrqqpidozu71m",
+            "param": "dzxeucqcofplf8r3z5df8",
+            "path": "juj4lyvbfrqqpidozu71m.dzxeucqcofplf8r3z5df8"
+          },
+          "to": {
+            "target": "juj4lyvbfrqqpidozu71m",
+            "param": "6p0dkr4icqdoqfzzn1ci7f",
+            "path": "juj4lyvbfrqqpidozu71m.6p0dkr4icqdoqfzzn1ci7f"
+          }
+        }
+      ],
+      "values": {},
+      "expandedParams": {}
+    },
+    "jm3lc1slldwo6k7vuuu5": {
+      "id": "jm3lc1slldwo6k7vuuu5",
+      "name": "view",
+      "core": false,
+      "input": [
+        {
+          "id": "06chbzwndnnv7ej79h111d3",
+          "name": "state",
+          "type": "state"
+        }
+      ],
+      "output": [
+        {
+          "id": "gy6jkwawe3et4wiwx2cj0e",
+          "name": "scene",
+          "type": "scene"
+        }
+      ],
+      "tokens": [],
+      "wires": [],
+      "values": {},
+      "expandedParams": {}
+    }
+  },
+  "mainFn": "zlmqwoneprkcrt34a3toc",
+  "types": {
+    "string": {
+      "id": "string",
+      "name": "string",
+      "core": true,
+      "defaultValue": ""
+    },
+    "number": {
+      "id": "number",
+      "name": "number",
+      "core": true,
+      "defaultValue": 0
+    },
+    "boolean": {
+      "id": "boolean",
+      "name": "boolean",
+      "core": true,
+      "defaultValue": false
+    },
+    "colour": {
+      "id": "colour",
+      "name": "colour",
+      "core": true,
+      "defaultValue": "#F00"
+    },
+    "imageSrc": {
+      "id": "imageSrc",
+      "name": "image source",
+      "core": true,
+      "defaultValue": "/sprites/Jump.png"
+    },
+    "through": {
+      "id": "through",
+      "name": "through",
+      "core": true
+    },
+    "list": {
+      "id": "list",
+      "name": "list",
+      "core": true,
+      "defaultValue": []
+    },
+    "rect": {
+      "id": "rect",
+      "name": "rect",
+      "params": [
+        {
+          "id": "x",
+          "name": "x",
+          "type": "number"
+        },
+        {
+          "id": "y",
+          "name": "y",
+          "type": "number"
+        },
+        {
+          "id": "height",
+          "name": "height",
+          "type": "number"
+        },
+        {
+          "id": "width",
+          "name": "width",
+          "type": "number"
+        },
+        {
+          "id": "colour",
+          "name": "colour",
+          "type": "colour"
+        }
+      ],
+      "core": true
+    },
+    "text": {
+      "id": "text",
+      "name": "text",
+      "params": [
+        {
+          "id": "x",
+          "name": "x",
+          "type": "number"
+        },
+        {
+          "id": "y",
+          "name": "y",
+          "type": "number"
+        },
+        {
+          "id": "text",
+          "name": "text",
+          "type": "string"
+        },
+        {
+          "id": "colour",
+          "name": "colour",
+          "type": "colour"
+        },
+        {
+          "id": "fontSize",
+          "name": "font size",
+          "type": "number"
+        }
+      ],
+      "core": true
+    },
+    "image": {
+      "id": "image",
+      "name": "image",
+      "params": [
+        {
+          "id": "x",
+          "name": "x",
+          "type": "number"
+        },
+        {
+          "id": "y",
+          "name": "y",
+          "type": "number"
+        },
+        {
+          "id": "height",
+          "name": "height",
+          "type": "number"
+        },
+        {
+          "id": "width",
+          "name": "width",
+          "type": "number"
+        },
+        {
+          "id": "imageSrc",
+          "name": "image source",
+          "type": "imageSrc"
+        }
+      ],
+      "core": true
+    },
+    "scene": {
+      "id": "scene",
+      "name": "scene",
+      "params": [
+        {
+          "id": "children",
+          "name": "children",
+          "type": "list"
+        }
+      ],
+      "core": true
+    },
+    "input": {
+      "id": "input",
+      "name": "input",
+      "params": [
+        {
+          "id": "keysDown",
+          "name": "keysDown",
+          "type": "list"
+        }
+      ],
+      "core": true
+    },
+    "state": {
+      "id": "state",
+      "name": "state",
+      "params": [],
+      "core": false
+    }
+  }
+}

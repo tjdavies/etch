@@ -38,7 +38,15 @@ export const ProjectListPage = () => {
   const loaded = loadProjectList();
   const history = useHistory();
 
-  const [projectList, setProjectList] = useState(loaded);
+  console.log(loaded);
+
+  const hasModified = loaded.some((p) => p.id === "hw");
+
+  const list = hasModified
+    ? loaded
+    : [{ id: "hw", name: "hello world" }, ...loaded];
+
+  const [projectList, setProjectList] = useState(list);
 
   if (projectList === undefined) {
     return null;

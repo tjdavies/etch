@@ -82,7 +82,7 @@ interface InputProps {
 
 function isValidConnection(socket: ISocket, isSocket?: boolean, drag?: IPath) {
   if (isSocket && drag) {
-    if (drag?.type !== socket.type) {
+    if (drag.type !== socket.type) {
       return false;
     } else {
       return !checkCircularDependency(drag, socket);
@@ -110,8 +110,8 @@ export const ParamLabel = observer(
       <InputWrapper
         socket={socket}
         fade={fade}
-        onMouseOver={() => !fade && store.setActiveSocket(path)}
-        onMouseOut={() => !fade && store.setActiveSocket(undefined)}
+        onMouseOver={() => socket && !fade && store.setActiveSocket(path)}
+        onMouseOut={() => socket && !fade && store.setActiveSocket(undefined)}
       >
         {editable && (
           <Options

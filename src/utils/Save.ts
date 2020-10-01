@@ -1,3 +1,5 @@
+import HelloWorld from "../assets/demos/HelloWorld.json";
+
 export const PROJECT_LIST = "PROJECT_LIST";
 const PROJECT_PREFIX = "ETCH_";
 
@@ -5,7 +7,7 @@ export function saveProjectList(projectList: any[]) {
   localStorage.setItem(PROJECT_LIST, JSON.stringify(projectList));
 }
 
-export function loadProjectList(): any[] | undefined {
+export function loadProjectList(): any[] {
   const projectList = localStorage.getItem(PROJECT_LIST);
   if (projectList) {
     return JSON.parse(projectList);
@@ -29,6 +31,9 @@ export function saveProject(data: any) {
 }
 
 export function loadProject(id: string): any {
+  if (id === "hw") {
+    return HelloWorld;
+  }
   const project = localStorage.getItem(PROJECT_PREFIX + id);
   if (project) {
     return JSON.parse(project);
