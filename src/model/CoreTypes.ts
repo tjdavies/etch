@@ -128,6 +128,16 @@ export const coreTypes: Record<string, ITypeIn> = {
         type: "number",
       },
       {
+        id: "height",
+        name: "height",
+        type: "number",
+      },
+      {
+        id: "width",
+        name: "width",
+        type: "number",
+      },
+      {
         id: "imageSrc",
         name: "image source",
         type: "imageSrc",

@@ -205,7 +205,7 @@ function ImageInput({
   onRemoveValue,
 }: Props) {
   const [editValue, setValue] = useState(value);
-  const [isDropDownOpen, setIsDropDownOpen] = useState(true);
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
   return (
     <>
@@ -229,14 +229,12 @@ const Dropdown = styled.div`
   top: 0px;
   left: 0px;
   width: 200px;
-
   border: 1px solid ${Colours.lightGrey};
   border-radius: 4px;
   background-color: ${Colours.white};
   box-shadow: 2px 2px 8px #aaa;
   z-index: 10;
   padding: 10px;
-
   img {
     cursor: pointer;
   }

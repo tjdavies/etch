@@ -78,7 +78,15 @@ export const Thing = ({ thing }: { thing: any }) => {
   if (thing.type === "image") {
     const I = new window.Image();
     I.src = thing.imageSrc;
-    return <Image x={thing.x} y={thing.y} image={I} />;
+    return (
+      <Image
+        x={thing.x}
+        y={thing.y}
+        width={thing.width}
+        height={thing.height}
+        image={I}
+      />
+    );
   }
   return null;
 };
