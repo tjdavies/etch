@@ -342,7 +342,6 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
 
 function runToken(token: IToken, plugValues: Object) {
   const input = mapSocketsToValues(token.sockets, plugValues);
-
   const r = calculateFunction(token.fn, input);
   const addToken = setValue(token.id, r, plugValues);
   return addToken;
@@ -363,41 +362,51 @@ function mapSocketsToValues(
           plugValues
         );
 
-        return {
-          [socket.param.id]: {
-            ...getValue(wire.from.path, plugValues),
-            ...paramValues,
-          },
-          ...accumulator,
-        };
+        return setParamValue(socket, accumulator, {
+          ...getValue(wire.from.path, plugValues),
+          ...paramValues,
+        });
       }
 
-      return {
-        [socket.param.id]: getValue(wire.from.path, plugValues),
-        ...accumulator,
-      };
+      return setParamValue(
+        socket,
+        accumulator,
+        getValue(wire.from.path, plugValues)
+      );
     }
 
     if (socket.value !== undefined) {
-      return {
-        [socket.param.id]: socket.value,
-        ...accumulator,
-      };
+      return setParamValue(socket, accumulator, socket.value);
     } else {
       if (socket.params) {
-        return {
-          [socket.param.id]: mapSocketsToValues(socket.params, plugValues),
-          ...accumulator,
-        };
+        return setParamValue(
+          socket,
+          accumulator,
+          mapSocketsToValues(socket.params, plugValues)
+        );
       }
-      return {
-        [socket.param.id]: socket.param.type.defaultValue,
-        ...accumulator,
-      };
+      return setParamValue(socket, accumulator, socket.param.type.defaultValue);
     }
   }, {});
 }
 
+function setParamValue(
+  socket: ISocket,
+  accumulator: Record<string, any>,
+  value: any
+) {
+  const r =
+    typeof value === "object" && !(value instanceof Array)
+      ? { ...value, type: socket.param.type.id }
+      : value;
+
+  return {
+    [socket.param.id]: r,
+    ...accumulator,
+  };
+}
+
+// we need this so we only override a parent data with stuff that has been expressly wired to the the children
 function mapOnlyWireSocketsToValues(
   sockets: ISocket[],
   plugValues: Record<string, any>

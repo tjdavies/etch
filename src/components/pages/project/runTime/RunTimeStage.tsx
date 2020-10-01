@@ -1,7 +1,7 @@
 import React from "react";
 import useDimensions from "react-use-dimensions";
 
-import { Stage, Rect, Layer } from "react-konva";
+import { Stage, Rect, Layer, Text } from "react-konva";
 import styled from "styled-components";
 
 const Box = styled.div`
@@ -10,6 +10,7 @@ const Box = styled.div`
 `;
 
 export interface IRect {
+  type: "rect";
   x: number;
   y: number;
   width: number;
@@ -30,7 +31,6 @@ const stageHeight = 600;
 
 export const RunTimeStage = ({ scene }: Props) => {
   const [ref, { width }] = useDimensions();
-
   const scale = width / stageWidth;
   return (
     <Box ref={ref}>
@@ -42,17 +42,30 @@ export const RunTimeStage = ({ scene }: Props) => {
         <Layer>
           {scene &&
             scene.children.map((rect, index) => (
-              <Rect
-                key={index}
-                x={rect.x}
-                y={rect.y}
-                width={rect.width}
-                height={rect.height}
-                fill={rect.colour}
-              />
+              <Thing thing={rect} key={index} />
             ))}
         </Layer>
       </Stage>
     </Box>
   );
+};
+
+export const Thing = ({ thing }: { thing: IRect }) => {
+  if (thing.type === "rect") {
+    return (
+      <Rect
+        x={thing.x}
+        y={thing.y}
+        width={thing.width}
+        height={thing.height}
+        fill={thing.colour}
+      />
+    );
+  }
+  if (thing.type === "text") {
+    return (
+      <Text x={thing.x} y={thing.y} text={thing.text} fill={thing.colour} />
+    );
+  }
+  return null;
 };

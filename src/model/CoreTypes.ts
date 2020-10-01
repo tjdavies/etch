@@ -25,6 +25,7 @@ export const coreTypes: Record<string, ITypeIn> = {
     name: "boolean",
     defaultValue: false,
   },
+
   colour: {
     core: true,
     id: "colour",

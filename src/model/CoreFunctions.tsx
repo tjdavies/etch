@@ -112,7 +112,7 @@ export const coreFunctionProcesses: Record<string, any> = {
     return {
       drawSceneOut: {
         ...drawScene,
-        children: [...drawScene.children, drawShape],
+        children: [...drawScene.children, { ...drawShape, type: "rect" }],
       },
     };
   },
