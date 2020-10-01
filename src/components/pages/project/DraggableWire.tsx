@@ -23,8 +23,10 @@ export const DraggableWire = ({
   const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
-    setDragPos(to);
-  }, [to]);
+    if (!dragging) {
+      setDragPos(to);
+    }
+  }, [to, dragging]);
 
   return (
     <>
