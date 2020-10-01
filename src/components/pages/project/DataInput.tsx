@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { TypeColours } from "../../../model/CoreTypes";
 import { Colours } from "../../../Style";
+import { useOutsideClick } from "../../../utils/hooks/useOutsideClick";
 
 const InputWrapper = styled.div`
   margin-right: 4px;
@@ -15,6 +16,11 @@ const InputWrapper = styled.div`
   }
 
   width: fit-content;
+
+  img {
+    cursor: pointer;
+    height: 22px;
+  }
 `;
 
 const Input = styled.input`
@@ -64,6 +70,13 @@ export function DataInput(props: Props) {
     return (
       <InputWrapper>
         <StringInput {...props} />
+      </InputWrapper>
+    );
+  }
+  if (props.type === "imageSrc") {
+    return (
+      <InputWrapper>
+        <ImageInput {...props} />
       </InputWrapper>
     );
   }
@@ -141,7 +154,6 @@ function BooleanInput({ value = false, onEnter, onRemoveValue }: Props) {
     onEnter(editValue);
   };
 
-  console.log(editValue);
   return (
     <input
       type="checkbox"
@@ -184,5 +196,79 @@ function ColourInput({ value = "#F00", onEnter, onRemoveValue }: Props) {
         }
       }}
     />
+  );
+}
+
+function ImageInput({
+  value = "/sprites/frog.png",
+  onEnter,
+  onRemoveValue,
+}: Props) {
+  const [editValue, setValue] = useState(value);
+  const [isDropDownOpen, setIsDropDownOpen] = useState(true);
+
+  return (
+    <>
+      {isDropDownOpen && (
+        <ImageSelectDropDown
+          onClose={() => setIsDropDownOpen(false)}
+          onSelect={(imgPath) => {
+            setValue(imgPath);
+            setIsDropDownOpen(false);
+            onEnter(imgPath);
+          }}
+        />
+      )}
+      <img src={editValue} onClick={() => setIsDropDownOpen(true)} />
+    </>
+  );
+}
+
+const Dropdown = styled.div`
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 200px;
+
+  border: 1px solid ${Colours.lightGrey};
+  border-radius: 4px;
+  background-color: ${Colours.white};
+  box-shadow: 2px 2px 8px #aaa;
+  z-index: 10;
+  padding: 10px;
+
+  img {
+    cursor: pointer;
+  }
+`;
+
+const sprites = [
+  "spikedBall.png",
+  "block.png",
+  "blueGuy.png",
+  "box1.png",
+  "box3.png",
+  "frog.png",
+  "Idle.png",
+  "mask.png",
+  "pinkMan.png",
+  "rockHead.png",
+];
+
+function ImageSelectDropDown({
+  onClose,
+  onSelect,
+}: {
+  onClose: () => void;
+  onSelect: (imageName: string) => void;
+}) {
+  const ref = useOutsideClick(onClose);
+  return (
+    <Dropdown ref={ref}>
+      {sprites.map((spriteName) => {
+        const imagePath = "/sprites/" + spriteName;
+        return <img src={imagePath} onClick={() => onSelect(imagePath)}></img>;
+      })}
+    </Dropdown>
   );
 }
