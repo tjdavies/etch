@@ -7,10 +7,11 @@ import { TypeIconBox } from "./TypeIcon";
 import { FormDown, FormNext } from "grommet-icons";
 import { Options } from "./Options";
 import { ToConnector } from "./ToConnector";
-import { useStore } from "../../../model/Store";
+import { checkCircularDependency, useStore } from "../../../model/Store";
 import { DataInput } from "./DataInput";
 import { ISocket } from "../../../model/Sockets";
 import { observer } from "mobx-react-lite";
+import { IPath } from "../../../model/Path";
 
 const InputWrapper = styled.div`
   position: relative;
@@ -79,6 +80,17 @@ interface InputProps {
   onToggleExpanded?: () => void;
 }
 
+function isValidConnection(socket: ISocket, isSocket?: boolean, drag?: IPath) {
+  if (isSocket && drag) {
+    if (drag?.type !== socket.type) {
+      return false;
+    } else {
+      return !checkCircularDependency(drag, socket);
+    }
+  }
+  return true;
+}
+
 export const ParamLabel = observer(
   ({
     path,
@@ -92,9 +104,7 @@ export const ParamLabel = observer(
     const store = useStore();
     const [isDataInput, setIsDataInput] = useState(false);
 
-    const fade: boolean =
-      (socket && store.activeDrag && store.activeDrag?.type !== path.type) ||
-      false;
+    const fade: boolean = !isValidConnection(path, socket, store.activeDrag);
 
     return (
       <InputWrapper

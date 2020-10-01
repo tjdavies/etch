@@ -21,6 +21,7 @@ import { ITypeIn } from "./Type";
 import { ISocket } from "./Sockets";
 import { IKeyValueMap } from "mobx";
 import { assocPath, mergeDeepLeft, path } from "ramda";
+import { IPlug } from "./Plug";
 
 const RunTimeViewMode = types.enumeration("runTimeViewMode", [
   "docked",
@@ -474,4 +475,16 @@ export function log<T>(t: T): T {
 
 export function getStore(target: IAnyStateTreeNode): IStore {
   return getRoot<IStore>(target);
+}
+
+export function checkCircularDependency(drag: IPath, socket: ISocket): boolean {
+  if (drag.target.id === socket.target.id) {
+    return true;
+  }
+  return drag.target.sockets.some((sock: ISocket) => {
+    if (sock.connection) {
+      return checkCircularDependency(sock.connection.from, socket);
+    }
+    return false;
+  });
 }
