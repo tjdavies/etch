@@ -9,6 +9,7 @@ import { PageHeader } from "../../common/Header";
 import { createNewProject } from "../../../model/Store";
 
 import { loadProjectList, saveProject } from "../../../utils/Save";
+import { prepend, when } from "ramda";
 
 const PageWrapper = styled.div``;
 
@@ -34,17 +35,29 @@ const ProjectHeader = styled.div`
   border-left: 2px solid ${Colours.lightText};
 `;
 
+function hasItemWithId(id: string) {
+  return (loaded: any[]) => {
+    return !loaded.some((p) => p.id === id);
+  };
+}
+
 export const ProjectListPage = () => {
   const loaded = loadProjectList();
   const history = useHistory();
 
   console.log(loaded);
 
-  const hasModified = loaded.some((p) => p.id === "hw");
+  const addHelloWorldProject = when(
+    hasItemWithId("hw"),
+    prepend({ id: "hw", name: "hello world" })
+  );
 
-  const list = hasModified
-    ? loaded
-    : [{ id: "hw", name: "hello world" }, ...loaded];
+  const addFrogProject = when(
+    hasItemWithId("jf"),
+    prepend({ id: "jf", name: "Jumping Frog" })
+  );
+
+  const list = addHelloWorldProject(addFrogProject(loaded));
 
   const [projectList, setProjectList] = useState(list);
 

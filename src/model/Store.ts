@@ -478,17 +478,16 @@ export function getStore(target: IAnyStateTreeNode): IStore {
 }
 
 export function checkCircularDependency(drag: IPath, socket: ISocket): boolean {
+  console.log(drag.target);
+  if (drag.target.fn === undefined) {
+    return false;
+  }
   if (drag.target.id === socket.target.id) {
     return true;
   }
+
   return drag.target.sockets.some((sock: ISocket) => {
     if (sock.connection) {
-      if (
-        sock.connection.from.target.fn === undefined ||
-        drag.target.fn === undefined
-      ) {
-        return false;
-      }
       return checkCircularDependency(sock.connection.from, socket);
     }
     return false;
