@@ -132,6 +132,20 @@ export const coreFunctionProcesses: Record<string, any> = {
       },
     };
   },
+  drawImage: ({
+    drawImageScene,
+    drawImageImage,
+  }: Record<string, any>): Record<string, any> => {
+    return {
+      drawImageOut: {
+        ...drawImageScene,
+        children: [
+          ...drawImageScene.children,
+          { ...drawImageImage, type: "image" },
+        ],
+      },
+    };
+  },
 };
 
 const notFn: IFnIn = {
@@ -615,6 +629,31 @@ const drawTextFn: IFnIn = {
   ],
 };
 
+const drawImageFn: IFnIn = {
+  id: "drawImage",
+  name: "draw image",
+  core: true,
+  input: [
+    {
+      id: "drawImageScene",
+      name: "scene",
+      type: "scene",
+    },
+    {
+      id: "drawImageImage",
+      name: "image",
+      type: "image",
+    },
+  ],
+  output: [
+    {
+      id: "drawImageOut",
+      name: "scene",
+      type: "scene",
+    },
+  ],
+};
+
 export const coreFunctions = {
   add: addFn,
   subtract: subtractFn,
@@ -633,4 +672,5 @@ export const coreFunctions = {
   isKeyDown: isKeyDownFn,
   draw: drawFn,
   drawText: drawTextFn,
+  drawImage: drawImageFn,
 };

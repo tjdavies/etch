@@ -1,7 +1,7 @@
 import React from "react";
 import useDimensions from "react-use-dimensions";
 
-import { Stage, Rect, Layer, Text } from "react-konva";
+import { Stage, Rect, Layer, Text, Image } from "react-konva";
 import styled from "styled-components";
 
 const Box = styled.div`
@@ -63,6 +63,22 @@ export const Thing = ({ thing }: { thing: any }) => {
         fontSize={thing.fontSize}
       />
     );
+  }
+  if (thing.type === "text") {
+    return (
+      <Text
+        x={thing.x}
+        y={thing.y}
+        text={thing.text}
+        fill={thing.colour}
+        fontSize={thing.fontSize}
+      />
+    );
+  }
+  if (thing.type === "image") {
+    const I = new window.Image();
+    I.src = "/sprites/Jump.png";
+    return <Image x={thing.x} y={thing.y} image={I} />;
   }
   return null;
 };
