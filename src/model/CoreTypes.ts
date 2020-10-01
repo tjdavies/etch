@@ -25,12 +25,17 @@ export const coreTypes: Record<string, ITypeIn> = {
     name: "boolean",
     defaultValue: false,
   },
-
   colour: {
     core: true,
     id: "colour",
     name: "colour",
     defaultValue: "#F00",
+  },
+  imageSrc: {
+    core: true,
+    id: "imageSrc",
+    name: "image source",
+    defaultValue: "/sprites/Jump.png",
   },
   through: {
     core: true,
@@ -123,9 +128,9 @@ export const coreTypes: Record<string, ITypeIn> = {
         type: "number",
       },
       {
-        id: "image",
-        name: "image",
-        type: "string",
+        id: "imageSrc",
+        name: "image source",
+        type: "imageSrc",
       },
     ],
   },

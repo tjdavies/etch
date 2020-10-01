@@ -77,7 +77,7 @@ export const Thing = ({ thing }: { thing: any }) => {
   }
   if (thing.type === "image") {
     const I = new window.Image();
-    I.src = "/sprites/Jump.png";
+    I.src = thing.imageSrc;
     return <Image x={thing.x} y={thing.y} image={I} />;
   }
   return null;
