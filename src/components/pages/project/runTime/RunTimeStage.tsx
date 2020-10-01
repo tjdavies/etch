@@ -9,17 +9,8 @@ const Box = styled.div`
   background-color: white;
 `;
 
-export interface IRect {
-  type: "rect";
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  colour: string;
-}
-
 export interface IScene {
-  children: IRect[];
+  children: any[];
 }
 
 interface Props {
@@ -50,7 +41,7 @@ export const RunTimeStage = ({ scene }: Props) => {
   );
 };
 
-export const Thing = ({ thing }: { thing: IRect }) => {
+export const Thing = ({ thing }: { thing: any }) => {
   if (thing.type === "rect") {
     return (
       <Rect
@@ -64,7 +55,13 @@ export const Thing = ({ thing }: { thing: IRect }) => {
   }
   if (thing.type === "text") {
     return (
-      <Text x={thing.x} y={thing.y} text={thing.text} fill={thing.colour} />
+      <Text
+        x={thing.x}
+        y={thing.y}
+        text={thing.text}
+        fill={thing.colour}
+        fontSize={thing.fontSize}
+      />
     );
   }
   return null;

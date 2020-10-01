@@ -75,6 +75,38 @@ export const coreTypes: Record<string, ITypeIn> = {
       },
     ],
   },
+  text: {
+    core: true,
+    id: "text",
+    name: "text",
+    params: [
+      {
+        id: "x",
+        name: "x",
+        type: "number",
+      },
+      {
+        id: "y",
+        name: "y",
+        type: "number",
+      },
+      {
+        id: "text",
+        name: "text",
+        type: "string",
+      },
+      {
+        id: "colour",
+        name: "colour",
+        type: "colour",
+      },
+      {
+        id: "fontSize",
+        name: "font size",
+        type: "number",
+      },
+    ],
+  },
   scene: {
     core: true,
     id: "scene",
