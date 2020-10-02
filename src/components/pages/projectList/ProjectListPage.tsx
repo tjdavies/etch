@@ -52,12 +52,7 @@ export const ProjectListPage = () => {
     prepend({ id: "hw", name: "hello world" })
   );
 
-  const addFrogProject = when(
-    hasItemWithId("jf"),
-    prepend({ id: "jf", name: "Jumping Frog" })
-  );
-
-  const list = addHelloWorldProject(addFrogProject(loaded));
+  const list = addHelloWorldProject(loaded);
 
   const [projectList, setProjectList] = useState(list);
 

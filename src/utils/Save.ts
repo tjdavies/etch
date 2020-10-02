@@ -1,5 +1,4 @@
 import HelloWorld from "../assets/demos/HelloWorld.json";
-import JumpingFrog from "../assets/demos/JumpingFrog.json";
 
 export const PROJECT_LIST = "PROJECT_LIST";
 const PROJECT_PREFIX = "ETCH_";
@@ -35,9 +34,7 @@ export function loadProject(id: string): any {
   if (id === "hw") {
     return HelloWorld;
   }
-  if (id === "jf") {
-    return JumpingFrog;
-  }
+
   const project = localStorage.getItem(PROJECT_PREFIX + id);
   if (project) {
     return JSON.parse(project);
