@@ -54,27 +54,27 @@ export const coreTypes: Record<string, ITypeIn> = {
     name: "rect",
     params: [
       {
-        id: "x",
+        id: "rectx",
         name: "x",
         type: "number",
       },
       {
-        id: "y",
+        id: "recty",
         name: "y",
         type: "number",
       },
       {
-        id: "height",
+        id: "rectheight",
         name: "height",
         type: "number",
       },
       {
-        id: "width",
+        id: "rectwidth",
         name: "width",
         type: "number",
       },
       {
-        id: "colour",
+        id: "rectcolour",
         name: "colour",
         type: "colour",
       },
@@ -86,12 +86,12 @@ export const coreTypes: Record<string, ITypeIn> = {
     name: "text",
     params: [
       {
-        id: "x",
+        id: "textx",
         name: "x",
         type: "number",
       },
       {
-        id: "y",
+        id: "texty",
         name: "y",
         type: "number",
       },
@@ -101,7 +101,7 @@ export const coreTypes: Record<string, ITypeIn> = {
         type: "string",
       },
       {
-        id: "colour",
+        id: "textcolour",
         name: "colour",
         type: "colour",
       },
@@ -118,22 +118,22 @@ export const coreTypes: Record<string, ITypeIn> = {
     name: "image",
     params: [
       {
-        id: "x",
+        id: "imagex",
         name: "x",
         type: "number",
       },
       {
-        id: "y",
+        id: "imagey",
         name: "y",
         type: "number",
       },
       {
-        id: "height",
+        id: "imageheight",
         name: "height",
         type: "number",
       },
       {
-        id: "width",
+        id: "imagewidth",
         name: "width",
         type: "number",
       },
