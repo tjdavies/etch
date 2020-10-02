@@ -45,32 +45,21 @@ export const Thing = ({ thing }: { thing: any }) => {
   if (thing.type === "rect") {
     return (
       <Rect
-        x={thing.x}
-        y={thing.y}
-        width={thing.width}
-        height={thing.height}
-        fill={thing.colour}
+        x={thing.rectx}
+        y={thing.rectx}
+        width={thing.rectwidth}
+        height={thing.rectheight}
+        fill={thing.rectcolour}
       />
     );
   }
   if (thing.type === "text") {
     return (
       <Text
-        x={thing.x}
-        y={thing.y}
+        x={thing.textx}
+        y={thing.texty}
         text={thing.text}
-        fill={thing.colour}
-        fontSize={thing.fontSize}
-      />
-    );
-  }
-  if (thing.type === "text") {
-    return (
-      <Text
-        x={thing.x}
-        y={thing.y}
-        text={thing.text}
-        fill={thing.colour}
+        fill={thing.textcolour}
         fontSize={thing.fontSize}
       />
     );
@@ -80,10 +69,10 @@ export const Thing = ({ thing }: { thing: any }) => {
     I.src = thing.imageSrc;
     return (
       <Image
-        x={thing.x}
-        y={thing.y}
-        width={thing.width}
-        height={thing.height}
+        x={thing.imagex}
+        y={thing.imagey}
+        width={thing.imageheight}
+        height={thing.imagewidth}
         image={I}
       />
     );

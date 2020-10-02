@@ -295,10 +295,10 @@ function getValuesForSockets(
   calculatedState: Object
 ): Object {
   return sockets.reduce((accumulator, socket) => {
-    const wire = socket.connection;
+    const connection = socket.connection;
 
-    if (wire) {
-      const wireValue = findPlugValue(fn, wire, accumulator);
+    if (connection) {
+      const wireValue = findPlugValue(fn, connection, accumulator);
 
       if (socket.params) {
         const socks = getValuesForSockets(fn, socket.params, wireValue);
@@ -315,14 +315,14 @@ function getValuesForSockets(
   }, calculatedState);
 }
 
-function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
-  const val = getValue(wire.from.path, calculatedState);
+function findPlugValue(fn: IFn, connection: IPath, calculatedState: Object) {
+  const val = getValue(connection.path, calculatedState);
 
   if (val !== undefined) {
     return calculatedState;
   } else {
-    if (getType(wire.from.target) === Token) {
-      const token = wire.from.target as IToken;
+    if (getType(connection.target) === Token) {
+      const token = connection.target as IToken;
 
       const computedValues: any = getValuesForSockets(
         fn,
@@ -333,8 +333,8 @@ function findPlugValue(fn: IFn, wire: IWire, calculatedState: Object) {
       return outPutValue;
     } else {
       return setValue(
-        wire.from.path,
-        wire.from.param.type.defaultValue,
+        connection.path,
+        connection.param.type.defaultValue,
         calculatedState
       );
     }
@@ -353,9 +353,9 @@ function mapSocketsToValues(
   plugValues: Record<string, any>
 ): Record<string, any> {
   return sockets.reduce((accumulator, socket) => {
-    const wire = socket.connection;
+    const connection = socket.connection;
 
-    if (wire) {
+    if (connection) {
       if (socket.params) {
         // get the value of a connection but over right it with any wires connected deeper down the tree
         const paramValues = mapOnlyWireSocketsToValues(
@@ -364,7 +364,7 @@ function mapSocketsToValues(
         );
 
         return setParamValue(socket, accumulator, {
-          ...getValue(wire.from.path, plugValues),
+          ...getValue(connection.path, plugValues),
           ...paramValues,
         });
       }
@@ -372,7 +372,7 @@ function mapSocketsToValues(
       return setParamValue(
         socket,
         accumulator,
-        getValue(wire.from.path, plugValues)
+        getValue(connection.path, plugValues)
       );
     }
 
@@ -413,9 +413,9 @@ function mapOnlyWireSocketsToValues(
   plugValues: Record<string, any>
 ): Record<string, any> {
   return sockets.reduce((accumulator, socket) => {
-    const wire = socket.connection;
+    const connection = socket.connection;
 
-    if (wire) {
+    if (connection) {
       if (socket.params) {
         const paramValues = mapOnlyWireSocketsToValues(
           socket.params,
@@ -423,7 +423,7 @@ function mapOnlyWireSocketsToValues(
         );
         return {
           [socket.param.id]: {
-            ...getValue(wire.from.path, plugValues),
+            ...getValue(connection.path, plugValues),
             ...paramValues,
           },
           ...accumulator,
@@ -431,7 +431,7 @@ function mapOnlyWireSocketsToValues(
       }
 
       return {
-        [socket.param.id]: getValue(wire.from.path, plugValues),
+        [socket.param.id]: getValue(connection.path, plugValues),
         ...accumulator,
       };
     }
@@ -478,7 +478,6 @@ export function getStore(target: IAnyStateTreeNode): IStore {
 }
 
 export function checkCircularDependency(drag: IPath, socket: ISocket): boolean {
-  console.log(drag.target);
   if (drag.target.fn === undefined) {
     return false;
   }
@@ -488,7 +487,7 @@ export function checkCircularDependency(drag: IPath, socket: ISocket): boolean {
 
   return drag.target.sockets.some((sock: ISocket) => {
     if (sock.connection) {
-      return checkCircularDependency(sock.connection.from, socket);
+      return checkCircularDependency(sock.connection, socket);
     }
     return false;
   });

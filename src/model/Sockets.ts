@@ -8,7 +8,7 @@ import { IType } from "./Type";
 
 export interface ISocket extends IPath {
   value?: number;
-  connection?: IWire;
+  connection?: IPath;
   params?: ISocket[];
   expanded: boolean;
   data?: any;
@@ -30,7 +30,7 @@ export function paramToSocket(
     param,
     path: path,
     value: values.get(path),
-    connection: findWireTo(wires, path),
+    connection: findWireTo(wires, path)?.from,
     type:
       param.type.id === "through" && selectedType ? selectedType : param.type,
     params:
