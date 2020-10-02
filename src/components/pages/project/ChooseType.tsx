@@ -45,8 +45,13 @@ export function ChooseType({ type, onSelect }: Props) {
           align={"left"}
         />
       )}
-      <Button onClick={() => setShowSelect(true)}>
-        : {type.name} <FormDown color="white" size="small" />
+      <Button>
+        : {type.name}{" "}
+        <FormDown
+          color="white"
+          size="small"
+          onClick={() => setShowSelect(true)}
+        />
       </Button>
     </Wrapper>
   );

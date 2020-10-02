@@ -71,6 +71,17 @@ export const Token = types
     },
     setSelectedType(typeId: string) {
       const type = getStore(self).project.types.get(typeId);
+      self.plugs.forEach(
+        (plug) =>
+          plug.param.type.id === "through" &&
+          getParent<IFn>(self, 2).removeAllWiresWithPath(plug)
+      );
+      self.sockets.forEach(
+        (plug) =>
+          plug.param.type.id === "through" &&
+          getParent<IFn>(self, 2).removeAllWiresWithPath(plug)
+      );
+
       self.selectedType = type;
     },
   }));

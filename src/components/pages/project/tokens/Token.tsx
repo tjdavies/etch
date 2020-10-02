@@ -108,7 +108,6 @@ export const Token = observer(({ token }: Props) => {
               </ShareWrap>
             )}
             <FnName>{token.fn.name}</FnName>
-
             {token.type && (
               <ChooseType type={token.type} onSelect={token.setSelectedType} />
             )}
@@ -117,7 +116,6 @@ export const Token = observer(({ token }: Props) => {
             <Close color="white" size="small" />
           </CloseButton>
         </TokenHeader>
-
         <TokenBody>
           <TokenInput input={token.sockets} />
           <TokenOutput output={token.plugs} />
