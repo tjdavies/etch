@@ -36,7 +36,7 @@ export const Project = types
     deletePath(path: IPath) {
       const store = getStore(self);
       store.setActiveSocket(undefined);
-      self.functions.forEach((f) => f.removeAllWiresWithPath(path));
+      self.functions.forEach((f) => f.removeAllWiresToParam(path));
       path.param.delete();
     },
   }));

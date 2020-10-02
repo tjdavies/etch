@@ -99,6 +99,16 @@ export const Fn = types
         destroy(element);
       });
     },
+    removeAllWiresToParam(path: IPath) {
+      const connected = self.wires.filter(
+        (wire) =>
+          wire.from.param.id === path.param.id ||
+          wire.to.param.id === path.param.id
+      );
+      connected.forEach((element) => {
+        destroy(element);
+      });
+    },
     removeToken(token: IToken) {
       const connected = self.wires.filter(
         (wire) => wire.from.target === token || wire.to.target === token
