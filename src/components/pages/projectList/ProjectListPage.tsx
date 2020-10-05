@@ -45,8 +45,6 @@ export const ProjectListPage = () => {
   const loaded = loadProjectList();
   const history = useHistory();
 
-  console.log(loaded);
-
   const addHelloWorldProject = when(
     hasItemWithId("hw"),
     prepend({ id: "hw", name: "hello world" })

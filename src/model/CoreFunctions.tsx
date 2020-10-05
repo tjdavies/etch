@@ -270,7 +270,7 @@ const divideFn: IFnIn = {
 
 const selectFn: IFnIn = {
   id: "select",
-  name: "select",
+  name: "if else",
   core: true,
   defaultSelectedType: "number",
   input: [
