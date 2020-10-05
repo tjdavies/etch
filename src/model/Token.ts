@@ -81,7 +81,9 @@ export const Token = types
           plug.param.type.id === "through" &&
           getParent<IFn>(self, 2).removeAllWiresWithPath(plug)
       );
-
+      self.sockets.forEach((plug) => {
+        plug.param.type.id === "through" && self.values.delete(plug.path);
+      });
       self.selectedType = type;
     },
   }));
