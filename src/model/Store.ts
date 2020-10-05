@@ -68,14 +68,22 @@ export const Store = types
     },
     stopDrag() {
       if (self.activeDrag) {
+        const index = self.activeFunction.wires.findIndex(
+          (i: any) => i.to.path === self.activeDrag?.path
+        );
+
         if (self.activeSocket) {
-          const index = self.activeFunction.wires.findIndex(
+          self.activeSocket.target.removeValue(self.activeSocket.path);
+
+          const wireToSocketIndex = self.activeFunction.wires.findIndex(
             (i: any) => i.to.path === self.activeSocket?.path
           );
 
-          self.activeSocket.target.removeValue(self.activeSocket.path);
-
+          if (wireToSocketIndex > -1) {
+            self.activeFunction.wires.splice(wireToSocketIndex, 1);
+          }
           if (index > -1) {
+            // if wire was connected else where update
             self.activeFunction.wires[index].to = clone(self.activeSocket);
           } else {
             self.activeFunction.wires.push({
@@ -86,11 +94,9 @@ export const Store = types
           }
         } else {
           // if dropped on background remove wire
-          const activeWireIndex = self.activeFunction.wires.findIndex(
-            (i: any) => i.to.path === self.activeDrag?.path
-          );
-          if (activeWireIndex > -1) {
-            self.activeFunction.wires.splice(activeWireIndex, 1);
+
+          if (index > -1) {
+            self.activeFunction.wires.splice(index, 1);
           }
         }
       }
