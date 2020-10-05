@@ -7,6 +7,8 @@ import { DataOutput } from "./DataOutput";
 import { ISocket } from "../../../model/Sockets";
 
 export const ConnectorCircle = styled.div`
+  margin-top: 5px;
+  margin-left: 5px;
   border: 1px solid ${Colours.lightGrey};
   width: 10px;
   height: 10px;
@@ -15,10 +17,8 @@ export const ConnectorCircle = styled.div`
 
 const Wrap = styled.div`
   position: absolute;
-`;
-
-const Wrap2 = styled.div`
-  position: relative;
+  height: 20px;
+  width: 20px;
 `;
 
 const WireSVG = styled.svg`
@@ -36,23 +36,21 @@ export function FromConnector({ path }: Props) {
   const store = useStore();
 
   return (
-    <Wrap>
-      <Wrap2>
-        <ConnectorCircle id={path.path} />
+    <Wrap id={path.path}>
+      <ConnectorCircle />
 
-        <WireSVG>
-          <DraggableWire
-            from={{ x: 0, y: 0 }}
-            to={{ x: 0, y: 0 }}
-            onStartDrag={() => store.startDrag(path)}
-            onStopDrag={() => store.stopDrag()}
-            color={path.type.colour}
-          />
-        </WireSVG>
-        {path.data !== undefined && (
-          <DataOutput value={path.data} type={path.type} />
-        )}
-      </Wrap2>
+      <WireSVG>
+        <DraggableWire
+          from={{ x: 0, y: 0 }}
+          to={{ x: 0, y: 0 }}
+          onStartDrag={() => store.startDrag(path)}
+          onStopDrag={() => store.stopDrag()}
+          color={path.type.colour}
+        />
+      </WireSVG>
+      {path.data !== undefined && (
+        <DataOutput value={path.data} type={path.type} />
+      )}
     </Wrap>
   );
 }

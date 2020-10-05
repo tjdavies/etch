@@ -37,8 +37,9 @@ const LabelWrapper = styled.div`
 
 const BlankConnector = styled.div`
   position: absolute;
-  width: 2px;
-  height: 50%;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
 `;
 
 export const ConnectorWrapper = styled.div`
@@ -55,7 +56,7 @@ export const ConnectorWrapper = styled.div`
 `;
 
 function getIndent(depth: number) {
-  return depth * 6 + 10 + "px";
+  return depth * 6 + 2 + "px";
 }
 
 interface SocketProps {
@@ -154,13 +155,10 @@ export const ParamLabel = observer(
               }}
             />
           )}
-          {!expanded && (
-            <>
-              {getAppParams(path).map((p) => (
-                <BlankConnector key={p.path} id={p.path} />
-              ))}
-            </>
-          )}
+          {!expanded &&
+            getAppParams(path).map((p) => (
+              <BlankConnector key={p.path} id={p.path} />
+            ))}
           {socket ? (
             <ToConnector
               socket={path}

@@ -11,9 +11,8 @@ interface Props {
 
 const InspectBox = styled.div`
   position: absolute;
-
-  bottom: 8px;
-  left: 12px;
+  bottom: 12px;
+  left: 16px;
   border: 1px solid ${Colours.lightGrey};
   background-color: ${Colours.background};
   pointer-events: none;
