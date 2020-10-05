@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export function useKeyDown(callback: (keys: any) => void) {
+export function useKeysDown(callback: (keys: any) => void) {
   const savedCallback = useRef<(keys: any) => void | null>();
   const keys = useRef<string[]>([]);
   // State for keeping track of whether key is pressed

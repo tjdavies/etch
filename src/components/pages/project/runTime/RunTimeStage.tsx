@@ -46,7 +46,7 @@ export const Thing = ({ thing }: { thing: any }) => {
     return (
       <Rect
         x={thing.rectx}
-        y={thing.rectx}
+        y={thing.recty}
         width={thing.rectwidth}
         height={thing.rectheight}
         fill={thing.rectcolour}
@@ -71,8 +71,8 @@ export const Thing = ({ thing }: { thing: any }) => {
       <Image
         x={thing.imagex}
         y={thing.imagey}
-        width={thing.imageheight}
-        height={thing.imagewidth}
+        width={thing.imagewidth}
+        height={thing.imageheight}
         image={I}
       />
     );

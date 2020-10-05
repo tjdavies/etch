@@ -1,7 +1,9 @@
+import { Keyboard } from "grommet-icons";
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { TypeColours } from "../../../model/CoreTypes";
 import { Colours } from "../../../Style";
+import { useKeyPressed } from "../../../utils/hooks/useKeyPressed";
 import { useOutsideClick } from "../../../utils/hooks/useOutsideClick";
 
 const InputWrapper = styled.div`
@@ -16,7 +18,7 @@ const InputWrapper = styled.div`
   }
 
   width: fit-content;
-
+  height: 22px;
   img {
     cursor: pointer;
     height: 22px;
@@ -77,6 +79,13 @@ export function DataInput(props: Props) {
     return (
       <InputWrapper>
         <ImageInput {...props} />
+      </InputWrapper>
+    );
+  }
+  if (props.type === "keyCode") {
+    return (
+      <InputWrapper>
+        <KeyInput {...props} />
       </InputWrapper>
     );
   }
@@ -269,4 +278,58 @@ function ImageSelectDropDown({
       })}
     </Dropdown>
   );
+}
+
+function KeyInput({ value, onEnter, onRemoveValue }: Props) {
+  const [isRecordingKey, setRecordKey] = useState(false);
+
+  return isRecordingKey ? (
+    <KeyRecorder
+      onClose={() => {
+        setRecordKey(false);
+        onRemoveValue();
+      }}
+      onKeyDown={(key) => {
+        setRecordKey(false);
+        onEnter(key);
+      }}
+    />
+  ) : (
+    <PressKeyValue onClick={() => setRecordKey(true)}>
+      <span>{value}</span>
+      <Keyboard />
+    </PressKeyValue>
+  );
+}
+
+const PressKeyValue = styled.div`
+  display: flex;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+  gap: 5px;
+`;
+
+const PressKeyPrompt = styled.span`
+  background-color: ${Colours.white};
+  white-space: nowrap;
+  user-select: none;
+  animation: blinker 1s linear infinite;
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+`;
+
+function KeyRecorder({
+  onClose,
+  onKeyDown,
+}: {
+  onClose: () => void;
+  onKeyDown: (key: string) => void;
+}) {
+  const ref = useOutsideClick(onClose);
+  useKeyPressed(onKeyDown);
+  return <PressKeyPrompt ref={ref}>Press a key</PressKeyPrompt>;
 }

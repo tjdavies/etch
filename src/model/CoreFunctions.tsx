@@ -556,7 +556,7 @@ const clampFn: IFnIn = {
 
 const isKeyDownFn: IFnIn = {
   id: "isKeyDown",
-  name: "isKeyDown",
+  name: "is key down",
   core: true,
   input: [
     {
@@ -566,8 +566,8 @@ const isKeyDownFn: IFnIn = {
     },
     {
       id: "isKeyDownValue",
-      name: "keyName",
-      type: "string",
+      name: "key",
+      type: "keyCode",
     },
   ],
   output: [

@@ -35,7 +35,13 @@ export const coreTypes: Record<string, ITypeIn> = {
     core: true,
     id: "imageSrc",
     name: "image source",
-    defaultValue: "/sprites/Jump.png",
+    defaultValue: "/sprites/frog.png",
+  },
+  keyCode: {
+    core: true,
+    id: "keyCode",
+    name: "key",
+    defaultValue: "a",
   },
   through: {
     core: true,

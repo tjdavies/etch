@@ -8,7 +8,7 @@ import { TokenDropDown } from "./TokenDropDown";
 import { Point } from "../../../types/types";
 import { Token } from "./tokens/Token";
 import { observer } from "mobx-react-lite";
-import { useKeyDown } from "../../../utils/hooks/useKeyDown";
+import { useKeysDown } from "../../../utils/hooks/useKeysDown";
 import { useStore } from "../../../model/Store";
 
 const FunctionViewWrapper = styled.div`
@@ -39,7 +39,7 @@ export const FunctionView = observer(({ fn }: Props) => {
 
   const store = useStore();
 
-  useKeyDown((keys) => {
+  useKeysDown((keys) => {
     store.setInput({ keysDown: keys });
   });
 
