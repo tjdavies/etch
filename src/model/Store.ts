@@ -68,11 +68,11 @@ export const Store = types
     },
     stopDrag() {
       if (self.activeDrag) {
-        const index = self.activeFunction.wires.findIndex(
-          (i: any) => i.to.path === self.activeDrag?.path
-        );
-
         if (self.activeSocket) {
+          const index = self.activeFunction.wires.findIndex(
+            (i: any) => i.to.path === self.activeSocket?.path
+          );
+
           self.activeSocket.target.removeValue(self.activeSocket.path);
 
           if (index > -1) {
@@ -85,8 +85,12 @@ export const Store = types
             });
           }
         } else {
-          if (index > -1) {
-            self.activeFunction.wires.splice(index, 1);
+          // if dropped on background remove wire
+          const activeWireIndex = self.activeFunction.wires.findIndex(
+            (i: any) => i.to.path === self.activeDrag?.path
+          );
+          if (activeWireIndex > -1) {
+            self.activeFunction.wires.splice(activeWireIndex, 1);
           }
         }
       }
