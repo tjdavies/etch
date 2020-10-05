@@ -386,7 +386,8 @@ function mapSocketsToValues(
           mapSocketsToValues(socket.params, plugValues)
         );
       }
-      return setParamValue(socket, accumulator, socket.param.type.defaultValue);
+      // get default value
+      return setParamValue(socket, accumulator, socket.type.defaultValue);
     }
   }, {});
 }
