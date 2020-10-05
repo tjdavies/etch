@@ -19,6 +19,7 @@
     "react-error-boundary": "^3.0.2",
     "react-inspector": "^5.1.0",
     "react-konva": "^16.13.0-6",
+    "react-player": "^2.6.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-use-dimensions": "^1.2.1",

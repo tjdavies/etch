@@ -5,6 +5,7 @@ import { Routes } from "../../../Routes";
 import { Colours } from "../../../Style";
 
 import { PageHeader } from "../../common/Header";
+import ReactPlayer from "react-player";
 
 const PageWrapper = styled.div`
   position: relative;
@@ -46,6 +47,15 @@ const PageContent = styled.div`
   }
 `;
 
+const iframe = `<iframe
+width="560"
+height="315"
+src="https://www.youtube.com/embed/W5Z8kVfKivs"
+frameborder="0"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen
+></iframe>`;
+
 export const SplashPage = () => {
   return (
     <PageWrapper>
@@ -65,8 +75,10 @@ export const SplashPage = () => {
         <Link to={Routes.projectList}>
           <button>Start Creating</button>
         </Link>
+        <p>Watch a quick intro to get started</p>
+        <ReactPlayer url="https://www.youtube.com/embed/W5Z8kVfKivs" />
         <p>
-          want to find out a bit <Link to={Routes.about}>more?</Link>
+          Want to find out <Link to={Routes.about}>more?</Link>
         </p>
       </PageContent>
     </PageWrapper>
