@@ -9,7 +9,7 @@ import { PageHeader } from "../../common/Header";
 import { createNewProject } from "../../../model/Store";
 
 import { loadProjectList, saveProject } from "../../../utils/Save";
-import { prepend, when } from "ramda";
+import { pipe, prepend, when } from "ramda";
 
 const PageWrapper = styled.div``;
 
@@ -47,7 +47,10 @@ export const ProjectListPage = () => {
 
   const addHelloWorldProject = when(
     hasItemWithId("hw"),
-    prepend({ id: "hw", name: "hello world" })
+    pipe(
+      prepend({ id: "hw", name: "hello world" }),
+      prepend({ id: "nf", name: "ninja frog" })
+    )
   );
 
   const list = addHelloWorldProject(loaded);

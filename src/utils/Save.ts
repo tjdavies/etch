@@ -1,4 +1,5 @@
 import HelloWorld from "../assets/demos/HelloWorld.json";
+import NinjaFrog from "../assets/demos/NinjaFrog.json";
 
 export const PROJECT_LIST = "PROJECT_LIST";
 const PROJECT_PREFIX = "ETCH_";
@@ -33,6 +34,9 @@ export function saveProject(data: any) {
 export function loadProject(id: string): any {
   if (id === "hw") {
     return HelloWorld;
+  }
+  if (id == "nf") {
+    return NinjaFrog;
   }
 
   const project = localStorage.getItem(PROJECT_PREFIX + id);
