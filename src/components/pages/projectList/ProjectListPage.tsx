@@ -47,13 +47,16 @@ export const ProjectListPage = () => {
 
   const addHelloWorldProject = when(
     hasItemWithId("hw"),
-    pipe(
-      prepend({ id: "hw", name: "hello world" }),
-      prepend({ id: "nf", name: "ninja frog" })
-    )
+
+    prepend({ id: "hw", name: "hello world" })
   );
 
-  const list = addHelloWorldProject(loaded);
+  const addFrogProject = when(
+    hasItemWithId("nf"),
+    prepend({ id: "nf", name: "ninja frog" })
+  );
+
+  const list = addFrogProject(addHelloWorldProject(loaded));
 
   const [projectList, setProjectList] = useState(list);
 
