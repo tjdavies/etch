@@ -49,7 +49,7 @@ export const FunctionView = observer(({ fn }: Props) => {
         onDoubleClick={(e) => setShowTokenDropdown({ x: e.pageX, y: e.pageY })}
       />
       {fn.tokens.map((t: any) => (
-        <Token key={t.id} token={t} />
+        <Token key={t.id} token={t} onSelect={() => console.log("onSelect")} />
       ))}
 
       <FunctionInput input={fn.plugs} editable={fn.isMain} />

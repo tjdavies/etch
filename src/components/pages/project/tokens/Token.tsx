@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { IToken } from "../../../../model/Token";
 import { Colours } from "../../../../Style";
-import Draggable from "react-draggable";
+import Draggable, { DraggableData } from "react-draggable";
 import { TokenInput } from "./TokenInput";
 import { TokenOutput } from "./TokenOutput";
 import { Share, Close } from "grommet-icons";
@@ -35,10 +35,6 @@ const TokenHeader = styled.div`
   user-select: none;
 `;
 
-interface Props {
-  token: IToken;
-}
-
 const TokenBody = styled.div`
   flex: 1;
   display: flex;
@@ -63,11 +59,11 @@ const CloseButton = styled.div`
 const FnName = styled.span`
   font-weight: bold;
   margin-right: 0px;
-  cursor: pointer;
 `;
 
 const ShareWrap = styled.div`
   margin-right: 4px;
+  cursor: pointer;
 `;
 
 const HeaderDetails = styled.div`
@@ -75,9 +71,15 @@ const HeaderDetails = styled.div`
   align-items: center;
 `;
 
-export const Token = observer(({ token }: Props) => {
+interface Props {
+  token: IToken;
+  onSelect: () => void;
+}
+
+export const Token = observer(({ token, onSelect }: Props) => {
   const history = useHistory();
   const store = useStore();
+  const [dragStartPos, setDragStartPos] = useState<DraggableData | null>(null);
 
   const onOpenToken = () => {
     if (!token.fn.core) {
@@ -91,19 +93,29 @@ export const Token = observer(({ token }: Props) => {
     }
   };
 
+  const onTokenClick = () => {
+    setDragStartPos(null);
+  };
+
+  const isDragging =
+    dragStartPos &&
+    (dragStartPos.x !== token.position.x ||
+      dragStartPos.y !== token.position.y);
+
   return (
     <Draggable
       handle={".header"}
       onDrag={(e, data) => {
         token.setPosition({ x: data.x, y: data.y });
       }}
+      onStart={(e, data) => setDragStartPos(data)}
       position={token.position}
     >
-      <TokenWrapper onDoubleClick={onOpenToken}>
+      <TokenWrapper onClick={onTokenClick}>
         <TokenHeader className="header" isCore={token.fn.core}>
           <HeaderDetails>
             {!token.fn.core && (
-              <ShareWrap>
+              <ShareWrap onClick={!isDragging ? onOpenToken : () => null}>
                 <Share color="white" size="small" />
               </ShareWrap>
             )}
@@ -112,7 +124,7 @@ export const Token = observer(({ token }: Props) => {
               <ChooseType type={token.type} onSelect={token.setSelectedType} />
             )}
           </HeaderDetails>
-          <CloseButton onClick={token.remove}>
+          <CloseButton onClick={!isDragging ? token.remove : () => null}>
             <Close color="white" size="small" />
           </CloseButton>
         </TokenHeader>
