@@ -195,12 +195,13 @@ export const Fn = types
 
       const newFnId = generateId();
 
+      // now find the wires connecting the input of  the new fn
       const wiresInto = self.wires.filter(
         (wire) =>
           selectedTokens.includes(wire.to.target.id) &&
           !selectedTokens.includes(wire.from.target.id)
       );
-
+      // generate the params and wire them up
       const incoming = wiresInto.map((wire) => {
         const param = Param.create({
           name: wire.to.param.name,
@@ -222,16 +223,16 @@ export const Fn = types
           newWire,
         };
       });
-
       const inputs = incoming.map((i) => i.param);
       const inWires = incoming.map((i) => i.newWire);
 
+      // now find the wires connecting to the  output of  the new fn
       const wiresOut = self.wires.filter(
         (wire) =>
           !selectedTokens.includes(wire.to.target.id) &&
           selectedTokens.includes(wire.from.target.id)
       );
-
+      // generate the params and wire them up
       const outgoing = wiresOut.map((wire) => {
         const param = Param.create({
           name: wire.from.param.name,
@@ -254,7 +255,7 @@ export const Fn = types
 
       const outputs = outgoing.map((i) => i.param);
       const outWires = outgoing.map((i) => i.newWire);
-
+      // now create that new function
       const newFn: IFnIn = {
         id: newFnId,
         core: false,
@@ -265,8 +266,7 @@ export const Fn = types
         wires: [...interConnected, ...inWires, ...outWires],
       };
 
-      console.log(newFn);
-      // remove the selected tokens
+      // now remove the selected tokens from the parent function
       self.tokens
         .filter((token) => selectedTokens.includes(token.id))
         .forEach((token) => {
@@ -275,7 +275,6 @@ export const Fn = types
 
       store.addNewFunction(newFn);
       // create the token
-
       const newTokenId = generateId();
       const newToken: ITokenIn = {
         id: newTokenId,
@@ -284,7 +283,7 @@ export const Fn = types
       };
 
       self.tokens.push(newToken);
-      // re wire to new token
+      // re wire all the inputs and out puts to new token
       // inputs
       const inConnectWires: IWireIn[] = wiresInto.map((wire, index) => {
         const param = inputs[index];
