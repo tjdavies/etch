@@ -5,18 +5,18 @@ import {
   destroy,
   getRoot,
   getSnapshot,
+  clone,
 } from "mobx-state-tree";
 import { Param, IParamIn, IParam } from "./Param";
 import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
-import { Wire } from "./Wire";
+import { IWire, IWireIn, Wire } from "./Wire";
 import { getStore, IStore } from "./Store";
 import { ISocket, createSockets } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";
 import { IPath } from "./Path";
 import { Type } from "./Type";
-import { Wires } from "../components/pages/project/wires/Wires";
 
 export function findContext(
   contextId: string,
@@ -181,38 +181,142 @@ export const Fn = types
       const store = getStore(self);
       // copy the selected tokens
       const selectedTokenList = self.tokens
-        .filter((token) => selectedTokens.some((id) => token.id === id))
+        .filter((token) => selectedTokens.includes(token.id))
         .map((t) => getSnapshot(t));
 
       // copy the wires for tokens
-      const connected = self.wires
-        .filter((wire) =>
-          selectedTokens.some(
-            (tokenId) =>
-              wire.from.target.id === tokenId || wire.to.target.id === tokenId
-          )
+      const interConnected = self.wires
+        .filter(
+          (wire) =>
+            selectedTokens.includes(wire.to.target.id) &&
+            selectedTokens.includes(wire.from.target.id)
         )
         .map((t) => getSnapshot(t));
 
+      const newFnId = generateId();
+
+      const wiresInto = self.wires.filter(
+        (wire) =>
+          selectedTokens.includes(wire.to.target.id) &&
+          !selectedTokens.includes(wire.from.target.id)
+      );
+
+      const incoming = wiresInto.map((wire) => {
+        const param = Param.create({
+          name: wire.to.param.name,
+          type: wire.to.param.type,
+        });
+        const path = {
+          target: newFnId,
+          param: param.id,
+          path: newFnId + "." + param.id,
+        };
+        const newWire = {
+          id: wire.to.path,
+          from: path,
+          to: getSnapshot(wire.to),
+        };
+
+        return {
+          param,
+          newWire,
+        };
+      });
+
+      const inputs = incoming.map((i) => i.param);
+      const inWires = incoming.map((i) => i.newWire);
+
+      const wiresOut = self.wires.filter(
+        (wire) =>
+          !selectedTokens.includes(wire.to.target.id) &&
+          selectedTokens.includes(wire.from.target.id)
+      );
+
+      const outgoing = wiresOut.map((wire) => {
+        const param = Param.create({
+          name: wire.from.param.name,
+          type: wire.from.param.type,
+        });
+        const newWire = {
+          id: wire.to.path,
+          from: getSnapshot(wire.from),
+          to: {
+            target: newFnId,
+            param: param.id,
+            path: newFnId + "." + param.id,
+          },
+        };
+        return {
+          param,
+          newWire,
+        };
+      });
+
+      const outputs = outgoing.map((i) => i.param);
+      const outWires = outgoing.map((i) => i.newWire);
+
       const newFn: IFnIn = {
-        id: generateId(),
+        id: newFnId,
         core: false,
         name: "new",
-        input: [],
-        output: [],
+        input: inputs,
+        output: outputs,
         tokens: selectedTokenList,
-        wires: connected,
+        wires: [...interConnected, ...inWires, ...outWires],
       };
+
+      console.log(newFn);
       // remove the selected tokens
       self.tokens
-        .filter((token) => selectedTokens.some((id) => token.id !== id))
+        .filter((token) => selectedTokens.includes(token.id))
         .forEach((token) => {
           this.removeToken(token);
         });
 
       store.addNewFunction(newFn);
+      // create the token
 
-      this.addToken(selectedTokenList[0].position, newFn);
+      const newTokenId = generateId();
+      const newToken: ITokenIn = {
+        id: newTokenId,
+        position: selectedTokenList[0].position,
+        fn: newFnId,
+      };
+
+      self.tokens.push(newToken);
+      // re wire to new token
+      // inputs
+      const inConnectWires: IWireIn[] = wiresInto.map((wire, index) => {
+        const param = inputs[index];
+        const path = {
+          target: newTokenId,
+          param: param.id,
+          path: newTokenId + "." + param.id,
+        };
+        return {
+          id: path.path,
+          from: getSnapshot(wire.from),
+          to: path,
+        };
+      });
+      // outputs
+      const outConnectWires: IWireIn[] = wiresOut.map((wire, index) => {
+        const param = outputs[index];
+        const path = {
+          target: newTokenId,
+          param: param.id,
+          path: newTokenId + "." + param.id,
+        };
+
+        return {
+          id: wire.to.path,
+          from: path,
+          to: getSnapshot(wire.to),
+        };
+      });
+
+      self.wires.push(...inConnectWires, ...outConnectWires);
+      //
     },
   }));
 
