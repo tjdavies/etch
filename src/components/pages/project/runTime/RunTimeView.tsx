@@ -19,6 +19,7 @@ const RunTimeBox = styled.div`
   border: 1px solid ${Colours.primary};
   background-color: ${Colours.background};
   z-index: 100;
+  border-radius: 4px;
 `;
 
 const RunTimeBoxMax = styled.div`
@@ -30,7 +31,7 @@ const RunTimeBoxMax = styled.div`
   left: 0px;
   top: 0px;
   color: ${Colours.lightText};
-  border: 1px solid ${Colours.primary};
+
   background-color: ${Colours.background};
   z-index: 10;
 `;
@@ -181,7 +182,7 @@ const BackGround = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${Colours.lightGrey};
+  background-color: #f2f2f2;
 `;
 
 const Container = styled.div`

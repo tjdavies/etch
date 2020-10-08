@@ -18,7 +18,7 @@ const RunButton = styled.div`
   width: 30px;
   color: ${Colours.lightText};
   background-color: ${Colours.primary};
-  border-top-left-radius: 10px;
+  border-top-left-radius: 4px;
   cursor: pointer;
 `;
 

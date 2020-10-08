@@ -10,6 +10,8 @@ import { Token } from "./tokens/Token";
 import { observer } from "mobx-react-lite";
 import { useKeysDown } from "../../../utils/hooks/useKeysDown";
 import { useStore } from "../../../model/Store";
+import { IToken } from "../../../model/Token";
+import { SelectionTools } from "./SelectionTools";
 
 const FunctionViewWrapper = styled.div`
   display: flex;
@@ -39,22 +41,45 @@ export const FunctionView = observer(({ fn }: Props) => {
 
   const store = useStore();
 
+  const [selectedTokens, setSelectedTokens] = useState<Record<string, boolean>>(
+    {}
+  );
+
   useKeysDown((keys) => {
     store.setInput({ keysDown: keys });
   });
+
+  const selectToken = (token: IToken) => {
+    setSelectedTokens({ ...selectedTokens, [token.id]: true });
+    console.log(selectedTokens);
+  };
 
   return (
     <FunctionViewWrapper>
       <BackGround
         onDoubleClick={(e) => setShowTokenDropdown({ x: e.pageX, y: e.pageY })}
+        onClick={(e) => setSelectedTokens({})}
       />
-      {fn.tokens.map((t: any) => (
-        <Token key={t.id} token={t} onSelect={() => console.log("onSelect")} />
+      {fn.tokens.map((t: IToken) => (
+        <Token
+          key={t.id}
+          token={t}
+          onSelect={() => selectToken(t)}
+          isSelected={selectedTokens[t.id]}
+        />
       ))}
 
       <FunctionInput input={fn.plugs} editable={fn.isMain} />
       <FunctionOutput output={fn.sockets} editable={fn.isMain} />
       <Wires />
+      {Object.keys(selectedTokens).length > 0 && (
+        <SelectionTools
+          onMakeFunction={() => {
+            fn.generateFunction(Object.keys(selectedTokens));
+            setSelectedTokens({});
+          }}
+        />
+      )}
       {showTokenDropdown && (
         <TokenDropDown
           position={showTokenDropdown}

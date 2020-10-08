@@ -33,6 +33,8 @@ const TokenHeader = styled.div`
   cursor: move;
   gap: 10px;
   user-select: none;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
 `;
 
 const TokenBody = styled.div`
@@ -44,6 +46,8 @@ const TokenBody = styled.div`
   padding-left: 1px;
   padding-right: 1px;
   gap: 30px;
+  background-color: ${({ isSelected }: { isSelected: boolean }) =>
+    isSelected ? "#df5e8810" : Colours.background};
   border: 1px solid ${Colours.lightGrey};
   border-top: none;
   border-bottom-right-radius: 4px;
@@ -74,9 +78,10 @@ const HeaderDetails = styled.div`
 interface Props {
   token: IToken;
   onSelect: () => void;
+  isSelected: boolean;
 }
 
-export const Token = observer(({ token, onSelect }: Props) => {
+export const Token = observer(({ token, onSelect, isSelected }: Props) => {
   const history = useHistory();
   const store = useStore();
   const [dragStartPos, setDragStartPos] = useState<DraggableData | null>(null);
@@ -93,14 +98,17 @@ export const Token = observer(({ token, onSelect }: Props) => {
     }
   };
 
-  const onTokenClick = () => {
-    setDragStartPos(null);
-  };
-
   const isDragging =
     dragStartPos &&
     (dragStartPos.x !== token.position.x ||
       dragStartPos.y !== token.position.y);
+
+  const onTokenClick = () => {
+    if (!isDragging) {
+      onSelect();
+    }
+    setDragStartPos(null);
+  };
 
   return (
     <Draggable
@@ -112,7 +120,11 @@ export const Token = observer(({ token, onSelect }: Props) => {
       position={token.position}
     >
       <TokenWrapper onClick={onTokenClick}>
-        <TokenHeader className="header" isCore={token.fn.core}>
+        <TokenHeader
+          className="header"
+          isCore={token.fn.core}
+          onDoubleClick={onOpenToken}
+        >
           <HeaderDetails>
             {!token.fn.core && (
               <ShareWrap onClick={!isDragging ? onOpenToken : () => null}>
@@ -128,7 +140,7 @@ export const Token = observer(({ token, onSelect }: Props) => {
             <Close color="white" size="small" />
           </CloseButton>
         </TokenHeader>
-        <TokenBody>
+        <TokenBody isSelected={isSelected}>
           <TokenInput input={token.sockets} />
           <TokenOutput output={token.plugs} />
         </TokenBody>

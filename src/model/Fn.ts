@@ -1,4 +1,11 @@
-import { types, Instance, SnapshotIn, destroy, getRoot } from "mobx-state-tree";
+import {
+  types,
+  Instance,
+  SnapshotIn,
+  destroy,
+  getRoot,
+  getSnapshot,
+} from "mobx-state-tree";
 import { Param, IParamIn, IParam } from "./Param";
 import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
@@ -9,6 +16,7 @@ import { ISocket, createSockets } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";
 import { IPath } from "./Path";
 import { Type } from "./Type";
+import { Wires } from "../components/pages/project/wires/Wires";
 
 export function findContext(
   contextId: string,
@@ -82,11 +90,13 @@ export const Fn = types
     setName(name: string) {
       self.name = name;
     },
-    addToken(position: IPoint, fn: IFn) {
-      position.y = position.y - 320;
+    addToken(position: IPoint, fn: IFn | IFnIn) {
       const newToken: ITokenIn = {
         id: generateId(),
-        position,
+        position: {
+          x: position.x,
+          y: position.y,
+        },
         fn: fn.id,
       };
       self.tokens.push(newToken);
@@ -168,6 +178,44 @@ export const Fn = types
     },
     shrinkParam(path: string) {
       self.expandedParams.delete(path);
+    },
+    generateFunction(selectedTokens: string[]) {
+      console.log("generateFunction");
+      const store = getStore(self);
+      // copy the selected tokens
+      const selectedTokenList = self.tokens
+        .filter((token) => selectedTokens.some((id) => token.id === id))
+        .map((t) => getSnapshot(t));
+
+      // copy the wires for tokens
+      const connected = self.wires
+        .filter((wire) =>
+          selectedTokens.some(
+            (tokenId) =>
+              wire.from.target.id === tokenId || wire.to.target.id === tokenId
+          )
+        )
+        .map((t) => getSnapshot(t));
+
+      const newFn: IFnIn = {
+        id: generateId(),
+        core: false,
+        name: "new",
+        input: [],
+        output: [],
+        tokens: selectedTokenList,
+        wires: connected,
+      };
+      // remove the selected tokens
+      self.tokens
+        .filter((token) => selectedTokens.some((id) => token.id !== id))
+        .forEach((token) => {
+          this.removeToken(token);
+        });
+
+      store.addNewFunction(newFn);
+
+      this.addToken(selectedTokenList[0].position, newFn);
     },
   }));
 

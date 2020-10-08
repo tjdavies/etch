@@ -122,10 +122,10 @@ export const Store = types
       };
 
       self.project.functions.put(newFn);
-      const f = self.project.functions.get(newFn.id);
-      if (f) {
-        self.activeFunction?.addToken(position, f);
-      }
+      self.activeFunction?.addToken(position, newFn);
+    },
+    addNewFunction(fn: IFn | IFnIn) {
+      self.project.functions.put(fn);
     },
     setRunTimeViewMode(mode: IRunTimeViewMode) {
       self.runTimeViewMode = mode;

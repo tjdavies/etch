@@ -7,6 +7,7 @@ import styled from "styled-components";
 const Box = styled.div`
   width: 100%;
   background-color: white;
+  border-radius: 4px;
 `;
 
 export interface IScene {
