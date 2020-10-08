@@ -14,6 +14,11 @@ import { IToken } from "../../../model/Token";
 import { SelectionTools } from "./SelectionTools";
 
 const FunctionViewWrapper = styled.div`
+  height: 100vh;
+  width: 100%;
+`;
+
+const Inputs = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -68,9 +73,10 @@ export const FunctionView = observer(({ fn }: Props) => {
           isSelected={selectedTokens[t.id]}
         />
       ))}
-
-      <FunctionInput input={fn.plugs} editable={fn.isMain} />
-      <FunctionOutput output={fn.sockets} editable={fn.isMain} />
+      <Inputs>
+        <FunctionInput input={fn.plugs} editable={fn.isMain} />
+        <FunctionOutput output={fn.sockets} editable={fn.isMain} />
+      </Inputs>
       <Wires />
       {Object.keys(selectedTokens).length > 0 && (
         <SelectionTools

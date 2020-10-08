@@ -8,8 +8,12 @@ import styled from "styled-components";
 import { IWire } from "../../../../model/Wire";
 
 const WireSVG = styled.svg`
-  position: absolute;
+  position: fixed;
   pointer-events: none;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   z-index: 0;
 `;
 
@@ -18,8 +22,8 @@ export const Wires = observer(() => {
 
   return (
     <WireSVG
-      height="100%"
       width="100%"
+      height="100%"
       fill={Colours.primary}
       stroke={Colours.primary}
     >

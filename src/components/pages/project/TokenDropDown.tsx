@@ -9,7 +9,7 @@ interface FloatyDropdownProps {
 }
 
 const FloatyDropdown = styled.div`
-  position: absolute;
+  position: fixed;
   width: fit-content;
   z-index: 20;
   left: min(

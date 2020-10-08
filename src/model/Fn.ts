@@ -93,10 +93,7 @@ export const Fn = types
     addToken(position: IPoint, fn: IFn | IFnIn) {
       const newToken: ITokenIn = {
         id: generateId(),
-        position: {
-          x: position.x,
-          y: position.y,
-        },
+        position,
         fn: fn.id,
       };
       self.tokens.push(newToken);
