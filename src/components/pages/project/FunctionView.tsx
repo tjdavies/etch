@@ -13,16 +13,14 @@ import { useStore } from "../../../model/Store";
 import { IToken } from "../../../model/Token";
 import { SelectionTools } from "./SelectionTools";
 import Selection from "react-ds";
+import { Colours } from "../../../Style";
 
 const FunctionViewWrapper = styled.div`
   height: 100vh;
   width: 100%;
-  .selection {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+  .react-ds-border {
+    background: #8fcfd110 !important;
+    border: 1px dashed ${Colours.darkText} !important;
   }
 `;
 
