@@ -5,13 +5,12 @@ import {
   destroy,
   getRoot,
   getSnapshot,
-  clone,
 } from "mobx-state-tree";
 import { Param, IParamIn, IParam } from "./Param";
 import { Token, ITokenIn, IToken } from "./Token";
 import { IPoint } from "./Point";
 import { generateId } from "../utils/generateId";
-import { IWire, IWireIn, Wire } from "./Wire";
+import { IWireIn, Wire } from "./Wire";
 import { getStore, IStore } from "./Store";
 import { ISocket, createSockets } from "./Sockets";
 import { createPlugs, IPlug } from "./Plug";

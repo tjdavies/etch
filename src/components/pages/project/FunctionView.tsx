@@ -79,11 +79,12 @@ export const FunctionView = observer(({ fn }: Props) => {
   };
 
   const [isReady, setIsReady] = useState(false);
+  const l = fn.tokens.length;
   useEffect(() => {
-    if (backgroundRef.current && itemsRef.current.length === fn.tokens.length) {
+    if (backgroundRef.current && itemsRef.current.length === l) {
       setIsReady(true);
     }
-  }, []);
+  }, [l]);
 
   return (
     <FunctionViewWrapper>

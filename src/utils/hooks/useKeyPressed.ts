@@ -6,9 +6,6 @@ export function useKeyPressed(callback: (keys: any) => void) {
   // State for keeping track of whether key is pressed
   //const [keyPressed, setKeyPressed] = useState(false);
   // If pressed key is our target key then set to true
-  const downHandler = ({ key }: any) => {
-    savedCallback.current && savedCallback.current(key);
-  };
 
   // Remember the latest callback.
   useEffect(() => {
@@ -16,12 +13,15 @@ export function useKeyPressed(callback: (keys: any) => void) {
   });
   // Add event listeners
   useEffect(() => {
+    const downHandler = ({ key }: any) => {
+      savedCallback.current && savedCallback.current(key);
+    };
     window.addEventListener("keydown", downHandler);
     // Remove event listeners on cleanup
     return () => {
       window.removeEventListener("keydown", downHandler);
     };
-  }, [downHandler]); // Empty array ensures that effect is only run on mount and unmount
+  }, []); // Empty array ensures that effect is only run on mount and unmount
 
   return {};
 }

@@ -138,6 +138,7 @@ function NumberInput({ value, onEnter, onRemoveValue }: Props) {
   return (
     <Input
       ref={inputEl}
+      alt=""
       width={str?.length ? str.length + "ch" : "1ch"}
       type="number"
       autoFocus
@@ -228,7 +229,7 @@ function ImageInput({
           }}
         />
       )}
-      <img src={editValue} onClick={() => setIsDropDownOpen(true)} />
+      <img alt="" src={editValue} onClick={() => setIsDropDownOpen(true)} />
     </>
   );
 }
@@ -274,7 +275,9 @@ function ImageSelectDropDown({
     <Dropdown ref={ref}>
       {sprites.map((spriteName) => {
         const imagePath = "/sprites/" + spriteName;
-        return <img src={imagePath} onClick={() => onSelect(imagePath)}></img>;
+        return (
+          <img alt="" src={imagePath} onClick={() => onSelect(imagePath)}></img>
+        );
       })}
     </Dropdown>
   );

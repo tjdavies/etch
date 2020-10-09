@@ -21,7 +21,6 @@ import { ITypeIn } from "./Type";
 import { ISocket } from "./Sockets";
 import { IKeyValueMap } from "mobx";
 import { assocPath, mergeDeepLeft, path } from "ramda";
-import { IPlug } from "./Plug";
 
 const RunTimeViewMode = types.enumeration("runTimeViewMode", [
   "docked",

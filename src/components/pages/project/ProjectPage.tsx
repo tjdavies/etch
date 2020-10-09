@@ -82,7 +82,7 @@ function useProjectStore(id: string, fn: string, context: string) {
 
       setStore(store);
     }
-  }, [id]);
+  }, [id, context, fn]);
 
   return storeState;
 }

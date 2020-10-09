@@ -47,15 +47,6 @@ const PageContent = styled.div`
   }
 `;
 
-const iframe = `<iframe
-width="560"
-height="315"
-src="https://www.youtube.com/embed/W5Z8kVfKivs"
-frameborder="0"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-allowfullscreen
-></iframe>`;
-
 export const SplashPage = () => {
   return (
     <PageWrapper>

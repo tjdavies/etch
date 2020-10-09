@@ -9,7 +9,7 @@ import { PageHeader } from "../../common/Header";
 import { createNewProject } from "../../../model/Store";
 
 import { loadProjectList, saveProject } from "../../../utils/Save";
-import { pipe, prepend, when } from "ramda";
+import { prepend, when } from "ramda";
 
 const PageWrapper = styled.div``;
 

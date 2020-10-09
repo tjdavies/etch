@@ -17,6 +17,6 @@ export function useOutsideClick(handler: () => void) {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside);
     };
-  }, [ref]);
+  }, [handler]);
   return ref;
 }
