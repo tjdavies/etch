@@ -86,6 +86,10 @@ export const FunctionView = observer(({ fn }: Props) => {
     }
   }, [l]);
 
+  useEffect(() => {
+    setSelectedTokens({});
+  }, [fn.id]);
+
   return (
     <FunctionViewWrapper>
       {isReady && (
@@ -120,6 +124,10 @@ export const FunctionView = observer(({ fn }: Props) => {
         <SelectionTools
           onMakeFunction={() => {
             fn.generateFunction(Object.keys(selectedTokens));
+            setSelectedTokens({});
+          }}
+          onDuplicate={() => {
+            fn.cloneTokens(Object.keys(selectedTokens));
             setSelectedTokens({});
           }}
         />

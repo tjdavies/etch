@@ -17,12 +17,31 @@ const TokenWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${Colours.white};
+
+  &:after {
+    content: "";
+    display: ${({ isSelected }: { isSelected: boolean }) =>
+      isSelected ? "block" : "none"};
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 4px;
+    border: 2px dashed #34c6eb;
+    pointer-events: none;
+  }
 `;
+
+interface TokenHeaderProps {
+  isCore: boolean;
+  isSelected: boolean;
+}
 
 const TokenHeader = styled.div`
   width: 100%;
   height: 30px;
-  background-color: ${(p: { isCore: boolean }) =>
+  background-color: ${(p: TokenHeaderProps) =>
     p.isCore ? Colours.secondary : Colours.primary};
   color: ${Colours.lightText};
   display: flex;
@@ -35,6 +54,7 @@ const TokenHeader = styled.div`
   user-select: none;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
+  border: 1px solid ${Colours.lightGrey};
 `;
 
 const TokenBody = styled.div`
@@ -46,8 +66,7 @@ const TokenBody = styled.div`
   padding-left: 1px;
   padding-right: 1px;
   gap: 30px;
-  background-color: ${({ isSelected }: { isSelected: boolean }) =>
-    isSelected ? "#df5e8810" : Colours.background};
+  background-color: ${Colours.background};
   border: 1px solid ${Colours.lightGrey};
   border-top: none;
   border-bottom-right-radius: 4px;
@@ -106,13 +125,6 @@ export const Token = observer(
       (dragStartPos.x !== token.position.x ||
         dragStartPos.y !== token.position.y);
 
-    const onTokenClick = () => {
-      if (!isDragging) {
-        onSelect();
-      }
-      setDragStartPos(null);
-    };
-
     return (
       <Draggable
         handle={".header"}
@@ -122,15 +134,18 @@ export const Token = observer(
         onStart={(e, data) => setDragStartPos(data)}
         position={token.position}
       >
-        <TokenWrapper ref={ref as any} onClick={onTokenClick}>
+        <TokenWrapper ref={ref as any} isSelected={isSelected}>
           <TokenHeader
+            isSelected={isSelected}
             className="header"
             isCore={token.fn.core}
             onDoubleClick={onOpenToken}
           >
             <HeaderDetails>
               {!token.fn.core && (
-                <ShareWrap onClick={!isDragging ? onOpenToken : () => null}>
+                <ShareWrap
+                  onClick={!isDragging ? safeClick(onOpenToken) : () => null}
+                >
                   <Share color="white" size="small" />
                 </ShareWrap>
               )}
@@ -142,11 +157,13 @@ export const Token = observer(
                 />
               )}
             </HeaderDetails>
-            <CloseButton onClick={!isDragging ? token.remove : () => null}>
+            <CloseButton
+              onClick={!isDragging ? safeClick(token.remove) : () => null}
+            >
               <Close color="white" size="small" />
             </CloseButton>
           </TokenHeader>
-          <TokenBody isSelected={isSelected}>
+          <TokenBody>
             <TokenInput input={token.sockets} />
             <TokenOutput output={token.plugs} />
           </TokenBody>
@@ -158,3 +175,11 @@ export const Token = observer(
     forwardRef: true,
   }
 );
+
+function safeClick(fn: () => void) {
+  return (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    fn();
+  };
+}

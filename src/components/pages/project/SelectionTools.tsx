@@ -26,12 +26,13 @@ const Button = styled.div`
 
 interface Props {
   onMakeFunction: () => void;
+  onDuplicate: () => void;
 }
 
-export const SelectionTools = ({ onMakeFunction }: Props) => {
+export const SelectionTools = ({ onMakeFunction, onDuplicate }: Props) => {
   return (
     <Wrapper>
-      <Button>
+      <Button onClick={onDuplicate}>
         <Clone color={Colours.lightText} size="small" />
       </Button>
       <Button onClick={onMakeFunction}>

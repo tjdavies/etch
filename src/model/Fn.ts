@@ -175,6 +175,24 @@ export const Fn = types
     shrinkParam(path: string) {
       self.expandedParams.delete(path);
     },
+    cloneTokens(selectedTokens: string[]) {
+      console.log("cloneTokens");
+      //  const store = getStore(self);
+      // copy the selected tokens
+      const selectedTokenList = self.tokens
+        .filter((token) => selectedTokens.includes(token.id))
+        .map((t) => getSnapshot(t))
+        .map((t) => ({
+          ...t,
+          id: undefined,
+          position: {
+            x: t.position.x + 40,
+            y: t.position.y + 40,
+          },
+        }));
+
+      self.tokens.push(...selectedTokenList);
+    },
     generateFunction(selectedTokens: string[]) {
       console.log("generateFunction");
       const store = getStore(self);
