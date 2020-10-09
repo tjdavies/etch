@@ -1,5 +1,5 @@
-import { Clone, ObjectGroup } from "grommet-icons";
-import React, { useState } from "react";
+import { Clone, Resources } from "grommet-icons";
+import React from "react";
 import styled from "styled-components";
 import { Colours } from "../../../Style";
 
@@ -35,7 +35,7 @@ export const SelectionTools = ({ onMakeFunction }: Props) => {
         <Clone color={Colours.lightText} size="small" />
       </Button>
       <Button onClick={onMakeFunction}>
-        <ObjectGroup color={Colours.lightText} size="small" />
+        <Resources color={Colours.lightText} size="small" />
       </Button>
     </Wrapper>
   );
