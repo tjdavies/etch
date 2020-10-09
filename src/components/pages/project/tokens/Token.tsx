@@ -81,70 +81,80 @@ interface Props {
   isSelected: boolean;
 }
 
-export const Token = observer(({ token, onSelect, isSelected }: Props) => {
-  const history = useHistory();
-  const store = useStore();
-  const [dragStartPos, setDragStartPos] = useState<DraggableData | null>(null);
+export const Token = observer(
+  ({ token, onSelect, isSelected }: Props, ref) => {
+    const history = useHistory();
+    const store = useStore();
+    const [dragStartPos, setDragStartPos] = useState<DraggableData | null>(
+      null
+    );
 
-  const onOpenToken = () => {
-    if (!token.fn.core) {
-      history.push(
-        generatePath(Routes.function, {
-          id: store.project.id,
-          fn: token.fn.id,
-          context: token.id,
-        })
-      );
-    }
-  };
+    const onOpenToken = () => {
+      if (!token.fn.core) {
+        history.push(
+          generatePath(Routes.function, {
+            id: store.project.id,
+            fn: token.fn.id,
+            context: token.id,
+          })
+        );
+      }
+    };
 
-  const isDragging =
-    dragStartPos &&
-    (dragStartPos.x !== token.position.x ||
-      dragStartPos.y !== token.position.y);
+    const isDragging =
+      dragStartPos &&
+      (dragStartPos.x !== token.position.x ||
+        dragStartPos.y !== token.position.y);
 
-  const onTokenClick = () => {
-    if (!isDragging) {
-      onSelect();
-    }
-    setDragStartPos(null);
-  };
+    const onTokenClick = () => {
+      if (!isDragging) {
+        onSelect();
+      }
+      setDragStartPos(null);
+    };
 
-  return (
-    <Draggable
-      handle={".header"}
-      onDrag={(e, data) => {
-        token.setPosition({ x: data.x, y: data.y });
-      }}
-      onStart={(e, data) => setDragStartPos(data)}
-      position={token.position}
-    >
-      <TokenWrapper onClick={onTokenClick}>
-        <TokenHeader
-          className="header"
-          isCore={token.fn.core}
-          onDoubleClick={onOpenToken}
-        >
-          <HeaderDetails>
-            {!token.fn.core && (
-              <ShareWrap onClick={!isDragging ? onOpenToken : () => null}>
-                <Share color="white" size="small" />
-              </ShareWrap>
-            )}
-            <FnName>{token.fn.name}</FnName>
-            {token.type && (
-              <ChooseType type={token.type} onSelect={token.setSelectedType} />
-            )}
-          </HeaderDetails>
-          <CloseButton onClick={!isDragging ? token.remove : () => null}>
-            <Close color="white" size="small" />
-          </CloseButton>
-        </TokenHeader>
-        <TokenBody isSelected={isSelected}>
-          <TokenInput input={token.sockets} />
-          <TokenOutput output={token.plugs} />
-        </TokenBody>
-      </TokenWrapper>
-    </Draggable>
-  );
-});
+    return (
+      <Draggable
+        handle={".header"}
+        onDrag={(e, data) => {
+          token.setPosition({ x: data.x, y: data.y });
+        }}
+        onStart={(e, data) => setDragStartPos(data)}
+        position={token.position}
+      >
+        <TokenWrapper ref={ref as any} onClick={onTokenClick}>
+          <TokenHeader
+            className="header"
+            isCore={token.fn.core}
+            onDoubleClick={onOpenToken}
+          >
+            <HeaderDetails>
+              {!token.fn.core && (
+                <ShareWrap onClick={!isDragging ? onOpenToken : () => null}>
+                  <Share color="white" size="small" />
+                </ShareWrap>
+              )}
+              <FnName>{token.fn.name}</FnName>
+              {token.type && (
+                <ChooseType
+                  type={token.type}
+                  onSelect={token.setSelectedType}
+                />
+              )}
+            </HeaderDetails>
+            <CloseButton onClick={!isDragging ? token.remove : () => null}>
+              <Close color="white" size="small" />
+            </CloseButton>
+          </TokenHeader>
+          <TokenBody isSelected={isSelected}>
+            <TokenInput input={token.sockets} />
+            <TokenOutput output={token.plugs} />
+          </TokenBody>
+        </TokenWrapper>
+      </Draggable>
+    );
+  },
+  {
+    forwardRef: true,
+  }
+);
