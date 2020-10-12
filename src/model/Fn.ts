@@ -221,7 +221,7 @@ export const Fn = types
       // generate the params and wire them up
       const incoming = wiresInto.map((wire) => {
         const param = Param.create({
-          name: wire.to.param.name,
+          name: wire.from.param.name,
           type: wire.to.param.type,
         });
         const path = {
@@ -252,7 +252,7 @@ export const Fn = types
       // generate the params and wire them up
       const outgoing = wiresOut.map((wire) => {
         const param = Param.create({
-          name: wire.from.param.name,
+          name: wire.to.param.name,
           type: wire.from.param.type,
         });
         const newWire = {
