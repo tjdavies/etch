@@ -16,19 +16,23 @@ import Selection from "react-ds";
 import { Colours } from "../../../Style";
 
 const FunctionViewWrapper = styled.div`
-  height: 100vh;
-  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   .react-ds-border {
     background: #8fcfd110 !important;
     border: 1px dashed ${Colours.darkText} !important;
   }
+  overflow: none;
 `;
 
 const Inputs = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100vh;
+  height: 100%;
   width: 100%;
 `;
 
@@ -115,6 +119,7 @@ export const FunctionView = observer(({ fn }: Props) => {
           isSelected={selectedTokens[t.id]}
         />
       ))}
+
       <Inputs>
         <FunctionInput input={fn.plugs} editable={fn.isMain} />
         <FunctionOutput output={fn.sockets} editable={fn.isMain} />

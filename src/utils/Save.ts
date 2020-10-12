@@ -35,6 +35,7 @@ export function loadProject(id: string): any {
   if (id === "hw") {
     return HelloWorld;
   }
+
   if (id === "nf") {
     return NinjaFrog;
   }

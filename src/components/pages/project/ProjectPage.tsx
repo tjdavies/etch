@@ -75,7 +75,7 @@ function useProjectStore(id: string, fn: string, context: string) {
       makeInspectable(store);
 
       onSnapshot(store, (snapShot) => saveProject(snapShot.project));
-
+      console.log(getSnapshot(store));
       (window as any).out = () => {
         console.log(getSnapshot(store));
       };

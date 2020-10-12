@@ -17,7 +17,7 @@ interface SocketProps {
 }
 
 const NestWrapper = styled.div`
-  width: 100%;
+  width: calc(100% - 5px);
   display: flex;
   flex-direction: column;
   align-items: ${(props: SocketProps) =>

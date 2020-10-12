@@ -13,10 +13,11 @@ import { observer } from "mobx-react-lite";
 import { ChooseType } from "../ChooseType";
 
 const TokenWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   background-color: ${Colours.white};
+  pointer-events: all;
 
   &:after {
     content: "";
@@ -54,7 +55,6 @@ const TokenHeader = styled.div`
   user-select: none;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
-  border: 1px solid ${Colours.lightGrey};
 `;
 
 const TokenBody = styled.div`
@@ -132,7 +132,11 @@ export const Token = observer(
           token.setPosition({ x: data.x, y: data.y });
         }}
         onStart={(e, data) => setDragStartPos(data)}
-        position={token.position}
+        position={{
+          x: Math.max(token.position.x, 0),
+          y: Math.max(token.position.y, 0),
+        }}
+        bounds="parent"
       >
         <TokenWrapper ref={ref as any} isSelected={isSelected}>
           <TokenHeader
