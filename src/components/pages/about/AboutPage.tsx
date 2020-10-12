@@ -9,8 +9,8 @@ const PageWrapper = styled.div`
 `;
 
 const PageContent = styled.div`
-  padding: 160px;
-  padding-top: 100px;
+  padding: 12%;
+  padding-top: 60px;
   height: 100%;
   font-size: 20px;
   color: ${Colours.darkText};
@@ -51,7 +51,7 @@ export const AboutPage = () => {
       <PageContent>
         <h1>About</h1>
         <p>
-          Im interested in the future of programming and what it may bring and
+          I am interested in the future of programming and what it may bring and
           how to inspire the next generation. Im also dyslexic myself and I also
           have a dyslexic kid so i'm keen to make programming more accessible.
           Also let us remember that some people never gave up punch cards.
@@ -105,6 +105,7 @@ export const AboutPage = () => {
           <li>Everything can be renamed safely</li>
           <li>Type aware static value input</li>
           <li>Live project debugging</li>
+          <li>multi drag selections (clone / make function) </li>
         </ul>
         <h3>On the wish list </h3>
         <ul>
@@ -116,7 +117,7 @@ export const AboutPage = () => {
           <li>Tutorials and Example projects</li>
           <li>Search / Share functions (modules?)</li>
           <li>Undo / Redo</li>
-          <li>multi drag selections (copy / delete / make function) </li>
+          <li>multi drag selections (delete ) </li>
           <li>zoom and pan function view</li>
           <li>Expanded type system (lists & unions)</li>
           <li>Scene functionality (images / sounds / layers) </li>

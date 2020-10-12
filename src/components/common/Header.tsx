@@ -18,6 +18,7 @@ const HeaderWrapper = styled.div`
   background-color: ${Colours.primary};
   color: ${Colours.lightText};
   border-bottom-right-radius: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const AppName = styled.span`
@@ -27,16 +28,17 @@ const AppName = styled.span`
 `;
 
 interface props {
+  link?: string;
   children?: React.ReactNode;
 }
 
-export function PageHeader(props: props) {
+export function PageHeader({ children, link = Routes.projectList }: props) {
   return (
     <HeaderWrapper>
-      <Link to={Routes.projectList}>
+      <Link to={link}>
         <AppName>EtcH</AppName>
       </Link>
-      {props.children}
+      {children}
     </HeaderWrapper>
   );
 }

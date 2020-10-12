@@ -12,8 +12,8 @@ const PageWrapper = styled.div`
 `;
 
 const PageContent = styled.div`
-  padding: 160px;
-  padding-top: 100px;
+  padding: 12%;
+  padding-top: 60px;
   height: 100%;
   font-size: 20px;
   color: ${Colours.darkText};
@@ -47,26 +47,38 @@ const PageContent = styled.div`
   }
 `;
 
+const About = styled.div`
+  display: flex;
+  height: 100%;
+  align-items: center;
+  font-size: 20px;
+  padding-left: 20px;
+  border-left: 2px solid ${Colours.lightText};
+`;
+
 export const SplashPage = () => {
   return (
     <PageWrapper>
-      <PageHeader></PageHeader>
+      <PageHeader />
+
       <PageContent>
         <h1>Welcome to EtcH</h1>
+        <p>
+          Etch is a functional visual programming environment in your browser
+        </p>
         <p>
           This is a rapidly developing prototype, feel free to play around but
           be aware
         </p>
         <ul>
           <li>Projects may on longer work after an update</li>
-          <li>There may well be breaking bugs</li>
+          <li>There may well be bugs</li>
           <li>All info is currently saved locally on your browser</li>
         </ul>
-        <p>I don't care! </p>
         <Link to={Routes.projectList}>
           <button>Start Creating</button>
         </Link>
-        <p>Watch a quick intro to get started</p>
+        <p>or watch a quick intro to get started</p>
         <ReactPlayer url="https://www.youtube.com/embed/W5Z8kVfKivs" />
         <p>
           Want to find out <Link to={Routes.about}>more?</Link>

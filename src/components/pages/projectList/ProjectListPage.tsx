@@ -76,7 +76,7 @@ export const ProjectListPage = () => {
 
   return (
     <PageWrapper>
-      <PageHeader>
+      <PageHeader link={Routes.root}>
         <ProjectHeader>projects</ProjectHeader>
       </PageHeader>
 
