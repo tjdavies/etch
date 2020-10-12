@@ -12,13 +12,17 @@ export function Wire({ from, to, color }: Props) {
   const y1 = from.y;
   const x2 = to.x;
   const y2 = to.y;
-  const hoz = x2 - x1;
+  // const hoz = x2 - x1;
 
+  var dx = Math.abs(x2 - x1) * 0.67;
+
+  var o2 = x1 + dx;
+  var o3 = x2 - dx;
+  var path = `M ${x1} ${y1} C ${o2} ${y1} ${o3} ${y2} ${x2} ${y2}`;
+  // hoz path  `M ${x1} ${y1} h ${hoz / 2} v ${y2 - y1} h ${hoz / 2}`
   return (
-    <path
-      d={`M ${x1} ${y1} h ${hoz / 2} v ${y2 - y1} h ${hoz / 2}`}
-      stroke={color}
-      fill="none"
-    />
+    <>
+      <path d={path} stroke={color} stroke-width="1" fill="none" />
+    </>
   );
 }
