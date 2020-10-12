@@ -218,30 +218,39 @@ export const Fn = types
           selectedTokens.includes(wire.to.target.id) &&
           !selectedTokens.includes(wire.from.target.id)
       );
-      // generate the params and wire them up
-      const incoming = wiresInto.map((wire) => {
-        const param = Param.create({
-          name: wire.from.param.name,
-          type: wire.to.param.type,
-        });
+      // remove wires connected to the same source
+      const mergedWiresInto = wiresInto.filter(
+        (wire, i, list) =>
+          list.findIndex((e) => wire.from.path === e.from.path) === i
+      );
+
+      // generate the params and keep a track of them in a map
+      const inputMap = mergedWiresInto.reduce(
+        (accum: Record<string, IParam>, wire) => {
+          accum[wire.from.path] = Param.create({
+            name: wire.from.param.name,
+            type: wire.to.type.id,
+          });
+          return accum;
+        },
+        {}
+      );
+
+      // generate the wires inside the new function mapping to the same input when
+      const inWires = wiresInto.map((wire) => {
+        const param = inputMap[wire.from.path];
         const path = {
           target: newFnId,
           param: param.id,
           path: newFnId + "." + param.id,
         };
-        const newWire = {
+        return {
           id: wire.to.path,
           from: path,
           to: getSnapshot(wire.to),
         };
-
-        return {
-          param,
-          newWire,
-        };
       });
-      const inputs = incoming.map((i) => i.param);
-      const inWires = incoming.map((i) => i.newWire);
+      const inputs = Object.values(inputMap);
 
       // now find the wires connecting to the  output of  the new fn
       const wiresOut = self.wires.filter(
@@ -249,13 +258,29 @@ export const Fn = types
           !selectedTokens.includes(wire.to.target.id) &&
           selectedTokens.includes(wire.from.target.id)
       );
+
+      // remove wires connected to the same source
+      const mergedWiresOut = wiresOut.filter(
+        (wire, i, list) =>
+          list.findIndex((e) => wire.from.path === e.from.path) === i
+      );
+
+      // generate the params and keep a track of them in a map
+      const outPutMap = mergedWiresOut.reduce(
+        (accum: Record<string, IParam>, wire) => {
+          accum[wire.from.path] = Param.create({
+            name: wire.to.param.name,
+            type: wire.from.type.id,
+          });
+          return accum;
+        },
+        {}
+      );
+
       // generate the params and wire them up
-      const outgoing = wiresOut.map((wire) => {
-        const param = Param.create({
-          name: wire.to.param.name,
-          type: wire.from.param.type,
-        });
-        const newWire = {
+      const outWires = mergedWiresOut.map((wire) => {
+        const param = outPutMap[wire.from.path];
+        return {
           id: wire.to.path,
           from: getSnapshot(wire.from),
           to: {
@@ -264,21 +289,17 @@ export const Fn = types
             path: newFnId + "." + param.id,
           },
         };
-        return {
-          param,
-          newWire,
-        };
       });
 
-      const outputs = outgoing.map((i) => i.param);
-      const outWires = outgoing.map((i) => i.newWire);
+      const outputs = Object.values(outPutMap);
+
       // now create that new function
       const newFn: IFnIn = {
         id: newFnId,
         core: false,
         name: "new",
-        input: inputs,
-        output: outputs,
+        input: inputs as any,
+        output: outputs as any,
         tokens: selectedTokenList,
         wires: [...interConnected, ...inWires, ...outWires],
       };
@@ -302,7 +323,7 @@ export const Fn = types
       self.tokens.push(newToken);
       // re wire all the inputs and out puts to new token
       // inputs
-      const inConnectWires: IWireIn[] = wiresInto.map((wire, index) => {
+      const inConnectWires: IWireIn[] = mergedWiresInto.map((wire, index) => {
         const param = inputs[index];
         const path = {
           target: newTokenId,
@@ -316,8 +337,8 @@ export const Fn = types
         };
       });
       // outputs
-      const outConnectWires: IWireIn[] = wiresOut.map((wire, index) => {
-        const param = outputs[index];
+      const outConnectWires: IWireIn[] = wiresOut.map((wire) => {
+        const param = outPutMap[wire.from.path];
         const path = {
           target: newTokenId,
           param: param.id,
