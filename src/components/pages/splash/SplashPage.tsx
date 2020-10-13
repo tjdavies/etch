@@ -6,45 +6,10 @@ import { Colours } from "../../../Style";
 
 import { PageHeader } from "../../common/Header";
 import ReactPlayer from "react-player";
+import { PageContent } from "../../common/PageContent";
 
 const PageWrapper = styled.div`
   position: relative;
-`;
-
-const PageContent = styled.div`
-  padding: 12%;
-  padding-top: 60px;
-  height: 100%;
-  font-size: 20px;
-  color: ${Colours.darkText};
-  h1 {
-    color: ${Colours.primary};
-  }
-  h2 {
-    color: ${Colours.primary};
-  }
-  h3 {
-    color: ${Colours.secondary};
-  }
-  ul {
-    padding: 10px;
-    margin: 10px;
-    list-style-type: disc;
-  }
-  button {
-    color: ${Colours.lightText};
-    background-color: ${Colours.primary};
-    border: none;
-    padding: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  a {
-    text-decoration: underline;
-    color: ${Colours.primary};
-  }
 `;
 
 const About = styled.div`
@@ -55,6 +20,10 @@ const About = styled.div`
   padding-left: 20px;
   border-left: 2px solid ${Colours.lightText};
 `;
+
+const divStyle = {
+  maxWidth: 640,
+};
 
 export const SplashPage = () => {
   return (
@@ -79,7 +48,11 @@ export const SplashPage = () => {
           <button>Start Creating</button>
         </Link>
         <p>or watch a quick intro to get started</p>
-        <ReactPlayer url="https://www.youtube.com/embed/W5Z8kVfKivs" />
+        <ReactPlayer
+          url="https://www.youtube.com/embed/W5Z8kVfKivs"
+          style={divStyle}
+          width="100%"
+        />
         <p>
           Want to find out <Link to={Routes.about}>more?</Link>
         </p>
