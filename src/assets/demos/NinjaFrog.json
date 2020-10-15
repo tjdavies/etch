@@ -806,8 +806,7 @@
       ],
       "values": {},
       "expandedParams": {
-        "juj4lyvbfrqqpidozu71m.6p0dkr4icqdoqfzzn1ci7f.3cjcw4ctvofnql7tvh16b": true,
-        "juj4lyvbfrqqpidozu71m.dzxeucqcofplf8r3z5df8.y8qpmfri6b86zvsk8sz1la": true
+        "juj4lyvbfrqqpidozu71m.6p0dkr4icqdoqfzzn1ci7f.3cjcw4ctvofnql7tvh16b": true
       }
     },
     "jm3lc1slldwo6k7vuuu5": {
@@ -2527,21 +2526,6 @@
           "id": "46ec657maaincg5poo430b",
           "name": "ballXPos",
           "type": "number"
-        },
-        {
-          "id": "y8qpmfri6b86zvsk8sz1la",
-          "name": "rect",
-          "type": "rect"
-        },
-        {
-          "id": "kwf23kd39ffzpi7q9r39np",
-          "name": "through",
-          "type": "through"
-        },
-        {
-          "id": "3cjcw4ctvofnql7tvh16b",
-          "name": "rect",
-          "type": "rect"
         }
       ],
       "core": false
