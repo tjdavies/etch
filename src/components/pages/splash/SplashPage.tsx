@@ -54,7 +54,10 @@ export const SplashPage = () => {
           width="100%"
         />
         <p>
-          Want to find out <Link to={Routes.about}>more?</Link>
+          Want to find out a bit more <Link to={Routes.about}>about</Link> Etch
+        </p>
+        <p>
+          Or read here what makes Etch <Link to={Routes.why}>different?</Link>
         </p>
       </PageContent>
     </PageWrapper>
