@@ -35,17 +35,17 @@ export const AboutPage = () => {
         <h2>Design Principles</h2>
         <h3>Low floor & wide walls</h3>
         <p>
-          EtcH is designed to be instantly more accessible than traditional text
-          based languages but has the potential to become a serious programming
-          environment capable of real work. Currently output is limited in
-          functionality but i'm working on it.
+          EtcH is designed to be instantly more accessible than traditional
+          textual languages but also has the potential to become a serious
+          programming environment capable of real work. Currently output is
+          limited in functionality but i'm working on it.
         </p>
         <h3>Modern functional paradigm</h3>
         <p>
           EtcH takes a modern pure functional approach to programming separating
           data from computation. An EtcH program is built out of the same simple
-          building blocks (functions) which reduces the concepts needed to be
-          understood. This is heavily influenced by Elm and React.
+          building blocks (functions) which dramatically reduces the concepts
+          needed to be understood. This is heavily influenced by Elm and React.
         </p>
         <h3>A fun playground</h3>
         <p>
@@ -58,7 +58,7 @@ export const AboutPage = () => {
           Many visual coding tools allow you to type "real" code into the boxes
           when you need additional functionality. EtcH is designed from first
           principles to be able to compose complex functionality from simple
-          base parts so you never have to.
+          base parts as a complete solution.
         </p>
         <h2>Features</h2>
         <h3>Built (at least partially)</h3>
@@ -72,7 +72,7 @@ export const AboutPage = () => {
           <li>Live project debugging</li>
           <li>multi drag selections (clone / make function) </li>
         </ul>
-        <h3>On the wish list </h3>
+        <h3>On the todo list </h3>
         <ul>
           <li>Duplicate/ Delete projects</li>
           <li>Map / Reduce and general first class function support</li>
@@ -86,7 +86,7 @@ export const AboutPage = () => {
           <li>zoom and pan function view</li>
           <li>Expanded type system (lists & unions)</li>
           <li>Scene functionality (images / sounds / layers) </li>
-          <li>Effects (network, time, scene events) </li>
+          <li>Effects (network, time, scene events, random numbers) </li>
           <li>Output html?</li>
           <li>mobile / tablet support</li>
           <li>performance optimisations</li>

@@ -28,22 +28,22 @@ export const WhyPage = () => {
         </p>
         <h2>Do we need visual programming?</h2>
         <p>
-          Honestly Im not sure but let me put forward a few reasons that we
-          should consider it
+          Honestly im not sure but let me put forward a few reasons that we
+          should consider it.
         </p>
         <p>
           I learned to code more of less by just playing with flash and before
           that director. These tools provided a friendlily environment with
-          instance feed back and i'm honestly not sure I would have got into
-          coding other wise. Battling with errors is a barrier to entry that we
-          programmers all managed to get over but how many tripped on a syntax
-          error and fell on the way?
+          instance feed back and i'm not sure I would have got into coding other
+          wise. Battling with errors is a barrier to entry that we programmers
+          all managed to get over but how many tripped on a syntax error and
+          fell on the way?
         </p>
         <p>
           We had punch cards and assembly possibly one day writing stuff in text
           files will seem equally as dated.
         </p>
-        <h3>Limitless ways to shoot yourself in the foot.</h3>
+        <h3>Limitless ways to shoot yourself in the foot</h3>
         <p>
           Mark Seemann covers this far better than I could in his blog{" "}
           <a
@@ -55,11 +55,11 @@ export const WhyPage = () => {
           which I recommend giving a good read.
         </p>
         <p>
-          The takeaway is being we should try and reduce the number of possible
-          errors that can be made but in a way as not to limit the number of
-          possible valid programs. However he is only talking about this in the
-          context of valid compiled code. What if we add to that another circle
-          for all possible text inputs we could give the compiler{" "}
+          The takeaway is we should try and reduce the number of possible errors
+          that can be made but in a way as not to limit the number of possible
+          valid programs. However he is only talking about this in the context
+          of valid compiled code. What if we add to that another circle for all
+          possible text inputs we could give the compiler.{" "}
         </p>
         <img src={validPrograms}></img>
         <p>
@@ -111,8 +111,8 @@ export const WhyPage = () => {
         <p>Draw a box round the functionality</p>
         <img src={maxmin}></img>
         <p>
-          Press a button and a new function is create preserving all the exiting
-          input and output mappings{" "}
+          Press a button and a new function is create preserving all the
+          existing input and output mappings{" "}
         </p>
         <img src={clamp}></img>
         <p>
@@ -128,7 +128,7 @@ export const WhyPage = () => {
         <p>
           If we only had basic types quickly everything would become a spaghetti
           like mess of wires and connectors as we have to add more and more
-          augments to keep track of the data. To try and mitigate this EtcH
+          arguments to keep track of the data. To try and mitigate this EtcH
           allows us to create records (objects with out methods). This means we
           can pass around say a User or we can open it up and pull out just the
           postcode for validation.
@@ -136,10 +136,11 @@ export const WhyPage = () => {
         <img src={record}></img>
         <p>
           This area definitely need some work around the UX and some proper
-          thought in to how best to support more complex types like unions and
-          lists but shows some promise as to how to deal with the complexity of
-          real applications. It also allows an intuitive form of destuctring so
-          that you can easily modify just some parts of a record.
+          thought as to how best to support more complex types like unions and
+          lists but shows some promise in how to deal effectively with the
+          complexity of real applications. It also allows an intuitive form of
+          destuctring / spread so that you can easily modify just some parts of
+          a record.
         </p>
         <h2>Data</h2>
         <p>
@@ -154,9 +155,9 @@ export const WhyPage = () => {
         </p>
         <img src={data}></img>
         <p>
-          If we want to share the same data in multiple places we can make a
-          function that returns a fixed set of data and share that. Again this
-          is reducing the number of concepts need to be understood.
+          If we want to share the same data in multiple places we can simply
+          make a function that returns a fixed set of data and then use that.
+          Again this is reducing the number of concepts need to be understood.
         </p>
         <h2>Output</h2>
         <p>
@@ -164,12 +165,13 @@ export const WhyPage = () => {
           programming and its visual nature it seemed right that making games
           would be a good fit. There is no reason however that it could not be
           used to any kind of programming in theory. I have limited resources so
-          have tired to pick what I thought would have the best impact.
+          have tired to pick what I thought would have the best impact. With
+          time i would like to expand on this to cover more use cases.
         </p>
         <p>
-          I felt it was important to be able to have options to be able to see
-          the results of your program in real time as you make changes. So I
-          added a floating output window option as well as full screen. This is
+          I felt it was important to have options to be able to see the results
+          of your program in real time as you make changes. So I added a
+          floating output window option as well as full screen view. This is
           particularly import when it comes to...
         </p>
         <h2>Debugging</h2>
@@ -184,8 +186,8 @@ export const WhyPage = () => {
         <img src={debug}></img>
         <p>
           When you open a function in EtcH that same function could be used in
-          many places throughout the app so EtcH remembers the context in which
-          you navigated to the function
+          many places throughout the app so EtcH has to remember the context in
+          which you navigated to the function.
         </p>
         <h2>Community</h2>
         <p>
