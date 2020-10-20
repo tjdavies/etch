@@ -107,6 +107,10 @@ export const FunctionView = observer(({ fn }: Props) => {
       <BackGround
         ref={backgroundRef}
         onDoubleClick={(e) => setShowTokenDropdown({ x: e.pageX, y: e.pageY })}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          setShowTokenDropdown({ x: e.pageX, y: e.pageY });
+        }}
       />
 
       {fn.tokens.map((t: IToken, index) => (
