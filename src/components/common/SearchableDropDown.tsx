@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Colours } from "../../Style";
 
@@ -20,9 +20,16 @@ export interface Option {
 
 function updateOptions(options: Option[], text: string) {
   const exp = getRegExp(text);
-  return [...options.filter((o) => exp.test(o.label))];
+  const filteredOptions = options.filter((o) => exp.test(o.label));
+  const showCreateNew = text != "" && filteredOptions[0]?.label !== text;
+  if (showCreateNew) {
+    return [
+      { key: "create", label: "Create: '" + text + "'" },
+      ...filteredOptions,
+    ];
+  }
+  return filteredOptions;
 }
-
 const SearchableDropDownWrapper = styled.div`
   border: 1px solid ${Colours.lightGrey};
   border-radius: 4px;
@@ -36,15 +43,15 @@ const SearchableDropDownWrapper = styled.div`
   ul {
     overflow-y: scroll;
     max-height: 200px;
-    li {
-      padding: 2px;
-      padding-left: 6px;
-      cursor: pointer;
-      &:hover {
-        background-color: #df5e8820;
-      }
-    }
   }
+`;
+
+const ListItem = styled.li`
+  padding: 2px;
+  padding-left: 6px;
+  cursor: pointer;
+  background-color: ${(props: { selected: boolean }) =>
+    props.selected && "#df5e8820"};
 `;
 
 export function SearchableDropDown({
@@ -56,19 +63,39 @@ export function SearchableDropDown({
   onCreateNew: (name: string) => void;
   onSelect: (name: string) => void;
 }) {
+  const refs = useRef<any>([]);
   const [dynamicOptions, setOptions] = useState(options);
   const [searchValue, setSearchValue] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const onSearch = (text: string) => {
     setOptions(updateOptions(options, text));
     setSearchValue(text);
+    setSelectedIndex(0);
   };
 
   const onEnter = () => {
-    if (dynamicOptions.length > 0 && searchValue === dynamicOptions[0].label) {
-      onSelect(searchValue);
-    } else {
+    const item = dynamicOptions[selectedIndex];
+    if (item.key === "create") {
       onCreateNew(searchValue);
+    } else {
+      onSelect(item.key);
+    }
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onEnter();
+    } else if (e.key === "ArrowUp") {
+      if (selectedIndex > 0) {
+        setSelectedIndex(selectedIndex - 1);
+        refs.current[selectedIndex - 1].scrollIntoView(false);
+      }
+    } else if (e.key === "ArrowDown") {
+      if (selectedIndex < dynamicOptions.length - 1) {
+        setSelectedIndex(selectedIndex + 1);
+        refs.current[selectedIndex + 1].scrollIntoView(false);
+      }
     }
   };
 
@@ -78,27 +105,21 @@ export function SearchableDropDown({
         autoFocus
         value={searchValue}
         onChange={(e) => onSearch(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && onEnter()}
+        onKeyDown={onKeyDown}
       />
-      <FunctionList options={dynamicOptions} onSelect={onSelect} />
+      <ul>
+        {dynamicOptions.map((option, index) => (
+          <ListItem
+            ref={(el) => (refs.current[index] = el)}
+            selected={selectedIndex === index}
+            key={option.key}
+            onClick={(e) => onSelect(option.key)}
+            onMouseOver={(e) => setSelectedIndex(index)}
+          >
+            {option.label}
+          </ListItem>
+        ))}
+      </ul>
     </SearchableDropDownWrapper>
-  );
-}
-
-function FunctionList({
-  options,
-  onSelect,
-}: {
-  options: Option[];
-  onSelect: (value: string) => void;
-}) {
-  return (
-    <ul>
-      {options.map((option) => (
-        <li key={option.key} onClick={(e) => onSelect(option.key)}>
-          {option.label}
-        </li>
-      ))}
-    </ul>
   );
 }
