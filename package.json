@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/ramda": "^0.27.32",
     "@types/react-inspector": "^4.0.1",
     "@types/react-router-dom": "^5.1.5",
     "grommet-icons": "^4.4.0",

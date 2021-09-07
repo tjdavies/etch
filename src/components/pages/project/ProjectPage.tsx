@@ -69,7 +69,7 @@ function useProjectStore(id: string, fn: string, context: string) {
         project: initialState,
         activeFunction: fn || initialState.mainFn,
         functionContext: context,
-        runTimeViewMode: "docked",
+        runTimeViewMode: "window",
       });
 
       makeInspectable(store);

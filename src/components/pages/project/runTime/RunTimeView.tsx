@@ -65,7 +65,7 @@ interface Props {
 export const RunTimeView = observer(({ onDock }: Props) => {
   const store = useStore();
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   // const [time, setTime] = useState(0);
 
