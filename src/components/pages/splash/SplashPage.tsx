@@ -33,17 +33,10 @@ export const SplashPage = () => {
       <PageContent>
         <h1>Welcome to EtcH</h1>
         <p>
-          Etch is a functional visual programming environment in your browser
+          Etch is a functional visual programming environment right in your
+          browser
         </p>
-        <p>
-          This is a rapidly developing prototype, feel free to play around but
-          be aware
-        </p>
-        <ul>
-          <li>Projects may on longer work after an update</li>
-          <li>There may well be bugs</li>
-          <li>All info is currently saved locally on your browser</li>
-        </ul>
+
         <Link to={Routes.projectList}>
           <button>Start Creating</button>
         </Link>

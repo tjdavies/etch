@@ -3,8 +3,12 @@ import styled from "styled-components";
 import { Colours } from "../../Style";
 
 export const PageContent = styled.div`
-  padding: 12%;
-  padding-top: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px;
+  width: 100%;
+  padding: 1rem;
+  padding-top: 100px;
   height: 100%;
   font-size: 20px;
   color: ${Colours.darkText};
