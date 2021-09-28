@@ -10,6 +10,7 @@ const StyledEdiText = styled(EdiText)`
     margin: 0px;
     padding: 0px;
     min-width: 0px;
+    cursor: edit;
   }
   button[editext="edit-button"] {
   }

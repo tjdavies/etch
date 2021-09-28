@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { ProjectButton, ProjectButtonNew } from "./ProjectButton";
+import {
+  ProjectButton,
+  ProjectButtonNew,
+  StyledForkIcon,
+  StyledDeleteIcon,
+} from "./ProjectButton";
 import styled from "styled-components";
 import { Padding } from "../../../Style";
 import { ReactComponent as PlusIcon } from "../../../assets/plus.svg";
@@ -8,7 +13,12 @@ import { Routes } from "../../../Routes";
 import { PageHeader } from "../../common/Header";
 import { createNewProject } from "../../../model/Store";
 
-import { loadProjectList, saveProject } from "../../../utils/Save";
+import {
+  deleteProject,
+  loadProjectList,
+  saveProject,
+  cloneProject,
+} from "../../../utils/Save";
 import { ProjectHeader } from "./ProjectHeader";
 
 const PageWrapper = styled.div``;
@@ -26,6 +36,26 @@ const StyledPlusIcon = styled(PlusIcon)`
   width: 100px;
 `;
 
+function getValidProjectName(
+  name: string,
+  projectList: {
+    name: string;
+  }[]
+): string {
+  if (projectList.some((p) => p.name === name)) {
+    const bits = name.split(" ");
+    const lastBit = bits.pop();
+    if (lastBit && parseInt(lastBit)) {
+      return getValidProjectName(
+        bits.join(" ") + " " + (parseInt(lastBit) + 1),
+        projectList
+      );
+    }
+    return getValidProjectName(name + " 1", projectList);
+  }
+  return name;
+}
+
 export const ProjectListPage = () => {
   const loaded = loadProjectList();
   const history = useHistory();
@@ -37,13 +67,28 @@ export const ProjectListPage = () => {
   }
 
   const onCreateNewHandler = () => {
-    const project = createNewProject("Project" + (projectList?.length + 1));
-    saveProject(project);
-    const loaded = loadProjectList();
+    const project = createNewProject(
+      getValidProjectName("Project", projectList)
+    );
+    const loaded = saveProject(project);
     if (loaded) {
       setProjectList(loaded);
     }
     history.push(generatePath(Routes.project, { id: project.id }));
+  };
+
+  const onForkProject = (id: string) => {
+    const loaded = cloneProject(id);
+    if (loaded) {
+      setProjectList(loaded);
+    }
+  };
+
+  const onDeleteProject = (projectId: string) => {
+    const loaded = deleteProject(projectId);
+    if (loaded) {
+      setProjectList(loaded);
+    }
   };
 
   return (
@@ -64,7 +109,21 @@ export const ProjectListPage = () => {
             key={project.id}
             to={generatePath(Routes.project, { id: project.id })}
           >
-            <ProjectButton>{project.name}</ProjectButton>
+            <ProjectButton>
+              <StyledForkIcon
+                onClick={(e) => {
+                  e.preventDefault();
+                  onForkProject(project.id);
+                }}
+              />
+              <StyledDeleteIcon
+                onClick={(e) => {
+                  e.preventDefault();
+                  onDeleteProject(project.id);
+                }}
+              />
+              {project.name}
+            </ProjectButton>
           </Link>
         ))}
       </ProjectListWrapper>

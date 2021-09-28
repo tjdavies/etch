@@ -1,14 +1,13 @@
 import React from "react";
-import { ProjectButtonNew } from "./ProjectButton";
+import { ProjectButtonNew, StyledForkIcon } from "./ProjectButton";
 import styled from "styled-components";
-import { Colours, Padding } from "../../../Style";
-import { Link, generatePath, useHistory } from "react-router-dom";
-import { ReactComponent as ForkIcon } from "../../../assets/fork.svg";
+import { Padding } from "../../../Style";
+import { Link, useHistory } from "react-router-dom";
+
 import { Routes } from "../../../Routes";
 import { PageHeader } from "../../common/Header";
-import { createNewProject } from "../../../model/Store";
 import { prepend } from "ramda";
-import { loadProjectList, saveProject } from "../../../utils/Save";
+import { cloneProject } from "../../../utils/Save";
 import { ProjectHeader } from "./ProjectHeader";
 
 const PageWrapper = styled.div``;
@@ -21,35 +20,6 @@ const ProjectListWrapper = styled.div`
   gap: ${Padding.default};
 `;
 
-const StyledForkIcon = styled(ForkIcon)`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 20px;
-  fill: white;
-  transform: rotate(90deg);
-`;
-
-function getValidProjectName(
-  name: string,
-  projectList: {
-    name: string;
-  }[]
-): string {
-  if (projectList.some((p) => p.name === name)) {
-    const bits = name.split(" ");
-    const lastBit = bits.pop();
-    if (lastBit && parseInt(lastBit)) {
-      return getValidProjectName(
-        bits.join(" ") + " " + (parseInt(lastBit) + 1),
-        projectList
-      );
-    }
-    return getValidProjectName(name + " 1", projectList);
-  }
-  return name;
-}
-
 export const ExampleProjectPage = () => {
   const history = useHistory();
 
@@ -59,12 +29,9 @@ export const ExampleProjectPage = () => {
 
   const projectList = addFrogProject(addHelloWorldProject([]));
 
-  const onForkProject = (name: string) => {
-    const projectList = loadProjectList();
-    const project = createNewProject(getValidProjectName(name, projectList));
-    saveProject(project);
-
-    history.push(generatePath(Routes.project, { id: project.id }));
+  const onForkProject = (id: string) => {
+    cloneProject(id);
+    history.push(Routes.myProjects);
   };
 
   return (
@@ -81,15 +48,10 @@ export const ExampleProjectPage = () => {
           <ProjectButtonNew
             onClick={(e) => {
               e.preventDefault();
-              onForkProject(project.name);
+              onForkProject(project.id);
             }}
           >
-            <StyledForkIcon
-              onClick={(e) => {
-                e.preventDefault();
-                onForkProject(project.name);
-              }}
-            />
+            <StyledForkIcon />
 
             {project.name}
           </ProjectButtonNew>

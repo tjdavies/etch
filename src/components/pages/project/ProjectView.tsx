@@ -6,9 +6,10 @@ import { FunctionView } from "./FunctionView";
 import { observer } from "mobx-react-lite";
 import { IStore } from "../../../model/Store";
 import { Revert } from "grommet-icons";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { InlineEdit } from "../../common/InlineEdit";
 import { RunTime } from "./runTime/RunTime";
+import { ProjectHeader } from "../projectList/ProjectHeader";
 
 const PageWrapper = styled.div`
   display: flex;
@@ -20,7 +21,6 @@ const ProjectNameWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
-  padding-left: 20px;
   border-left: 2px solid ${Colours.lightText};
 `;
 
@@ -66,13 +66,16 @@ export const ProjectView = observer(({ store }: { store: IStore }) => {
     <PageWrapper>
       <FunctionView fn={store.activeFunction} />
       <PageHeader>
-        <ProjectNameWrapper />
-        <ProjectNameHeader
-          onChange={(e) => {
-            store.project.setName(e.target.value);
-          }}
-          value={store.project.name}
-        />
+        <Link to={"/projects/MyProjects"}>
+          <ProjectHeader>my projects</ProjectHeader>
+        </Link>
+        <FnNameHeader>
+          <InlineEdit
+            type="text"
+            value={store.project.name}
+            onSave={store.project.setName}
+          />
+        </FnNameHeader>
         <FnNameHeader>
           <InlineEdit
             type="text"
