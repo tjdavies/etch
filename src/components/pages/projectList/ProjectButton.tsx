@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Colours } from "../../../Style";
 
 export const ProjectButton = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,4 +19,6 @@ export const ProjectButton = styled.div`
 
 export const ProjectButtonNew = styled(ProjectButton)`
   background-color: ${Colours.primary};
+  text-align: center;
+  line-height: 1.6;
 `;

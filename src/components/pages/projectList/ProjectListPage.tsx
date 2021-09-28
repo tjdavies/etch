@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ProjectButton, ProjectButtonNew } from "./ProjectButton";
 import styled from "styled-components";
-import { Colours, Padding } from "../../../Style";
+import { Padding } from "../../../Style";
 import { ReactComponent as PlusIcon } from "../../../assets/plus.svg";
 import { Link, generatePath, useHistory } from "react-router-dom";
 import { Routes } from "../../../Routes";
@@ -9,7 +9,7 @@ import { PageHeader } from "../../common/Header";
 import { createNewProject } from "../../../model/Store";
 
 import { loadProjectList, saveProject } from "../../../utils/Save";
-import { prepend, when } from "ramda";
+import { ProjectHeader } from "./ProjectHeader";
 
 const PageWrapper = styled.div``;
 
@@ -26,39 +26,11 @@ const StyledPlusIcon = styled(PlusIcon)`
   width: 100px;
 `;
 
-const ProjectHeader = styled.div`
-  display: flex;
-  height: 100%;
-  align-items: center;
-  font-size: 20px;
-  padding-left: 20px;
-  border-left: 2px solid ${Colours.lightText};
-`;
-
-function hasItemWithId(id: string) {
-  return (loaded: any[]) => {
-    return !loaded.some((p) => p.id === id);
-  };
-}
-
 export const ProjectListPage = () => {
   const loaded = loadProjectList();
   const history = useHistory();
 
-  const addHelloWorldProject = when(
-    hasItemWithId("hw"),
-
-    prepend({ id: "hw", name: "hello world" })
-  );
-
-  const addFrogProject = when(
-    hasItemWithId("nf"),
-    prepend({ id: "nf", name: "ninja frog" })
-  );
-
-  const list = addFrogProject(addHelloWorldProject(loaded));
-
-  const [projectList, setProjectList] = useState(list);
+  const [projectList, setProjectList] = useState(loaded);
 
   if (projectList === undefined) {
     return null;
@@ -77,7 +49,10 @@ export const ProjectListPage = () => {
   return (
     <PageWrapper>
       <PageHeader link={Routes.root}>
-        <ProjectHeader>projects</ProjectHeader>
+        <Link to={"/projects"}>
+          <ProjectHeader>projects</ProjectHeader>
+        </Link>
+        <ProjectHeader>my projects</ProjectHeader>
       </PageHeader>
 
       <ProjectListWrapper>

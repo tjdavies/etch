@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { ProjectListPage } from "./components/pages/projectList/ProjectListPage";
+import { ExampleProjectPage } from "./components/pages/projectList/ExampleProjectPage";
 import { Colours } from "./Style";
 import { Routes } from "./Routes";
 import { ProjectPage } from "./components/pages/project/ProjectPage";
@@ -9,6 +10,7 @@ import "mobx-react-lite/batchingForReactDom";
 import { SplashPage } from "./components/pages/splash/SplashPage";
 import { AboutPage } from "./components/pages/about/AboutPage";
 import { WhyPage } from "./components/pages/blog/WhyPage";
+import { ProjectFolderPage } from "./components/pages/projectList/ProjectFolderPage";
 
 const AppWrapper = styled.div`
   min-width: 100vw;
@@ -28,7 +30,13 @@ function App() {
           <Route path={Routes.function} exact>
             <ProjectPage />
           </Route>
-          <Route path={Routes.projectList}>
+          <Route path={Routes.projectList} exact>
+            <ProjectFolderPage />
+          </Route>
+          <Route path={Routes.exampleProjects} exact>
+            <ExampleProjectPage />
+          </Route>
+          <Route path={Routes.myProjects} exact>
             <ProjectListPage />
           </Route>
           <Route path={Routes.about}>
