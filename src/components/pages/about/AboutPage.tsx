@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import styled from "styled-components";
 
 import { PageHeader } from "../../common/Header";
@@ -11,6 +12,14 @@ const PageWrapper = styled.div`
 export const AboutPage = () => {
   return (
     <PageWrapper>
+      <Helmet>
+        <title>About Etch</title>
+        <meta
+          name="description"
+          content="what makes Etch is an innovative live functional visual programing environment in your browser"
+        />
+      </Helmet>
+      <PageHeader />
       <PageHeader></PageHeader>
       <PageContent>
         <h1>Design Principles</h1>

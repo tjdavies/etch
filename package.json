@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/ramda": "^0.27.32",
+    "@types/react-helmet": "^6.1.2",
     "@types/react-inspector": "^4.0.1",
     "@types/react-router-dom": "^5.1.5",
     "grommet-icons": "^4.4.0",
@@ -19,6 +20,7 @@
     "react-ds": "^1.13.0",
     "react-editext": "^3.17.0",
     "react-error-boundary": "^3.0.2",
+    "react-helmet": "^6.1.0",
     "react-inspector": "^5.1.0",
     "react-konva": "^16.13.0-6",
     "react-player": "^2.6.2",

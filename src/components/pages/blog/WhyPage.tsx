@@ -10,6 +10,7 @@ import clamp from "../../../assets/clampFn.png";
 import debug from "../../../assets/debug.png";
 import record from "../../../assets/records.png";
 import data from "../../../assets/data.png";
+import { Helmet } from "react-helmet";
 
 const PageWrapper = styled.div`
   position: relative;
@@ -18,6 +19,13 @@ const PageWrapper = styled.div`
 export const WhyPage = () => {
   return (
     <PageWrapper>
+      <Helmet>
+        <title>What make Etch different</title>
+        <meta
+          name="description"
+          content="EtcH is an experimental functional visual programming language here this is why it different"
+        />
+      </Helmet>
       <PageHeader></PageHeader>
       <PageContent>
         <h1>An EtcH to Scratch</h1>
