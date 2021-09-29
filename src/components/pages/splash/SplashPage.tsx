@@ -36,7 +36,7 @@ export const SplashPage = () => {
           seasoned coder you may want to watch a quick intro to get you started
         </p>
         <p>
-          or read here what makes Etch <Link to={Routes.why}>different?</Link>
+          Or read here what makes Etch <Link to={Routes.why}>different?</Link>
         </p>
 
         <ReactPlayer
