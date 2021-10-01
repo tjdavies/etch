@@ -16,7 +16,7 @@ export const AboutPage = () => {
         <title>About Etch</title>
         <meta
           name="description"
-          content="what makes Etch is an innovative live functional visual programing environment in your browser"
+          content="Etch is an innovative live functional visual programing environment in your browser"
         />
       </Helmet>
       <PageHeader />
@@ -47,9 +47,10 @@ export const AboutPage = () => {
         </p>
         <h3>A fun playground</h3>
         <p>
-          I wanted to remove the early stumbling blocks. A rich UI and features
-          such as type safety and realtime debugging are designed to make
-          creating software a fun experience. If possible no errors ever.
+          I wanted to remove some of the stumbling blocks that text based
+          programing has. A rich UI and features such as type safety and
+          realtime debugging are designed to make creating software a more
+          intuitive experience. If possible no runtime errors ever.
         </p>
         <h1>Features</h1>
         <h3>Built (at least partially)</h3>

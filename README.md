@@ -1,8 +1,74 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Etch - functional visual programing environment
 
-## Available Scripts
+Etch is a browser based open source live functional visual programing environment.
 
-In the project directory, you can run:
+You can try it [here](https://letset.ch/)
+
+## Design Principles
+
+Etch is designed as a next generation language. There are some key principles that have guided the design choices.
+
+### `Low floor & wide walls`
+
+EtcH is designed to be instantly more accessible than traditional
+textual languages but also has the potential to become a serious
+programming environment capable of all the same tasks. Currently
+output is limited in functionality but that will be expanded.
+
+### `Visual all the way down`
+
+Many visual coding tools allow you to type "real" code into the boxes
+when you need additional functionality. EtcH is designed from first
+principles to be able to compose complex functionality from simple
+base parts as a complete solution.
+
+### `Modern functional paradigm`
+
+EtcH takes a pure functional approach to programming separating data
+from computation. An EtcH program is built entirely out of the same
+simple composable building blocks (functions). This reduces the
+concepts needed to be understood and alow certain key features (auto
+function creation).
+
+### `Inclusive and collaborative`
+
+A rich UI and features such as type safety and
+realtime debugging are designed to make creating software a more
+intuitive experience especially for new programers. If possible no runtime errors ever. My hope is we can also open up new ways to collaborate by sharing functions and libraries in new ways.
+
+## Features
+
+Built (at least partially)
+
+- Functions are project wide and can be nested
+- Simple type system
+- Project wide shared types
+- Nested inspection and wiring
+- Everything can be renamed safely
+- Type aware static value input
+- Live project debugging
+- multi drag selections (clone / make function)
+- Duplicate / Delete projects
+
+On the todo list
+
+- Map / Reduce and general first class function support
+- Save and share project on the "cloud"
+- Tutorials and Example projects
+- Search / Share functions (modules?)
+- Undo / Redo
+- multi drag selections (delete )
+- zoom and pan function view
+- Expanded type system (lists & unions)
+- Scene functionality (images / sounds / layers)
+- Effects (network, time, scene events, random numbers)
+- Output html?
+- mobile / tablet support
+- performance optimisations
+
+## Run it
+
+project is uses create react You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 ### `yarn start`
 
@@ -26,19 +92,3 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
