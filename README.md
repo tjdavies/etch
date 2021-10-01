@@ -1,8 +1,10 @@
 # Etch - functional visual programing environment
 
-Etch is a browser based open source live functional visual programing environment.
+Etch is an experiment to see if we can address the issues with some other visual programing languages by using functional programing
 
-You can try it [here](https://letset.ch/)
+![GitHub Logo](/public/screenshot.png)
+
+You can jump in and try it [here](https://letset.ch/)
 
 ## Design Principles
 
