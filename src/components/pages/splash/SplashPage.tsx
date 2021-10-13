@@ -30,7 +30,7 @@ export const SplashPage = () => {
       <PageContent>
         <h1>Welcome to EtcH</h1>
         <p>
-          Etch is an innovative live functional visual programming environment
+          Etch is an live functional visual programming environment
           right in your browser <br /> <br /> Thats a lot of words but it's a
           whole new way to look at programing so if your a beginner or a
           seasoned coder you may want to watch a quick intro to get you started
@@ -53,6 +53,11 @@ export const SplashPage = () => {
           <br />
           Want to find out a bit more <Link to={Routes.about}>about</Link> Etch
         </p>
+        <p>
+          <br />
+           Etch is also <Link to={{ pathname: "https://github.com/tjdavies/etch" }} target="_blank" >open source</Link>
+        </p>
+        
       </PageContent>
     </PageWrapper>
   );
